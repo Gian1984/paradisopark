@@ -208,17 +208,6 @@
   </div>
 
 
-
-
-
-
-
-
-
-
-
-
-
   <router-view/>
 
 
@@ -404,7 +393,7 @@ const navigation = {
     { name: 'Contact', href: '#' },
     { name: 'Espace Client', href: '#' },
     { name: 'Réserver', href: '#' },
-    { name: 'Á propos', href: '#' },
+    { name: 'Á propos', href: '/about' },
   ],
 }
 
