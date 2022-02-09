@@ -390,7 +390,7 @@ const navigation = {
       featured: [
         {
           name: 'Chambres',
-          href: '#',
+          href: '/rooms',
           imageSrc: 'https://tailwindui.com/img/ecommerce-images/mega-menu-01-men-category-01.jpg',
           imageAlt: 'Hats and sweaters on wood shelves next to various colors of t-shirts on hangers.',
         },
