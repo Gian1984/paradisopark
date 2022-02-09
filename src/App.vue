@@ -51,10 +51,10 @@
 
           <div class="border-t border-gray-200 py-6 px-4 space-y-6">
             <div class="flow-root">
-              <a href="#" class="-m-2 p-2 block font-medium text-gray-900">Create an account</a>
+              <router-link to="#" class="-m-2 p-2 block font-medium text-gray-900">Create an account</router-link>
             </div>
             <div class="flow-root">
-              <a href="#" class="-m-2 p-2 block font-medium text-gray-900">Sign in</a>
+              <router-link to="#" class="-m-2 p-2 block font-medium text-gray-900">Sign in</router-link>
             </div>
           </div>
 
@@ -102,8 +102,8 @@
               </div>
             </form>
             <div class="flex items-center space-x-6">
-              <a href="#" class="text-sm font-medium text-white hover:text-gray-100">Sign in</a>
-              <a href="#" class="text-sm font-medium text-white hover:text-gray-100">Create an account</a>
+              <router-link to="#" class="text-sm font-medium text-white hover:text-gray-100">Sign in</router-link>
+              <router-link to="#" class="text-sm font-medium text-white hover:text-gray-100">Create an account</router-link>
             </div>
           </div>
         </div>
@@ -125,7 +125,7 @@
                   <!-- Flyout menus -->
                   <PopoverGroup class="px-4 bottom-0 inset-x-0">
                     <div class="h-full flex justify-center space-x-8">
-                      <a v-for="firstpage in navigation.firstpages" :key="firstpage.name" :href="firstpage.href" class="flex items-center text-sm font-medium text-white">{{ firstpage.name }}</a>
+                      <router-link v-for="firstpage in navigation.firstpages" :key="firstpage.name" :to="firstpage.href" class="flex items-center text-sm font-medium text-white">{{ firstpage.name }}</router-link>
                       <Popover v-for="category in navigation.categories" :key="category.name" class="flex" v-slot="{ open }">
                         <div class="relative flex">
                           <PopoverButton class="relative z-10 flex items-center justify-center transition-colors ease-out duration-200 text-sm font-medium text-white">
@@ -146,10 +146,10 @@
                                     <div class="h-40 w-40 rounded-md bg-gray-100 overflow-hidden group-hover:opacity-75">
                                       <img :src="item.imageSrc" :alt="item.imageAlt" class="object-center object-cover" />
                                     </div>
-                                    <a :href="item.href" class="mt-4 block font-medium text-gray-900 text-center">
+                                    <router-link :to="item.href" class="mt-4 block font-medium text-gray-900 text-center">
                                       <span class="absolute z-10 inset-0" aria-hidden="true" />
                                       {{ item.name }}
-                                    </a>
+                                    </router-link>
                                     <p aria-hidden="true" class="mt-1">{{ item.role }}</p>
                                   </div>
                                 </div>
@@ -159,7 +159,7 @@
                         </transition>
                       </Popover>
 
-                      <a v-for="page in navigation.pages" :key="page.name" :href="page.href" class="flex items-center text-sm font-medium text-white">{{ page.name }}</a>
+                      <router-link v-for="page in navigation.pages" :key="page.name" :to="page.href" class="flex items-center text-sm font-medium text-white">{{ page.name }}</router-link>
                     </div>
                   </PopoverGroup>
                 </div>
@@ -195,11 +195,11 @@
                     <MailIcon class="h-6 w-6 text-white"/>
                   </router-link>
                     <div class="ml-4 flow-root lg:ml-8">
-                      <a href="#" class="group -m-2 p-2 flex items-center">
+                      <router-link to="#" class="group -m-2 p-2 flex items-center">
                         <ShoppingBagIcon class="flex-shrink-0 h-6 w-6 text-white" aria-hidden="true" />
                         <span class="ml-2 text-sm font-medium text-white">0</span>
                         <span class="sr-only">items in cart, view bag</span>
-                      </a>
+                      </router-link>
                     </div>
                   </div>
                 </div>
@@ -225,9 +225,9 @@
               <h3 class="text-sm font-semibold text-gray-400 tracking-wider uppercase">Solutions</h3>
               <ul role="list" class="mt-4 space-y-4">
                 <li v-for="item in footernavigation.solutions" :key="item.name">
-                  <a :href="item.href" class="text-base text-gray-300 hover:text-white">
+                  <router-link :to="item.href" class="text-base text-gray-300 hover:text-white">
                     {{ item.name }}
-                  </a>
+                  </router-link>
                 </li>
               </ul>
             </div>
@@ -235,9 +235,9 @@
               <h3 class="text-sm font-semibold text-gray-400 tracking-wider uppercase">Support</h3>
               <ul role="list" class="mt-4 space-y-4">
                 <li v-for="item in footernavigation.support" :key="item.name">
-                  <a :href="item.href" class="text-base text-gray-300 hover:text-white">
+                  <router-link :to="item.href" class="text-base text-gray-300 hover:text-white">
                     {{ item.name }}
-                  </a>
+                  </router-link>
                 </li>
               </ul>
             </div>
@@ -247,9 +247,9 @@
               <h3 class="text-sm font-semibold text-gray-400 tracking-wider uppercase">Company</h3>
               <ul role="list" class="mt-4 space-y-4">
                 <li v-for="item in navigation.company" :key="item.name">
-                  <a :href="item.href" class="text-base text-gray-300 hover:text-white">
+                  <router-link :to="item.href" class="text-base text-gray-300 hover:text-white">
                     {{ item.name }}
-                  </a>
+                  </router-link>
                 </li>
               </ul>
             </div>
@@ -257,9 +257,9 @@
               <h3 class="text-sm font-semibold text-gray-400 tracking-wider uppercase">Legal</h3>
               <ul role="list" class="mt-4 space-y-4">
                 <li v-for="item in footernavigation.legal" :key="item.name">
-                  <a :href="item.href" class="text-base text-gray-300 hover:text-white">
+                  <router-link :to="item.href" class="text-base text-gray-300 hover:text-white">
                     {{ item.name }}
-                  </a>
+                  </router-link>
                 </li>
               </ul>
             </div>
@@ -389,35 +389,12 @@ const navigation = {
     },
   ],
   pages: [
-    { name: 'Événements', href: '#' },
+    { name: 'Événements', href: '/events' },
     { name: 'Tarifs', href: '#' },
     { name: 'Espace Client', href: '#' },
     { name: 'Réserver', href: '#' },
   ],
 }
-
-
-// const navigations = {
-//   categories: [
-//     {
-//       name: 'Services',
-//       categories: [
-//         { name: 'Chambres', href: '#' },
-//         { name: 'Soins', href: '#' },
-//         { name: 'Bar/Restauran', href: '#' },
-//       ],
-//     },
-//   ],
-//   pages: [
-//     { name: 'Événements', href: '#' },
-//     { name: 'Tarifs', href: '#' },
-//     { name: 'Contact', href: '#' },
-//     { name: 'Espace Client', href: '#' },
-//     { name: 'Réserver', href: '#' },
-//     { name: 'Á propos', href: '#' },
-//   ],
-// }
-
 
 const footernavigation = {
   solutions: [
