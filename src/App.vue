@@ -1,6 +1,4 @@
 <template>
-<div class="bg-white">
-  <!-- Mobile menu -->
   <TransitionRoot as="template" :show="mobileMenuOpen">
     <Dialog as="div" class="fixed inset-0 flex z-40 lg:hidden" @close="mobileMenuOpen = false">
       <TransitionChild as="template" enter="transition-opacity ease-linear duration-300" enter-from="opacity-0" enter-to="opacity-100" leave="transition-opacity ease-linear duration-300" leave-from="opacity-100" leave-to="opacity-0">
@@ -8,7 +6,7 @@
       </TransitionChild>
 
       <TransitionChild as="template" enter="transition ease-in-out duration-300 transform" enter-from="-translate-x-full" enter-to="translate-x-0" leave="transition ease-in-out duration-300 transform" leave-from="translate-x-0" leave-to="-translate-x-full">
-        <div class="relative max-w-xs w-full bg-white shadow-xl pb-12 flex flex-col overflow-y-auto">
+        <div class="relative max-w-xs w-full bg-gray-600 bg-opacity-90 shadow-xl pb-12 pt-24 flex flex-col overflow-y-auto">
           <div class="px-4 pt-5 pb-2 flex">
             <button type="button" class="-m-2 p-2 rounded-md inline-flex items-center justify-center text-gray-400" @click="mobileMenuOpen = false">
               <span class="sr-only">Close menu</span>
@@ -21,7 +19,7 @@
             <div class="border-b border-gray-200">
               <TabList class="-mb-px flex px-4 space-x-8">
                 <Tab as="template" v-for="category in navigation.categories" :key="category.name" v-slot="{ selected }">
-                  <button :class="[selected ? 'text-indigo-600 border-indigo-600' : 'text-gray-900 border-transparent', 'flex-1 whitespace-nowrap py-4 px-1 border-b-2 text-base font-medium']">
+                  <button :class="[selected ? 'text-teal-600 border-teal-600' : 'text-white border-transparent', 'flex-1 whitespace-nowrap py-4 px-1 border-b-2 text-base font-medium']">
                     {{ category.name }}
                   </button>
                 </Tab>
@@ -31,14 +29,14 @@
               <TabPanel v-for="category in navigation.categories" :key="category.name" class="px-4 py-6 space-y-12">
                 <div class="grid grid-cols-2 gap-x-4 gap-y-10">
                   <div v-for="item in category.featured" :key="item.name" class="group relative">
-                    <div class="aspect-w-1 aspect-h-1 rounded-md bg-gray-100 overflow-hidden group-hover:opacity-75">
+                    <div class="aspect-w-1 aspect-h-1  rounded-md bg-gray-100 overflow-hidden group-hover:opacity-75">
                       <img :src="item.imageSrc" :alt="item.imageAlt" class="object-center object-cover" />
                     </div>
-                    <a :href="item.href" class="mt-6 block text-sm font-medium text-gray-900">
+                    <router-link :to="item.href" class="mt-6 block text-sm font-medium text-white" @click="mobileMenuOpen = false">
                       <span class="absolute z-10 inset-0" aria-hidden="true" />
                       {{ item.name }}
-                    </a>
-                    <p aria-hidden="true" class="mt-1 text-sm text-gray-500">Shop now</p>
+                    </router-link>
+                    <p aria-hidden="true" class="mt-1 text-sm text-gray-500">{{ item.role }}</p>
                   </div>
                 </div>
               </TabPanel>
@@ -47,7 +45,7 @@
 
           <div class="border-t border-gray-200 py-6 px-4 space-y-6">
             <div v-for="page in navigation.pages" :key="page.name" class="flow-root">
-              <a :href="page.href" class="-m-2 p-2 block font-medium text-gray-900">{{ page.name }}</a>
+              <router-link :to="page.href" class="-m-2 p-2 block font-medium text-gray-900">{{ page.name }}</router-link>
             </div>
           </div>
 
@@ -61,19 +59,14 @@
           </div>
 
           <div class="border-t border-gray-200 py-6 px-4 space-y-6">
-            <!-- Currency selector -->
+            <!-- languages selector -->
             <form>
               <div class="inline-block">
-                <label for="mobile-language" class="sr-only">Language</label>
+                <label for="mobile-languages" class="sr-only">Languages</label>
                 <div class="-ml-2 group relative border-transparent rounded-md focus-within:ring-2 focus-within:ring-white">
-                  <select id="mobile-language" name="language" class="bg-none border-transparent rounded-md py-0.5 pl-2 pr-5 flex items-center text-sm font-medium text-gray-700 group-hover:text-gray-800 focus:outline-none focus:ring-0 focus:border-transparent">
+                  <select id="mobile-languages" name="language" class="bg-none border-transparent rounded-md py-0.5 pl-2 pr-5 flex items-center text-sm font-medium text-gray-700 group-hover:text-gray-800 focus:outline-none focus:ring-0 focus:border-transparent">
                     <option v-for="language in languages" :key="language">{{ language }}</option>
                   </select>
-                  <div class="absolute right-0 inset-y-0 flex items-center pointer-events-none">
-                    <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20" class="w-5 h-5 text-gray-500">
-                      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 8l4 4 4-4" />
-                    </svg>
-                  </div>
                 </div>
               </div>
             </form>
@@ -84,7 +77,7 @@
   </TransitionRoot>
 
   <!-- Hero section -->
-  <div class="relative fixed z-50 bg-gray-900">
+  <div class="fixed z-50 w-full bg-gray-900">
     <!-- Decorative image and overlay -->
     <div aria-hidden="true" class="absolute inset-0 overflow-hidden">
       <img src="https://tailwindui.com/img/ecommerce-images/home-page-01-hero-full-width.jpg" alt="" class="w-full h-full object-center object-cover" />
@@ -97,23 +90,17 @@
         <!-- Top navigation -->
         <div class="bg-gray-900">
           <div class="max-w-7xl mx-auto h-10 px-4 flex items-center justify-between sm:px-6 lg:px-8">
-            <!-- language selector -->
+            <!-- languages selector -->
             <form>
               <div>
-                <label for="desktop-language" class="sr-only">language</label>
+                <label for="desktop-language" class="sr-only">Languages</label>
                 <div class="-ml-2 group relative bg-gray-900 border-transparent rounded-md focus-within:ring-2 focus-within:ring-white">
                   <select id="desktop-language" name="language" class="bg-none bg-gray-900 border-transparent rounded-md py-0.5 pl-2 pr-5 flex items-center text-sm font-medium text-white group-hover:text-gray-100 focus:outline-none focus:ring-0 focus:border-transparent">
-                    <option v-for="language in languages" :key="language">{{ language }}</option>
+                    <option v-for="language in languages" :key="language">{{ language}}</option>
                   </select>
-                  <div class="absolute right-0 inset-y-0 flex items-center pointer-events-none">
-                    <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20" class="w-5 h-5 text-gray-300">
-                      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 8l4 4 4-4" />
-                    </svg>
-                  </div>
                 </div>
               </div>
             </form>
-
             <div class="flex items-center space-x-6">
               <a href="#" class="text-sm font-medium text-white hover:text-gray-100">Sign in</a>
               <a href="#" class="text-sm font-medium text-white hover:text-gray-100">Create an account</a>
@@ -128,10 +115,10 @@
               <div class="h-16 flex items-center justify-between">
                 <!-- Logo (lg+) -->
                 <div class="hidden lg:flex-1 lg:flex lg:items-center">
-                  <a href="#">
+                  <router-link to="/">
                     <span class="sr-only">Workflow</span>
-                    <img class="h-8 w-auto" src="https://tailwindui.com/img/logos/workflow-mark.svg?color=white" alt="" />
-                  </a>
+                    <img class="h-12 w-auto" src="img/logos/paradiso_logo.png" alt="paradisopark_logo" />
+                  </router-link>
                 </div>
 
                 <div class="hidden h-full lg:flex">
@@ -153,16 +140,16 @@
 
                             <div class="relative bg-white">
                               <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                                <div class="grid grid-cols-4 gap-y-10 gap-x-8 py-16">
+                                <div class="grid grid-cols-4 gap-y-10 gap-x-8 py-10">
                                   <div v-for="item in category.featured" :key="item.name" class="group relative">
-                                    <div class="aspect-w-1 aspect-h-1 rounded-md bg-gray-100 overflow-hidden group-hover:opacity-75">
+                                    <div class="h-40 w-40 rounded-md bg-gray-100 overflow-hidden group-hover:opacity-75">
                                       <img :src="item.imageSrc" :alt="item.imageAlt" class="object-center object-cover" />
                                     </div>
                                     <a :href="item.href" class="mt-4 block font-medium text-gray-900">
                                       <span class="absolute z-10 inset-0" aria-hidden="true" />
                                       {{ item.name }}
                                     </a>
-                                    <p aria-hidden="true" class="mt-1">Shop now</p>
+                                    <p aria-hidden="true" class="mt-1">{{ item.role }}</p>
                                   </div>
                                 </div>
                               </div>
@@ -183,17 +170,18 @@
                     <MenuIcon class="h-6 w-6" aria-hidden="true" />
                   </button>
 
-                  <!-- Search -->
                 </div>
 
                 <!-- Logo (lg-) -->
-                <a href="#" class="lg:hidden">
+                <router-link to="/" class="lg:hidden">
                   <span class="sr-only">Workflow</span>
-                  <img src="https://tailwindui.com/img/logos/workflow-mark.svg?color=white" alt="" class="h-8 w-auto" />
-                </a>
+                  <img src="img/logos/paradiso_logo.png" alt="paradisopark_logo" class="h-12 w-auto" />
+                </router-link>
 
                 <div class="flex-1 flex items-center justify-end">
-
+                  <!--                  <a href="#" class="hidden text-sm font-medium text-white lg:block">-->
+                  <!--                    Search-->
+                  <!--                  </a>-->
 
                   <div class="flex items-center lg:ml-8">
                     <!-- Help -->
@@ -202,8 +190,6 @@
                       <QuestionMarkCircleIcon class="w-6 h-6" aria-hidden="true" />
                     </a>
                     <a href="#" class="hidden text-sm font-medium text-white lg:block">Help</a>
-
-                    <!-- Cart -->
                     <div class="ml-4 flow-root lg:ml-8">
                       <a href="#" class="group -m-2 p-2 flex items-center">
                         <ShoppingBagIcon class="flex-shrink-0 h-6 w-6 text-white" aria-hidden="true" />
@@ -219,14 +205,10 @@
         </div>
       </nav>
     </header>
-
-    <div class="relative max-w-3xl mx-auto py-32 px-6 flex flex-col items-center text-center sm:py-64 lg:px-0">
-      <h1 class="text-4xl font-extrabold tracking-tight text-white lg:text-6xl">New arrivals are here</h1>
-      <p class="mt-4 text-xl text-white">The new arrivals have, well, newly arrived. Check out the latest options from our summer small-batch release while they're still in stock.</p>
-      <a href="#" class="mt-8 inline-block bg-white border border-transparent rounded-md py-3 px-8 text-base font-medium text-gray-900 hover:bg-gray-100">Shop New Arrivals</a>
-    </div>
   </div>
-</div>
+
+
+
 
 
 
