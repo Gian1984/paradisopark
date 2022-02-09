@@ -117,7 +117,7 @@
                 <div class="hidden lg:flex-1 lg:flex lg:items-center">
                   <router-link to="/">
                     <span class="sr-only">Workflow</span>
-                    <img class="h-12 w-auto" src="img/logos/paradiso_logo.png" alt="paradisopark_logo" />
+                    <img class="h-12 w-auto" src="img/logos/paradisowhite.png" alt="paradisopark_logo" />
                   </router-link>
                 </div>
 
@@ -125,6 +125,7 @@
                   <!-- Flyout menus -->
                   <PopoverGroup class="px-4 bottom-0 inset-x-0">
                     <div class="h-full flex justify-center space-x-8">
+                      <a v-for="firstpage in navigation.firstpages" :key="firstpage.name" :href="firstpage.href" class="flex items-center text-sm font-medium text-white">{{ firstpage.name }}</a>
                       <Popover v-for="category in navigation.categories" :key="category.name" class="flex" v-slot="{ open }">
                         <div class="relative flex">
                           <PopoverButton class="relative z-10 flex items-center justify-center transition-colors ease-out duration-200 text-sm font-medium text-white">
@@ -140,12 +141,12 @@
 
                             <div class="relative bg-white">
                               <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                                <div class="grid grid-cols-4 gap-y-10 gap-x-8 py-10">
+                                <div class="flex justify-around py-10">
                                   <div v-for="item in category.featured" :key="item.name" class="group relative">
                                     <div class="h-40 w-40 rounded-md bg-gray-100 overflow-hidden group-hover:opacity-75">
                                       <img :src="item.imageSrc" :alt="item.imageAlt" class="object-center object-cover" />
                                     </div>
-                                    <a :href="item.href" class="mt-4 block font-medium text-gray-900">
+                                    <a :href="item.href" class="mt-4 block font-medium text-gray-900 text-center">
                                       <span class="absolute z-10 inset-0" aria-hidden="true" />
                                       {{ item.name }}
                                     </a>
@@ -185,11 +186,14 @@
 
                   <div class="flex items-center lg:ml-8">
                     <!-- Help -->
-                    <a href="#" class="p-2 text-white lg:hidden">
+                    <!-- <a href="#" class="p-2 text-white lg:hidden">
                       <span class="sr-only">Help</span>
                       <QuestionMarkCircleIcon class="w-6 h-6" aria-hidden="true" />
                     </a>
-                    <a href="#" class="hidden text-sm font-medium text-white lg:block">Help</a>
+                    <a href="#" class="hidden text-sm font-medium text-white lg:block">Help</a> -->
+                    <router-link to="/contact">
+                    <MailIcon class="h-6 w-6 text-white"/>
+                  </router-link>
                     <div class="ml-4 flow-root lg:ml-8">
                       <a href="#" class="group -m-2 p-2 flex items-center">
                         <ShoppingBagIcon class="flex-shrink-0 h-6 w-6 text-white" aria-hidden="true" />
@@ -348,12 +352,15 @@ import {
   TransitionRoot,
 } from '@headlessui/vue'
 import { MenuIcon, SearchIcon, ShoppingCartIcon, UserIcon, XIcon, QuestionMarkCircleIcon, ShoppingBagIcon  } from '@heroicons/vue/outline'
-import { ChevronDownIcon } from '@heroicons/vue/solid'
+import { ChevronDownIcon,MailIcon } from '@heroicons/vue/solid'
 
 const languages = ['FR', 'EN', 'NL']
 
 
 const navigation = {
+  firstpages: [
+    { name: 'About', href: '/about' },
+  ],
   categories: [
 
     {
@@ -368,21 +375,15 @@ const navigation = {
         {
           name: 'Soins',
           href: '#',
-          imageSrc: 'https://tailwindui.com/img/ecommerce-images/mega-menu-01-men-category-02.jpg',
+          imageSrc: 'img/candles.jpg',
           imageAlt: 'Model wearing light heather gray t-shirt.',
         },
         {
           name: 'Traiteur',
           href: '#',
-          imageSrc: 'img/traiteur.jpg',
+          imageSrc: 'img/dish.jpg',
           imageAlt:
               'Grey 6-panel baseball hat with black brim, black mountain graphic on front, and light heather gray body.',
-        },
-        {
-          name: 'Carry',
-          href: '#',
-          imageSrc: 'https://tailwindui.com/img/ecommerce-images/mega-menu-01-men-category-04.jpg',
-          imageAlt: 'Model putting folded cash into slim card holder olive leather wallet with hand stitching.',
         },
       ],
     },
@@ -390,10 +391,8 @@ const navigation = {
   pages: [
     { name: 'Événements', href: '#' },
     { name: 'Tarifs', href: '#' },
-    { name: 'Contact', href: '#' },
     { name: 'Espace Client', href: '#' },
     { name: 'Réserver', href: '#' },
-    { name: 'Á propos', href: '/about' },
   ],
 }
 
@@ -539,7 +538,8 @@ export default {
     XIcon,
     ChevronDownIcon,
     QuestionMarkCircleIcon,
-    ShoppingBagIcon
+    ShoppingBagIcon,
+    MailIcon
   },
   setup() {
     const mobileMenuOpen = ref(false)
