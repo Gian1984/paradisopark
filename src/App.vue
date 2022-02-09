@@ -1,4 +1,6 @@
 <template>
+<div class="bg-white">
+  <!-- Mobile menu -->
   <TransitionRoot as="template" :show="mobileMenuOpen">
     <Dialog as="div" class="fixed inset-0 flex z-40 lg:hidden" @close="mobileMenuOpen = false">
       <TransitionChild as="template" enter="transition-opacity ease-linear duration-300" enter-from="opacity-0" enter-to="opacity-100" leave="transition-opacity ease-linear duration-300" leave-from="opacity-100" leave-to="opacity-0">
@@ -26,52 +28,17 @@
               </TabList>
             </div>
             <TabPanels as="template">
-              <TabPanel v-for="(category, categoryIdx) in navigation.categories" :key="category.name" class="px-4 pt-10 pb-6 space-y-12">
-                <div class="grid grid-cols-1 items-start gap-y-10 gap-x-6">
-                  <div class="grid grid-cols-1 gap-y-10 gap-x-6">
-                    <div>
-                      <p :id="`mobile-featured-heading-${categoryIdx}`" class="font-medium text-gray-900">Featured</p>
-                      <ul role="list" :aria-labelledby="`mobile-featured-heading-${categoryIdx}`" class="mt-6 space-y-6">
-                        <li v-for="item in category.chambres" :key="item.name" class="flex">
-                          <a :href="item.href" class="text-gray-500">
-                            {{ item.name }}
-                          </a>
-                        </li>
-                      </ul>
+              <TabPanel v-for="category in navigation.categories" :key="category.name" class="px-4 py-6 space-y-12">
+                <div class="grid grid-cols-2 gap-x-4 gap-y-10">
+                  <div v-for="item in category.featured" :key="item.name" class="group relative">
+                    <div class="aspect-w-1 aspect-h-1 rounded-md bg-gray-100 overflow-hidden group-hover:opacity-75">
+                      <img :src="item.imageSrc" :alt="item.imageAlt" class="object-center object-cover" />
                     </div>
-                    <div>
-                      <p id="mobile-categories-heading" class="font-medium text-gray-900">Categories</p>
-                      <ul role="list" aria-labelledby="mobile-categories-heading" class="mt-6 space-y-6">
-                        <li v-for="item in category.categories" :key="item.name" class="flex">
-                          <a :href="item.href" class="text-gray-500">
-                            {{ item.name }}
-                          </a>
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                  <div class="grid grid-cols-1 gap-y-10 gap-x-6">
-                    <div>
-                      <p id="mobile-collection-heading" class="font-medium text-gray-900">Collection</p>
-                      <ul role="list" aria-labelledby="mobile-collection-heading" class="mt-6 space-y-6">
-                        <li v-for="item in category.collection" :key="item.name" class="flex">
-                          <a :href="item.href" class="text-gray-500">
-                            {{ item.name }}
-                          </a>
-                        </li>
-                      </ul>
-                    </div>
-
-                    <div>
-                      <p id="mobile-brand-heading" class="font-medium text-gray-900">Brands</p>
-                      <ul role="list" aria-labelledby="mobile-brand-heading" class="mt-6 space-y-6">
-                        <li v-for="item in category.brands" :key="item.name" class="flex">
-                          <a :href="item.href" class="text-gray-500">
-                            {{ item.name }}
-                          </a>
-                        </li>
-                      </ul>
-                    </div>
+                    <a :href="item.href" class="mt-6 block text-sm font-medium text-gray-900">
+                      <span class="absolute z-10 inset-0" aria-hidden="true" />
+                      {{ item.name }}
+                    </a>
+                    <p aria-hidden="true" class="mt-1 text-sm text-gray-500">Shop now</p>
                   </div>
                 </div>
               </TabPanel>
@@ -116,154 +83,150 @@
     </Dialog>
   </TransitionRoot>
 
-  <header class="relative z-10">
-    <nav aria-label="Top">
-      <!-- Top navigation -->
-      <div class="bg-gray-900">
-        <div class="max-w-full mx-auto h-10 px-4 flex items-center justify-between sm:px-6 lg:px-8">
+  <!-- Hero section -->
+  <div class="relative fixed z-50 bg-gray-900">
+    <!-- Decorative image and overlay -->
+    <div aria-hidden="true" class="absolute inset-0 overflow-hidden">
+      <img src="https://tailwindui.com/img/ecommerce-images/home-page-01-hero-full-width.jpg" alt="" class="w-full h-full object-center object-cover" />
+    </div>
+    <div aria-hidden="true" class="absolute inset-0 bg-gray-900 opacity-50" />
 
-          <p class="flex-1 text-left text-xs font-xs text-white hidden md:block lg:block lg:flex-none font-extralight"><span class="text-md font-medium">Paradiso Park</span> - Lintsesteenweg, 269 2570 Duffel - 0493 47 07 07 - info@paradisopark.be - Ouverture Lundi au Dimanche 09:00 - 23:00</p>
-
-          <div class="flex justify-end space-x-2">
-            <a href="#" class="-m-1 p-1 text-white hover:text-gray-500">
-              <span class="sr-only">Search</span>
-              <SearchIcon class="w-6 h-6 font-extralight" aria-hidden="true" />
-            </a>
-            <a href="#" class="-m-1 p-1 text-white hover:text-gray-500">
-              <span class="sr-only">Account</span>
-              <UserIcon class="w-6 h-6 font-extralight" aria-hidden="true" />
-            </a>
-            <a href="#" class="group -m-1 p-1 flex items-center">
-              <ShoppingCartIcon class="flex-shrink-0 h-6 w-6 text-white group-hover:text-gray-500 font-extralight" aria-hidden="true" />
-              <span class="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">0</span>
-            </a>
-            <span class="h-6 w-px bg-gray-600 " aria-hidden="true" />
-            <form class=" lg:block lg:flex-1">
-              <div class="flex">
-                <label for="desktop-language" class="sr-only">Languagey</label>
+    <!-- Navigation -->
+    <header class="relative z-10">
+      <nav aria-label="Top">
+        <!-- Top navigation -->
+        <div class="bg-gray-900">
+          <div class="max-w-7xl mx-auto h-10 px-4 flex items-center justify-between sm:px-6 lg:px-8">
+            <!-- language selector -->
+            <form>
+              <div>
+                <label for="desktop-language" class="sr-only">language</label>
                 <div class="-ml-2 group relative bg-gray-900 border-transparent rounded-md focus-within:ring-2 focus-within:ring-white">
                   <select id="desktop-language" name="language" class="bg-none bg-gray-900 border-transparent rounded-md py-0.5 pl-2 pr-5 flex items-center text-sm font-medium text-white group-hover:text-gray-100 focus:outline-none focus:ring-0 focus:border-transparent">
                     <option v-for="language in languages" :key="language">{{ language }}</option>
                   </select>
+                  <div class="absolute right-0 inset-y-0 flex items-center pointer-events-none">
+                    <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20" class="w-5 h-5 text-gray-300">
+                      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 8l4 4 4-4" />
+                    </svg>
+                  </div>
                 </div>
               </div>
             </form>
+
+            <div class="flex items-center space-x-6">
+              <a href="#" class="text-sm font-medium text-white hover:text-gray-100">Sign in</a>
+              <a href="#" class="text-sm font-medium text-white hover:text-gray-100">Create an account</a>
+            </div>
           </div>
         </div>
-      </div>
 
-      <!-- Secondary navigation -->
-      <div class="bg-white">
-        <div class="border-b border-gray-200">
+        <!-- Secondary navigation -->
+        <div class="backdrop-blur-md backdrop-filter bg-opacity-10 bg-white">
           <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="h-16 flex items-center justify-between">
-              <!-- Logo (lg+) -->
-              <div class="hidden lg:flex lg:items-center">
-                <a href="#">
-                  <span class="sr-only">Workflow</span>
-                  <img class="h-10 w-auto" src="img/logos/paradiso_logo.png" alt="" />
-                </a>
-              </div>
+            <div>
+              <div class="h-16 flex items-center justify-between">
+                <!-- Logo (lg+) -->
+                <div class="hidden lg:flex-1 lg:flex lg:items-center">
+                  <a href="#">
+                    <span class="sr-only">Workflow</span>
+                    <img class="h-8 w-auto" src="https://tailwindui.com/img/logos/workflow-mark.svg?color=white" alt="" />
+                  </a>
+                </div>
 
-              <div class="hidden h-full lg:flex">
-                <!-- Mega menus -->
-                <PopoverGroup class="ml-8">
-                  <div class="h-full flex justify-center space-x-8">
-                    <Popover v-for="(category, categoryIdx) in navigation.categories" :key="category.name" class="flex" v-slot="{ open }">
-                      <div class="relative flex">
-                        <PopoverButton :class="[open ? 'border-indigo-600 text-indigo-600' : 'border-transparent text-gray-700 hover:text-gray-800', 'relative z-10 flex items-center transition-colors ease-out duration-200 text-sm font-medium border-b-2 -mb-px pt-px']">
-                          {{ category.name }}
-                        </PopoverButton>
-                      </div>
+                <div class="hidden h-full lg:flex">
+                  <!-- Flyout menus -->
+                  <PopoverGroup class="px-4 bottom-0 inset-x-0">
+                    <div class="h-full flex justify-center space-x-8">
+                      <Popover v-for="category in navigation.categories" :key="category.name" class="flex" v-slot="{ open }">
+                        <div class="relative flex">
+                          <PopoverButton class="relative z-10 flex items-center justify-center transition-colors ease-out duration-200 text-sm font-medium text-white">
+                            {{ category.name }}
+                            <span :class="[open ? 'bg-white' : '', 'absolute -bottom-px inset-x-0 h-0.5 transition ease-out duration-200']" aria-hidden="true" />
+                          </PopoverButton>
+                        </div>
 
-                      <transition enter-active-class="transition ease-out duration-200" enter-from-class="opacity-0" enter-to-class="opacity-100" leave-active-class="transition ease-in duration-150" leave-from-class="opacity-100" leave-to-class="opacity-0">
-                        <PopoverPanel class="absolute top-full inset-x-0 text-gray-500 sm:text-sm">
-                          <!-- Presentational element used to render the bottom shadow, if we put the shadow on the actual panel it pokes out the top, so we use this shorter element to hide the top of the shadow -->
-                          <div class="absolute inset-0 top-1/2 bg-white shadow" aria-hidden="true" />
+                        <transition enter-active-class="transition ease-out duration-200" enter-from-class="opacity-0" enter-to-class="opacity-100" leave-active-class="transition ease-in duration-150" leave-from-class="opacity-100" leave-to-class="opacity-0">
+                          <PopoverPanel class="absolute top-full inset-x-0 text-sm text-gray-500">
+                            <!-- Presentational element used to render the bottom shadow, if we put the shadow on the actual panel it pokes out the top, so we use this shorter element to hide the top of the shadow -->
+                            <div class="absolute inset-0 top-1/2 bg-white shadow" aria-hidden="true" />
 
-                          <div class="relative bg-white">
-                            <div class="max-w-7xl mx-auto px-8">
-                              <div class="grid grid-cols-2 items-start gap-y-10 gap-x-8 pt-10 pb-12">
-                                <div class="grid grid-cols-2 gap-y-10 gap-x-8">
-                                  <div>
-                                    <p :id="`desktop-featured-heading-${categoryIdx}`" class="font-medium text-gray-900">Featured</p>
-                                    <ul role="list" :aria-labelledby="`desktop-featured-heading-${categoryIdx}`" class="mt-6 space-y-6 sm:mt-4 sm:space-y-4">
-                                      <li v-for="item in category.chambres" :key="item.name" class="flex">
-                                        <a :href="item.href" class="hover:text-gray-800">
-                                          {{ item.name }}
-                                        </a>
-                                      </li>
-                                    </ul>
-                                  </div>
-                                  <div>
-                                    <p id="desktop-categories-heading" class="font-medium text-gray-900">Categories</p>
-                                    <ul role="list" aria-labelledby="desktop-categories-heading" class="mt-6 space-y-6 sm:mt-4 sm:space-y-4">
-                                      <li v-for="item in category.categories" :key="item.name" class="flex">
-                                        <a :href="item.href" class="hover:text-gray-800">
-                                          {{ item.name }}
-                                        </a>
-                                      </li>
-                                    </ul>
-                                  </div>
-                                </div>
-                                <div class="grid grid-cols-2 gap-y-10 gap-x-8">
-                                  <div>
-                                    <p id="desktop-collection-heading" class="font-medium text-gray-900">Collection</p>
-                                    <ul role="list" aria-labelledby="desktop-collection-heading" class="mt-6 space-y-6 sm:mt-4 sm:space-y-4">
-                                      <li v-for="item in category.collection" :key="item.name" class="flex">
-                                        <a :href="item.href" class="hover:text-gray-800">
-                                          {{ item.name }}
-                                        </a>
-                                      </li>
-                                    </ul>
-                                  </div>
-
-                                  <div>
-                                    <p id="desktop-brand-heading" class="font-medium text-gray-900">Brands</p>
-                                    <ul role="list" aria-labelledby="desktop-brand-heading" class="mt-6 space-y-6 sm:mt-4 sm:space-y-4">
-                                      <li v-for="item in category.brands" :key="item.name" class="flex">
-                                        <a :href="item.href" class="hover:text-gray-800">
-                                          {{ item.name }}
-                                        </a>
-                                      </li>
-                                    </ul>
+                            <div class="relative bg-white">
+                              <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                                <div class="grid grid-cols-4 gap-y-10 gap-x-8 py-16">
+                                  <div v-for="item in category.featured" :key="item.name" class="group relative">
+                                    <div class="aspect-w-1 aspect-h-1 rounded-md bg-gray-100 overflow-hidden group-hover:opacity-75">
+                                      <img :src="item.imageSrc" :alt="item.imageAlt" class="object-center object-cover" />
+                                    </div>
+                                    <a :href="item.href" class="mt-4 block font-medium text-gray-900">
+                                      <span class="absolute z-10 inset-0" aria-hidden="true" />
+                                      {{ item.name }}
+                                    </a>
+                                    <p aria-hidden="true" class="mt-1">Shop now</p>
                                   </div>
                                 </div>
                               </div>
                             </div>
-                          </div>
-                        </PopoverPanel>
-                      </transition>
-                    </Popover>
+                          </PopoverPanel>
+                        </transition>
+                      </Popover>
 
-                    <a v-for="page in navigation.pages" :key="page.name" :href="page.href" class="flex items-center text-sm font-medium text-gray-700 hover:text-gray-800">{{ page.name }}</a>
+                      <a v-for="page in navigation.pages" :key="page.name" :href="page.href" class="flex items-center text-sm font-medium text-white">{{ page.name }}</a>
+                    </div>
+                  </PopoverGroup>
+                </div>
+
+                <!-- Mobile menu and search (lg-) -->
+                <div class="flex-1 flex items-center lg:hidden">
+                  <button type="button" class="-ml-2 p-2 text-white" @click="mobileMenuOpen = true">
+                    <span class="sr-only">Open menu</span>
+                    <MenuIcon class="h-6 w-6" aria-hidden="true" />
+                  </button>
+
+                  <!-- Search -->
+                </div>
+
+                <!-- Logo (lg-) -->
+                <a href="#" class="lg:hidden">
+                  <span class="sr-only">Workflow</span>
+                  <img src="https://tailwindui.com/img/logos/workflow-mark.svg?color=white" alt="" class="h-8 w-auto" />
+                </a>
+
+                <div class="flex-1 flex items-center justify-end">
+
+
+                  <div class="flex items-center lg:ml-8">
+                    <!-- Help -->
+                    <a href="#" class="p-2 text-white lg:hidden">
+                      <span class="sr-only">Help</span>
+                      <QuestionMarkCircleIcon class="w-6 h-6" aria-hidden="true" />
+                    </a>
+                    <a href="#" class="hidden text-sm font-medium text-white lg:block">Help</a>
+
+                    <!-- Cart -->
+                    <div class="ml-4 flow-root lg:ml-8">
+                      <a href="#" class="group -m-2 p-2 flex items-center">
+                        <ShoppingBagIcon class="flex-shrink-0 h-6 w-6 text-white" aria-hidden="true" />
+                        <span class="ml-2 text-sm font-medium text-white">0</span>
+                        <span class="sr-only">items in cart, view bag</span>
+                      </a>
+                    </div>
                   </div>
-                </PopoverGroup>
+                </div>
               </div>
-
-              <!-- Mobile menu and search (lg-) -->
-              <div class="flex-1 flex items-center lg:hidden">
-                <button type="button" class="-ml-2 bg-white p-2 rounded-md text-gray-400" @click="mobileMenuOpen = true">
-                  <span class="sr-only">Open menu</span>
-                  <MenuIcon class="h-6 w-6" aria-hidden="true" />
-                </button>
-
-              </div>
-
-              <!-- Logo (lg-) -->
-              <a href="#" class="lg:hidden">
-                <span class="sr-only">Workflow</span>
-                <img src="img/logos/paradiso_logo.png" alt="" class="h-8 w-auto" />
-              </a>
-
-
             </div>
           </div>
         </div>
-      </div>
-    </nav>
-  </header>
+      </nav>
+    </header>
 
+    <div class="relative max-w-3xl mx-auto py-32 px-6 flex flex-col items-center text-center sm:py-64 lg:px-0">
+      <h1 class="text-4xl font-extrabold tracking-tight text-white lg:text-6xl">New arrivals are here</h1>
+      <p class="mt-4 text-xl text-white">The new arrivals have, well, newly arrived. Check out the latest options from our summer small-batch release while they're still in stock.</p>
+      <a href="#" class="mt-8 inline-block bg-white border border-transparent rounded-md py-3 px-8 text-base font-medium text-gray-900 hover:bg-gray-100">Shop New Arrivals</a>
+    </div>
+  </div>
+</div>
 
 
 
@@ -413,77 +376,77 @@ import {
   TransitionChild,
   TransitionRoot,
 } from '@headlessui/vue'
-import { MenuIcon, SearchIcon, ShoppingCartIcon, UserIcon, XIcon } from '@heroicons/vue/outline'
+import { MenuIcon, SearchIcon, ShoppingCartIcon, UserIcon, XIcon, QuestionMarkCircleIcon, ShoppingBagIcon  } from '@heroicons/vue/outline'
 import { ChevronDownIcon } from '@heroicons/vue/solid'
 
 const languages = ['FR', 'EN', 'NL']
+
+
 const navigation = {
   categories: [
-    {
-      name: 'Wellness',
-      chambres: [
-        { name: 'Sleep', href: '#' },
-        { name: 'Swimwear', href: '#' },
-        { name: 'Underwear', href: '#' },
-      ],
-      collection: [
-        { name: 'Everything', href: '#' },
-        { name: 'Core', href: '#' },
-        { name: 'New Arrivals', href: '#' },
-        { name: 'Sale', href: '#' },
-      ],
-      categories: [
-        { name: 'Basic Tees', href: '#' },
-        { name: 'Artwork Tees', href: '#' },
-        { name: 'Bottoms', href: '#' },
-        { name: 'Underwear', href: '#' },
-        { name: 'Accessories', href: '#' },
-      ],
-      brands: [
-        { name: 'Full Nelson', href: '#' },
-        { name: 'My Way', href: '#' },
-        { name: 'Re-Arranged', href: '#' },
-        { name: 'Counterfeit', href: '#' },
-        { name: 'Significant Other', href: '#' },
-      ],
-    },
+
     {
       name: 'Services',
-      chambres: [
-        { name: 'Casual', href: '#' },
-        { name: 'Boxers', href: '#' },
-        { name: 'Outdoor', href: '#' },
-      ],
-      collection: [
-        { name: 'Everything', href: '#' },
-        { name: 'Core', href: '#' },
-        { name: 'New Arrivals', href: '#' },
-        { name: 'Sale', href: '#' },
-      ],
-      categories: [
-        { name: 'Artwork Tees', href: '#' },
-        { name: 'Pants', href: '#' },
-        { name: 'Accessories', href: '#' },
-        { name: 'Boxers', href: '#' },
-        { name: 'Basic Tees', href: '#' },
-      ],
-      brands: [
-        { name: 'Significant Other', href: '#' },
-        { name: 'My Way', href: '#' },
-        { name: 'Counterfeit', href: '#' },
-        { name: 'Re-Arranged', href: '#' },
-        { name: 'Full Nelson', href: '#' },
+      featured: [
+        {
+          name: 'Chambres',
+          href: '#',
+          imageSrc: 'https://tailwindui.com/img/ecommerce-images/mega-menu-01-men-category-01.jpg',
+          imageAlt: 'Hats and sweaters on wood shelves next to various colors of t-shirts on hangers.',
+        },
+        {
+          name: 'Soins',
+          href: '#',
+          imageSrc: 'https://tailwindui.com/img/ecommerce-images/mega-menu-01-men-category-02.jpg',
+          imageAlt: 'Model wearing light heather gray t-shirt.',
+        },
+        {
+          name: 'Bar/Restauran',
+          href: '#',
+          imageSrc: 'https://tailwindui.com/img/ecommerce-images/mega-menu-01-men-category-03.jpg',
+          imageAlt:
+              'Grey 6-panel baseball hat with black brim, black mountain graphic on front, and light heather gray body.',
+        },
+        {
+          name: 'Carry',
+          href: '#',
+          imageSrc: 'https://tailwindui.com/img/ecommerce-images/mega-menu-01-men-category-04.jpg',
+          imageAlt: 'Model putting folded cash into slim card holder olive leather wallet with hand stitching.',
+        },
       ],
     },
   ],
   pages: [
-    { name: 'Cures', href: '#' },
-    { name: 'Sauna Privé', href: '#' },
-    { name: 'Hotel', href: '#' },
-    { name: 'Promotion', href: '#' },
-    { name: 'Business', href: '#' },
+    { name: 'Événements', href: '#' },
+    { name: 'Tarifs', href: '#' },
+    { name: 'Contact', href: '#' },
+    { name: 'Espace Client', href: '#' },
+    { name: 'Réserver', href: '#' },
+    { name: 'Á propos', href: '#' },
   ],
 }
+
+
+// const navigations = {
+//   categories: [
+//     {
+//       name: 'Services',
+//       categories: [
+//         { name: 'Chambres', href: '#' },
+//         { name: 'Soins', href: '#' },
+//         { name: 'Bar/Restauran', href: '#' },
+//       ],
+//     },
+//   ],
+//   pages: [
+//     { name: 'Événements', href: '#' },
+//     { name: 'Tarifs', href: '#' },
+//     { name: 'Contact', href: '#' },
+//     { name: 'Espace Client', href: '#' },
+//     { name: 'Réserver', href: '#' },
+//     { name: 'Á propos', href: '#' },
+//   ],
+// }
 
 
 const footernavigation = {
@@ -603,7 +566,9 @@ export default {
     ShoppingCartIcon,
     UserIcon,
     XIcon,
-    ChevronDownIcon
+    ChevronDownIcon,
+    QuestionMarkCircleIcon,
+    ShoppingBagIcon
   },
   setup() {
     const mobileMenuOpen = ref(false)

@@ -1,26 +1,13 @@
 <template>
   <main>
-    <!-- Hero -->
-    <div class="flex flex-col border-b border-gray-200 lg:border-0">
-
-      <div class="relative">
-        <div aria-hidden="true" class="hidden absolute w-1/2 h-full bg-gray-100 lg:block" />
-        <div class="relative bg-gray-100 lg:bg-transparent">
-          <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 lg:grid lg:grid-cols-2">
-            <div class="max-w-2xl mx-auto py-24 lg:py-64 lg:max-w-none">
-              <div class="lg:pr-16">
-                <h1 class="text-4xl font-extrabold tracking-tight text-gray-900 sm:text-5xl xl:text-6xl">Bienvenue chez ParadisoPark</h1>
-                <p class="mt-4 text-xl text-gray-600">Profitez d'une expérience dans un domaine inoubliable.</p>
-                <div class="mt-6">
-                  <a href="#" class="inline-block bg-indigo-600 border border-transparent py-3 px-8 rounded-md font-medium text-white hover:bg-indigo-700">Réserver</a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="w-full h-48 sm:h-64 lg:absolute lg:top-0 lg:right-0 lg:w-1/2 lg:h-full">
-          <img src="img/IMG_4244.jpeg" alt="" class="w-full h-full object-center object-cover" />
-        </div>
+    <div class="relative pb-32 bg-gray-800 pt-40">
+      <div class="absolute inset-0">
+        <img class="w-full h-full object-cover" src="img/domaine_complet.webp" />
+        <div class="absolute inset-0 bg-gray-900 opacity-50" aria-hidden="true" />
+      </div>
+      <div class="relative max-w-7xl mx-auto py-24 px-4 sm:py-32 sm:px-6 lg:px-8">
+        <h1 class="mt-6 text-4xl font-extrabold tracking-tight text-white md:text-5xl lg:text-6xl">Web Development Company</h1>
+        <p class="mt-6 max-w-3xl text-xl text-gray-300">Take the software path to your digital future.</p>
       </div>
     </div>
 
