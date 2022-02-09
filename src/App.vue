@@ -383,9 +383,9 @@ const navigation = {
           imageAlt: 'Model wearing light heather gray t-shirt.',
         },
         {
-          name: 'Bar/Restauran',
+          name: 'Traiteur',
           href: '#',
-          imageSrc: 'https://tailwindui.com/img/ecommerce-images/mega-menu-01-men-category-03.jpg',
+          imageSrc: 'img/traiteur.jpg',
           imageAlt:
               'Grey 6-panel baseball hat with black brim, black mountain graphic on front, and light heather gray body.',
         },
