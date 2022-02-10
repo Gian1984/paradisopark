@@ -8,7 +8,7 @@
       <TransitionChild as="template" enter="transition ease-in-out duration-300 transform" enter-from="-translate-x-full" enter-to="translate-x-0" leave="transition ease-in-out duration-300 transform" leave-from="translate-x-0" leave-to="-translate-x-full">
         <div class="relative max-w-xs w-full bg-gray-600 bg-opacity-90 shadow-xl pb-12 pt-24 flex flex-col overflow-y-auto">
           <div class="px-4 pt-5 pb-2 flex">
-            <button type="button" class="-m-2 p-2 rounded-md inline-flex items-center justify-center text-gray-400" @click="mobileMenuOpen = false">
+            <button type="button" class="-m-2 p-2 rounded-md inline-flex items-center justify-center text-gray-400 outline-none" @click="mobileMenuOpen = false">
               <span class="sr-only">Close menu</span>
               <XIcon class="h-6 w-6" aria-hidden="true" />
             </button>
@@ -43,6 +43,14 @@
             </TabPanels>
           </TabGroup>
 
+          <!-- ABOUT BTN-->
+          <div class="border-t border-gray-200 py-6 px-4 space-y-6">
+            <div v-for="firstpage in navigation.firstpages" :key="firstpage.name" class="flow-root">
+              <router-link :to="firstpage.href" class="-m-2 p-2 block font-medium text-gray-900">{{ firstpage.name }}</router-link>
+            </div>
+          </div>
+          
+          <!-- OTHERS BTN -->
           <div class="border-t border-gray-200 py-6 px-4 space-y-6">
             <div v-for="page in navigation.pages" :key="page.name" class="flow-root">
               <router-link :to="page.href" class="-m-2 p-2 block font-medium text-gray-900">{{ page.name }}</router-link>
