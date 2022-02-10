@@ -128,7 +128,7 @@
                       <router-link v-for="firstpage in navigation.firstpages" :key="firstpage.name" :to="firstpage.href" class="flex items-center text-sm font-medium text-white">{{ firstpage.name }}</router-link>
                       <Popover v-for="category in navigation.categories" :key="category.name" class="flex" v-slot="{ open }">
                         <div class="relative flex">
-                          <PopoverButton class="relative z-10 flex items-center justify-center transition-colors ease-out duration-200 text-sm font-medium text-white">
+                          <PopoverButton class="relative z-10 outline-none flex items-center justify-center transition-colors ease-out duration-200 text-sm font-medium text-white">
                             {{ category.name }}
                             <span :class="[open ? 'bg-white' : '', 'absolute -bottom-px inset-x-0 h-0.5 transition ease-out duration-200']" aria-hidden="true" />
                           </PopoverButton>
@@ -390,9 +390,8 @@ const navigation = {
   ],
   pages: [
     { name: 'Événements', href: '/events' },
-    { name: 'Tarifs', href: '#' },
     { name: 'Espace Client', href: '#' },
-    { name: 'Réserver', href: '#' },
+    { name: 'Réserver', href: '/booking' },
   ],
 }
 
