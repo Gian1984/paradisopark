@@ -4,7 +4,9 @@ import Rooms from '../views/Rooms.vue'
 import Events from '../views/Events.vue'
 import Booking from '../views/Booking.vue'
 import Timeslot from '../views/Timeslot.vue'
+import Additionaltimeslot from '../views/Additionaltimeslot.vue'
 import Fullday from '../views/Fullday.vue'
+import Additionalfullday from '../views/Additionalfullday.vue'
 
 const routes = [
   {
@@ -41,9 +43,19 @@ const routes = [
     component: Timeslot
   },
   {
+    path: '/additionaltimeslot',
+    name: 'Additionaltimeslot',
+    component: Additionaltimeslot
+  },
+  {
     path: '/fullday',
     name: 'Fullday',
     component: Fullday
+  },
+  {
+    path: '/additionalfullday',
+    name: 'Additionalfullday',
+    component: Additionalfullday
   },
 ]
 

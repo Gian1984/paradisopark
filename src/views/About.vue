@@ -5,7 +5,7 @@
       <div class="absolute inset-0">
         <img class="w-full h-full object-cover" src="img/swim_night.webp" alt="swimming_at_night" />
       </div>
-      <div class="relative max-w-7xl mx-auto py-44 px-4 sm:py-48 sm:px-6 lg:px-8 py-4">
+      <div class="relative max-w-7xl mx-auto py-4 px-4 sm:py-48 sm:px-6 lg:px-8">
       </div>
     </div>
 
