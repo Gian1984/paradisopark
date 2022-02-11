@@ -5,12 +5,12 @@
 
         <div class="lg:max-w-3xl mx-auto mt-20 mb-20 space-y-12 lg:space-y-0 lg:grid lg:grid-cols-2 lg:gap-x-20">
         <router-link :to="collection.href" v-for="collection in collections" :key="collection.name" class="group block">
-            <div aria-hidden="true" class="aspect-w-3 aspect-h-2 rounded-lg overflow-hidden group-hover:opacity-75 lg:aspect-w-5 lg:aspect-h-6">
+            <div aria-hidden="true" class="aspect-w-3 aspect-h-2 overflow-hidden group-hover:opacity-75 lg:aspect-w-5 lg:aspect-h-6">
             <img :src="collection.imageSrc" :alt="collection.imageAlt" class="w-full h-full object-center object-cover" />
             </div>
             <h3 class="mt-4 text-base font-semibold text-gray-900 uppercase">{{ collection.name }}</h3>
             <p class="mt-2 text-sm text-gray-500">{{ collection.description }}</p>
-            <p class="mt-2 text-sm text-right text-gray-500">{{ collection.button }}</p>
+            <p class="mt-2 text-sm text-right text-gray-500 font-bold">{{ collection.button }}</p>
         </router-link>
         </div>
     </section>
