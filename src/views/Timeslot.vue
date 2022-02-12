@@ -59,7 +59,7 @@
 
                     <transition leave-active-class="transition ease-in duration-100" leave-from-class="opacity-100" leave-to-class="opacity-0">
                       <ListboxOptions class="absolute z-10 mt-1 w-full bg-white shadow-lg max-h-60 rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none sm:text-sm">
-                        <ListboxOption as="template" v-for="person in people" :key="person.id" :value="person" v-slot="{ active, selected }">
+                        <ListboxOption as="template" v-for="person in numberOfPeopleTimeSlot" :key="person.id" :value="person" v-slot="{ active, selected }">
                           <li :class="[active ? 'text-white bg-indigo-600' : 'text-gray-900', 'cursor-default select-none relative py-2 pl-3 pr-9']">
                             <span :class="[selected ? 'font-semibold' : 'font-normal', 'block truncate']">
                               {{ person.name }}
@@ -200,7 +200,7 @@ const steps = [
   { name: 'Step 2', href: '/additionaltimeslot', status: 'upcoming' },
   { name: 'Step 3', href: '#', status: 'upcoming' },
 ]
-const people = [
+const numberOfPeopleTimeSlot = [
   { id: 1, name: '1' },
   { id: 2, name: '2' },
   { id: 3, name: '3' },
@@ -334,11 +334,11 @@ export default {
     RadioGroupOption, 
   },
   setup() {
-    const selected = ref(people[5])
+    const selected = ref(numberOfPeopleTimeSlot[5])
     const selectedTimeSlots = ref(timeslots[0])
     return {
       steps,
-      people,
+      numberOfPeopleTimeSlot,
       selected,
       timeslots,
       selectedTimeSlots,
