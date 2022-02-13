@@ -47,7 +47,7 @@
         <div class="flex items-center justify-between bg-gray-50 mb-4 p-4">
           <!-- SELECT NUMBER OF PEOPLE -->
           <div>
-            <Listbox as="div" v-model="selected">
+            <Listbox as="div"  v-model="selected">
               <ListboxLabel class="block text-sm font-medium text-gray-700"> Number of people </ListboxLabel>
               <div class="mt-1 relative">
                 <ListboxButton class="bg-white relative w-full border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
@@ -60,7 +60,7 @@
                 <transition leave-active-class="transition ease-in duration-100" leave-from-class="opacity-100" leave-to-class="opacity-0">
                   <ListboxOptions class="absolute z-10 mt-1 w-full bg-white shadow-lg max-h-60 rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none sm:text-sm">
                     <ListboxOption as="template" v-for="person in numberOfPeopleFullDay" :key="person.id" :value="person" v-slot="{ active, selected }">
-                      <li :class="[active ? 'text-white bg-indigo-600' : 'text-gray-900', 'cursor-default select-none relative py-2 pl-3 pr-9']">
+                      <li :class="[active ? 'text-white bg-indigo-600' : 'text-gray-900', 'cursor-default select-none relative py-2 pl-3 pr-9']" @click="numberOfPeople(person.id)">
                         <span :class="[selected ? 'font-semibold' : 'font-normal', 'block truncate']">
                           {{ person.name }}
                         </span>
@@ -114,10 +114,10 @@
           is-expanded
           is-range
           color="green"
-          :disabled-dates='{ weekdays: [6, 7] }'
+          :disabled-dates="data.disableDates"
           :min-date='new Date()'
-          :attributes="attributes"
-          v-model="selectedDate"
+          :attributes="data.attributes"
+          v-model="data"
         />
         <!-- <div class="w-full flex">
           <p>Legendary</p>
@@ -211,21 +211,18 @@
     { id: 19, name: ' Late checkout at 19:00 (+600€)' },
   ]
 
-  export default {
-    data() {
-    return {
-      selectedDate: "",
-
-      attributes: [
-        {
-          key: 'today',
-          highlight: {
-            color: 'blue',
-            fillMode: 'solid',
-          },
-          dates: new Date(),
+  let data = {
+    disableDates: {},
+    attributes: [
+      {
+        key: 'today',
+        highlight: {
+          color: 'blue',
+          fillMode: 'solid',
         },
-        // EXAMPLE => Structure when selected dates in red
+        dates: new Date(),
+      },
+      // EXAMPLE => Structure when selected dates in red
         // {
         //   highlight: {
         //     color: 'red',
@@ -233,12 +230,17 @@
         //   },
         //   dates: [
         //     { 
-        //       start: new Date(2022, 1, 27), 
-        //       end: new Date(2022, 2, 3)
+        //       start: new Date(2022, 1, 15), 
+        //       end: new Date(2022, 1, 18)
         //     },
         //   ]
         // },
-      ],
+    ],
+  }
+
+  export default {
+    data() {
+      return {
     };
   },
 
@@ -256,35 +258,27 @@
     setup() {
       const selected = ref(numberOfPeopleFullDay[3])
       const selectedCheckout = ref(lateCheckout[0])
+      numberOfPeople(numberOfPeopleFullDay[3].id)
       return {
         steps,
         numberOfPeopleFullDay,
         lateCheckout,
         selected,
         selectedCheckout,
-        //numberOfPeople,
+        numberOfPeople,
+        data,
       }
     },
   }
-
-  // function numberOfPeople(e){
-  //   let disabledDates = "";
-
-  //   if(e.id === "8" || e.id === "9" || e.id === "10"){
-
-  //     disabledDates = { weekdays: [6, 7] };
-  //     return disabledDates
-
-  //   } else {
-
-  //     disabledDates = {  };
-  //     return disabledDates
-
-  //   }
-  // }
-
-
-
+  function numberOfPeople(e){
+    if(e == "8" || e == "9" || e == "10"){
+      data.disableDates = { weekdays: [6, 7] };
+    } else {
+      var current = new Date();
+      current.setDate(current.getDate() - 1);
+      data.disableDates = { start: null, end: current.setDate(current.getDate() - 1)};
+    }
+  }
 
   // EXAMPLE => VUEX STORE ???
   // this.disabledDays = response.disabledDates.map(string => new Date(string))`
