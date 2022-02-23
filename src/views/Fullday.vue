@@ -175,14 +175,14 @@
 <script>
   import 'v-calendar/dist/style.css';
   import { ref } from 'vue'
-  import { 
-    Listbox, 
-    ListboxButton, 
-    ListboxLabel, 
-    ListboxOption, 
-    ListboxOptions, 
+  import {
+    Listbox,
+    ListboxButton,
+    ListboxLabel,
+    ListboxOption,
+    ListboxOptions,
   } from '@headlessui/vue'
-  import { 
+  import {
     CheckIcon,
     ChevronLeftIcon,
     SelectorIcon,
@@ -223,18 +223,18 @@
         dates: new Date(),
       },
       // EXAMPLE => Structure when selected dates in red
-        // {
-        //   highlight: {
-        //     color: 'red',
-        //     fillMode: 'light',
-        //   },
-        //   dates: [
-        //     { 
-        //       start: new Date(2022, 1, 15), 
-        //       end: new Date(2022, 1, 18)
-        //     },
-        //   ]
-        // },
+        {
+          highlight: {
+            color: 'red',
+            fillMode: 'light',
+          },
+          dates: [
+            {
+              start: new Date(2022, 1, 23),
+              end: new Date(2022, 1, 25)
+            },
+          ]
+        },
     ],
   }
 
@@ -271,6 +271,8 @@
     },
   }
   function numberOfPeople(e){
+
+
     if(e == "8" || e == "9" || e == "10"){
       data.disableDates = { weekdays: [6, 7] };
     } else {

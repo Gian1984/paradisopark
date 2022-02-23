@@ -43,9 +43,9 @@
           <h2 id="cart-heading" class="sr-only">Items in your shopping cart</h2>
 
           <ul role="list" class="border-t border-b border-gray-200 divide-y divide-gray-200">
-            <li v-for="(product, productIdx) in products" :key="product.id" class="flex py-3 sm:py-4">
+            <li v-for="(product, productIdx) in additionals" :key="product.id" class="flex py-3 sm:py-4">
               <div class="flex-shrink-0">
-                <img :src="product.imageSrc" :alt="product.imageAlt" class="w-16 h-16 rounded-md object-center object-cover sm:w-20 sm:h-20" />
+                <img :src="product.image" :alt="product.imageAlt" class="w-16 h-16 rounded-md object-center object-cover sm:w-20 sm:h-20" />
               </div>
 
               <div class="ml-4 flex-1 flex flex-col justify-between sm:ml-6">
@@ -59,14 +59,11 @@
                       </h3>
                     </div>
                     <div class="mt-1 flex text-sm">
-                      <p class="text-gray-500">
-                        {{ product.color }}
-                      </p>
-                      <p v-if="product.size" class="ml-4 pl-4 border-l border-gray-200 text-gray-500">
-                        {{ product.size }}
+                      <p v-if="product.description" class="text-gray-500">
+                        {{ product.description }}
                       </p>
                     </div>
-                    <p class="mt-1 text-sm font-medium text-gray-900">{{ product.price }}</p>
+                    <p class="mt-1 text-sm font-medium text-gray-900">{{ product.price }} €</p>
                   </div>
 
                   <div class="mt-4 sm:mt-0 sm:pr-9 flex flex-col">
@@ -81,7 +78,7 @@
                       <option value="7">7</option>
                       <option value="8">8</option>
                     </select>
-                    
+
                   </div>
                 </div>
 
@@ -141,7 +138,7 @@
 </template>
 
 <script>
-import { 
+import {
   CheckIcon,
   // ClockIcon,
   QuestionMarkCircleIcon,
@@ -153,75 +150,72 @@ const steps = [
   { name: 'Step 3', href: '#', status: 'upcoming' },
 ]
 
-const products = [
-  {
-    id: 1,
-    name: 'Bath linen',
-    href: '#',
-    price: '€9.50',
-    color: 'White',
-    // inStock: true,
-    size: 'Comb + Towel + Slippers',
-    imageSrc: 'https://tailwindui.com/img/ecommerce-images/shopping-cart-page-01-product-01.jpg',
-    imageAlt: "Front of men's Basic Tee in sienna.",
-  },
-  {
-    id: 2,
-    name: 'Comb',
-    href: '#',
-    price: '€5.50',
-    color: 'White',
-    // inStock: false,
-    // leadTime: '3–4 weeks',
-    size: 'Unique size',
-    imageSrc: 'https://tailwindui.com/img/ecommerce-images/shopping-cart-page-01-product-02.jpg',
-    imageAlt: "Front of men's Basic Tee in black.",
-  },
-  {
-    id: 3,
-    name: 'Towel',
-    href: '#',
-    price: '€2.00',
-    color: 'White',
-    // inStock: true,
-    size: 'Unique size',
-    imageSrc: 'https://tailwindui.com/img/ecommerce-images/shopping-cart-page-01-product-03.jpg',
-    imageAlt: 'Insulated bottle with white base and black snap lid.',
-  },
-  {
-    id: 4,
-    name: 'Slippers',
-    href: '#',
-    price: '€2.00',
-    color: 'White',
-    size: 'Unique size',
-    // inStock: true,
-    imageSrc: 'https://tailwindui.com/img/ecommerce-images/shopping-cart-page-01-product-03.jpg',
-    imageAlt: 'Insulated bottle with white base and black snap lid.',
-  },
-  {
-    id: 5,
-    name: 'Cava',
-    href: '#',
-    price: '€24.50',
-    color: 'Brut',
-    size: '75cl',
-    // inStock: true,
-    imageSrc: 'https://tailwindui.com/img/ecommerce-images/shopping-cart-page-01-product-03.jpg',
-    imageAlt: 'Insulated bottle with white base and black snap lid.',
-  },
-]
+// const products = [
+//   {
+//     id: 1,
+//     name: 'Bath linen',
+//     price: '9.50',
+//     description: 'Comb + Towel + Slippers',
+//     image: 'https://tailwindui.com/img/ecommerce-images/shopping-cart-page-01-product-01.jpg',
+//     imageAlt: "Front of men's Basic Tee in sienna.",
+//   },
+//   {
+//     id: 2,
+//     name: 'Comb',
+//     price: '5.50',
+//     description: 'Unique size',
+//     image: 'https://tailwindui.com/img/ecommerce-images/shopping-cart-page-01-product-02.jpg',
+//     imageAlt: "Front of men's Basic Tee in black.",
+//   },
+//   {
+//     id: 3,
+//     name: 'Towel',
+//     price: '2.00',
+//     description: 'Unique size',
+//     image: 'https://tailwindui.com/img/ecommerce-images/shopping-cart-page-01-product-03.jpg',
+//     imageAlt: 'Insulated bottle with white base and black snap lid.',
+//   },
+//   {
+//     id: 4,
+//     name: 'Slippers',
+//     price: '2.00',
+//     description: 'Unique size',
+//     image: 'https://tailwindui.com/img/ecommerce-images/shopping-cart-page-01-product-03.jpg',
+//     imageAlt: 'Insulated bottle with white base and black snap lid.',
+//   },
+//   {
+//     id: 5,
+//     name: 'Cava',
+//     price: '24.50',
+//     description: '75cl',
+//     image: 'https://tailwindui.com/img/ecommerce-images/shopping-cart-page-01-product-03.jpg',
+//     imageAlt: 'Insulated bottle with white base and black snap lid.',
+//   },
+// ]
 
 export default {
+
+  mounted() {
+    this.axios.get(process.env.VUE_APP_URL_API + "api/additionals")
+        .then(response => {
+          this.additionals = response.data
+        })
+  },
+
+  data(){
+    return{
+      additionals:''
+    }
+  },
+
+
   components: {
     CheckIcon,
-    // ClockIcon,
     QuestionMarkCircleIcon,
   },
   setup() {
     return {
       steps,
-      products,
     }
   },
 }
