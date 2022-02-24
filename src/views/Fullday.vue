@@ -136,8 +136,8 @@
 
         <dl class="mt-6 space-y-4">
           <div class="flex items-center justify-between">
-            <dt class="text-sm text-gray-600">Subtotal</dt>
-            <dd class="text-sm font-medium text-gray-900">$99.00</dd>
+            <dt class="text-sm text-gray-600">Numbers of guest</dt>
+            <dd class="text-sm font-medium text-gray-900">{{ guests }}</dd>
           </div>
           <div class="border-t border-gray-200 pt-4 flex items-center justify-between">
             <dt class="flex items-center text-sm text-gray-600">
@@ -166,7 +166,7 @@
         </dl>
 
         <div class="mt-6">
-          <button v-on:click="cons()" type="button" class="w-full bg-indigo-600 border border-transparent rounded-md shadow-sm py-3 px-4 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-indigo-500">Add to cart</button>
+          <button v-on:click="next( range, amount, guests)" type="button" class="w-full bg-indigo-600 border border-transparent rounded-md shadow-sm py-3 px-4 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-indigo-500">Add to cart</button>
         </div>
       </section>
     </form>
@@ -277,6 +277,7 @@
 
         if(e == "8" || e == "9" || e == "10"){
 
+          this.guests = ''
           this.amount = ''
           this.range = ''
 
@@ -289,9 +290,11 @@
             disable[0]
           ]
           this.disableCalendar = bookeed[0]
+          this.guests = e
 
         } else {
 
+          this.guests = ''
           this.amount = ''
           this.range = ''
 
@@ -299,6 +302,7 @@
             this.reservations
           ]
           this.disableCalendar = disable[0]
+          this.guests = e
 
         }
       },
@@ -307,9 +311,19 @@
         let difference = this.range['start'] - this.range['end']
         let daysdifference = Math.ceil(difference / (1000 * 3600 * 24));
         let days = Math.abs(daysdifference )
-        let amount = days * this.products[0]['price']
+        let amount = days * this.products[0]['price'] * this.guests
         this.amount = amount
-      }
+      },
+
+      next( range, amount, guests ){
+
+        this.$store.commit('setReservationRange',( range ))
+        this.$store.commit('setReservationAmount',( amount ))
+        this.$store.commit('setReservationGuests',( guests ))
+
+        this.$router.push({path: '/additionalfullday'})
+        },
+
 
 
 
@@ -317,6 +331,7 @@
 
     data() {
       return {
+        guests:'',
         amount:'',
         products:'',
         disabledDays: [],
