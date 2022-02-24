@@ -60,7 +60,7 @@
                 <transition leave-active-class="transition ease-in duration-100" leave-from-class="opacity-100" leave-to-class="opacity-0">
                   <ListboxOptions class="absolute z-10 mt-1 w-full bg-white shadow-lg max-h-60 rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none sm:text-sm">
                     <ListboxOption as="template" v-for="person in numberOfPeopleFullDay" :key="person.id" :value="person" v-slot="{ active, selected }">
-                      <li :class="[active ? 'text-white bg-indigo-600' : 'text-gray-900', 'cursor-default select-none relative py-2 pl-3 pr-9']" @click="checknumberOfPeople(person.id)">
+                      <li :class="[active ? 'text-white bg-indigo-600' : 'text-gray-900', 'cursor-default select-none relative py-2 pl-3 pr-9']" v-on:click="checknumberOfPeople(person.id)">
                         <span :class="[selected ? 'font-semibold' : 'font-normal', 'block truncate']">
                           {{ person.name }}
                         </span>
@@ -111,24 +111,24 @@
         <!-- DATE PICKER -->
 
 
-          <!-- :disabled-dates='numberOfPeople(person.id)' -->
-          <!--:disabled-dates="data.disableDates"-->
-          <!-- disabledDays-->
-          <!-- :attributes="data.attributes"-->
-
         <v-date-picker class="mycustomcalendar"
-
           :attributes="data.attributes"
           is-expanded
           is-range
           color="green"
-          :disabled-dates="disabledDays"
+          :disabled-dates="disableCalendar"
           :min-date='new Date()'
-          v-model="datas"
+          v-model="range"
 
         />
 
+        <div class="mt-6">
+          <button v-on:click="calculate()" type="button" class="w-full bg-indigo-600 border border-transparent rounded-md shadow-sm py-3 px-4 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-indigo-500">Calculate</button>
+        </div>
+
       </section>
+
+
 
       <!-- Order summary -->
       <section aria-labelledby="summary-heading" class="mt-16 bg-gray-50 px-4 py-6 sm:p-6 lg:p-8 lg:mt-0 lg:col-span-5">
@@ -161,12 +161,12 @@
           </div>
           <div class="border-t border-gray-200 pt-4 flex items-center justify-between">
             <dt class="text-base font-medium text-gray-900">Order total</dt>
-            <dd class="text-base font-medium text-gray-900">$112.32</dd>
+            <dd class="text-base font-medium text-gray-900">{{ amount }} €</dd>
           </div>
         </dl>
 
         <div class="mt-6">
-          <button class="w-full bg-indigo-600 border border-transparent rounded-md shadow-sm py-3 px-4 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-indigo-500">Add to cart</button>
+          <button v-on:click="cons()" type="button" class="w-full bg-indigo-600 border border-transparent rounded-md shadow-sm py-3 px-4 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-indigo-500">Add to cart</button>
         </div>
       </section>
     </form>
@@ -198,6 +198,7 @@
   ]
 
   const numberOfPeopleFullDay = [
+    { id: 0, name: 'Choise how many' },
     { id: 8, name: 'Group of max 8' },
     { id: 9, name: 'Group of max 8 +1' },
     { id: 10, name: 'Group of max 8 +2' },
@@ -228,37 +229,100 @@
   }
 
   export default {
+
     mounted() {
 
-      setTimeout(() => {
-        let string_dates_from_srver = ['2022-03-24']
-        string_dates_from_srver.forEach((item) => {
-          this.disabledDays.push(new Date(item))
-        })
-      }, 1000)
 
+      this.axios.get(process.env.VUE_APP_URL_API + "api/reservations")
+          .then(response => {
+
+            let reservations = response.data
+                this.reservations = reservations.map(element=>{
+
+                  return { start: new Date(element.startdate), end: new Date(element.finishdate) }
+
+                })
+
+          })
+
+
+      this.axios.get(process.env.VUE_APP_URL_API + "api/products ")
+          .then(response => {
+            this.products = response.data
+          })
 
     },
 
     methods:{
 
+      cons(){
+        console.log(this.range)
+      },
+
       checknumberOfPeople(e){
 
-        data.disable = [ new Date(2022, 2, 24) ]
+
+        this.axios.get(process.env.VUE_APP_URL_API + "api/reservations")
+            .then(response => {
+
+              let reservations = response.data
+              this.reservations = reservations.map(element=>{
+
+                return { start: new Date(element.startdate), end: new Date(element.finishdate) }
+
+              })
+
+            })
+
 
         if(e == "8" || e == "9" || e == "10"){
-          this.disabledDays = [{ weekdays: [6, 7,] }, data.disable[0] ]
+
+          this.amount = ''
+          this.range = ''
+
+          let disable =  [
+            this.reservations
+          ]
+          let weekend = {weekdays: [6, 7,]}
+          disable[0].unshift(weekend);
+          let bookeed =  [
+            disable[0]
+          ]
+          this.disableCalendar = bookeed[0]
+
         } else {
-          this.disabledDays =  new Date(2022, 2, 24)
+
+          this.amount = ''
+          this.range = ''
+
+          let disable =  [
+            this.reservations
+          ]
+          this.disableCalendar = disable[0]
+
         }
+      },
+
+      calculate(){
+        let difference = this.range['start'] - this.range['end']
+        let daysdifference = Math.ceil(difference / (1000 * 3600 * 24));
+        let days = Math.abs(daysdifference )
+        let amount = days * this.products[0]['price']
+        this.amount = amount
       }
+
+
 
     },
 
     data() {
       return {
+        amount:'',
+        products:'',
         disabledDays: [],
-        datas:''
+        disableCalendar:[],
+        reservations:'',
+        range:''
     };
   },
 
@@ -275,7 +339,7 @@
 
     },
     setup() {
-      const selected = ref(numberOfPeopleFullDay[3])
+      const selected = ref(numberOfPeopleFullDay[0])
       const selectedCheckout = ref(lateCheckout[0])
 
       return {
@@ -289,8 +353,6 @@
     },
   }
 
-  // EXAMPLE => VUEX STORE ???
-  // this.disabledDays = response.disabledDates.map(string => new Date(string))`
 
 
 </script>
