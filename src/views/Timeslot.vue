@@ -44,7 +44,7 @@
         <form class="mt-8 lg:grid lg:grid-cols-12 lg:gap-x-12 lg:items-start xl:gap-x-16">
           <section aria-labelledby="cart-heading" class="lg:col-span-7">
             <h2 id="cart-heading" class="sr-only">Items in your shopping cart</h2>
-            <div class="flex items-center justify-between bg-gray-50 mb-4 p-4">
+            <div class="items-center bg-gray-50 mb-4 p-4">
               <!-- SELECT NUMBER OF PEOPLE -->
               <div>
                 <Listbox as="div" v-model="selected">
@@ -75,16 +75,21 @@
                   </div>
                 </Listbox>
                 <small class="text-gray-400">The minimum price start for a group of 6 persons.</small>
-              </div>
-              <!-- BTN CONTACT-->
-              <div>
-                <div class="flex">
-                  <p>More than 60 persons?</p>
-                  <router-link to="/contact" class="ml-2 inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                    <MailIcon class="-ml-0.5 mr-2 h-4 w-4" aria-hidden="true" />
-                    Contact us
-                  </router-link>
+
+                <!-- BTN CONTACT-->
+                <div class="mx-auto">
+                  <div class="mt-4 flex mx-auto text-center">
+                    <p class="text-center text-sm mt-1">More than 60 persons?</p>
+                    <div class="text-center">
+                      <router-link to="/contact" class="ml-2 inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                        <MailIcon class="-ml-0.5 mr-2 h-4 w-4" aria-hidden="true" />
+                        Contact us
+                      </router-link>
+                    </div>
+                  </div>
                 </div>
+
+
               </div>
             </div>
             <!-- DATE PICKER -->
@@ -102,7 +107,7 @@
               <p class="bg-green-500 rounded-2xl py-1 px-3 text-white mx-4">Selection</p>
               <p class="bg-red-600 rounded-2xl py-1 px-3 text-white mx-4">Not available</p>
             </div> -->
-            
+
             <!-- TIME SLOT CARDS -->
             <RadioGroup v-model="selectedTimeSlots">
               <!-- <RadioGroupLabel class="text-base font-medium text-gray-900"> Select a time slot </RadioGroupLabel> -->
@@ -174,19 +179,19 @@
 <script>
 import 'v-calendar/dist/style.css';
 import { ref } from 'vue'
-import { 
-  Listbox, 
-  ListboxButton, 
-  ListboxLabel, 
-  ListboxOption, 
+import {
+  Listbox,
+  ListboxButton,
+  ListboxLabel,
+  ListboxOption,
   ListboxOptions,
-  RadioGroup, 
-  RadioGroupDescription, 
-  RadioGroupLabel, 
-  RadioGroupOption, 
+  RadioGroup,
+  RadioGroupDescription,
+  RadioGroupLabel,
+  RadioGroupOption,
 } from '@headlessui/vue'
 
-import { 
+import {
   CheckIcon,
   ChevronLeftIcon,
   SelectorIcon,
@@ -263,31 +268,41 @@ const numberOfPeopleTimeSlot = [
   { id: 10, name: '60' },
 ]
 
-const timeslots = [
-  { id: 1,
-    name: '10-14',
-    start: '10:00',
-    end: '14:00',
-  },
-  {
-    id: 2,
-    name: '15-19',
-    start: '15:00',
-    end: '19:00',
-  },
-  {
-    id: 3,
-    name: '20-00',
-    start: '20:00',
-    end: '00:00',
-  },
-]
+// const timeslots = [
+//   { id: 1,
+//     name: '10-14',
+//     start: '10:00',
+//     end: '14:00',
+//   },
+//   {
+//     id: 2,
+//     name: '15-19',
+//     start: '15:00',
+//     end: '19:00',
+//   },
+//   {
+//     id: 3,
+//     name: '20-00',
+//     start: '20:00',
+//     end: '00:00',
+//   },
+// ]
 
 export default {
 
+
+  mounted() {
+    this.axios.get(process.env.VUE_APP_URL_API + "api/timeslots")
+        .then(response => {
+          this.timeslots = response.data
+        })
+  },
+
   data() {
   return {
-    date: "",
+    selectedTimeSlots:'',
+    timeslots:'',
+    date:'',
     attributes: [
       {
         key: 'today',
@@ -299,7 +314,7 @@ export default {
       },
       {
         highlight: {
-          color: 'red',
+          color: 'green',
           fillMode: 'solid',
         },
         dates: new Date(2022, 1, 13),
@@ -328,20 +343,17 @@ export default {
     ListboxLabel,
     ListboxOption,
     ListboxOptions,
-    RadioGroup, 
-    RadioGroupDescription, 
-    RadioGroupLabel, 
-    RadioGroupOption, 
+    RadioGroup,
+    RadioGroupDescription,
+    RadioGroupLabel,
+    RadioGroupOption,
   },
   setup() {
     const selected = ref(numberOfPeopleTimeSlot[5])
-    const selectedTimeSlots = ref(timeslots[0])
     return {
       steps,
       numberOfPeopleTimeSlot,
       selected,
-      timeslots,
-      selectedTimeSlots,
     }
   },
 }
