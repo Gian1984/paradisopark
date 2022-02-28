@@ -4,6 +4,7 @@ import Rooms from '../views/Rooms.vue'
 import Events from '../views/Events.vue'
 import Contact from '../views/Contact.vue'
 import Booking from '../views/Booking.vue'
+import Admin from '../views/Admin.vue'
 import Timeslot from '../views/Timeslot.vue'
 import Additionaltimeslot from '../views/Additionaltimeslot.vue'
 import Fullday from '../views/Fullday.vue'
@@ -42,6 +43,11 @@ const routes = [
     path: '/booking',
     name: 'Booking',
     component: Booking
+  },
+  {
+    path: '/admin',
+    name: 'Admin',
+    component: Admin
   },
   {
     path: '/timeslot',
