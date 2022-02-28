@@ -60,7 +60,7 @@
                 <transition leave-active-class="transition ease-in duration-100" leave-from-class="opacity-100" leave-to-class="opacity-0">
                   <ListboxOptions class="absolute z-10 mt-1 w-full bg-white shadow-lg max-h-60 rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none sm:text-sm">
                     <ListboxOption as="template" v-for="person in numberOfPeopleFullDay" :key="person.id" :value="person" v-slot="{ active, selected }">
-                      <li :class="[active ? 'text-white bg-indigo-600' : 'text-gray-900', 'cursor-default select-none relative py-2 pl-3 pr-9']" v-on:click="checknumberOfPeople(person.id)">
+                      <li :class="[active ? 'text-white bg-indigo-600' : 'text-gray-900', 'cursor-default select-none relative py-2 pl-3 pr-9']" v-on:click="checknumberOfPeople(person.value)">
                         <span :class="[selected ? 'font-semibold' : 'font-normal', 'block truncate']">
                           {{ person.name }}
                         </span>
@@ -198,14 +198,14 @@
   ]
 
   const numberOfPeopleFullDay = [
-    { id: 0, name: 'Choise how many' },
-    { id: 8, name: 'Group of max 8' },
-    { id: 9, name: 'Group of max 8 +1' },
-    { id: 10, name: 'Group of max 8 +2' },
-    { id: 16, name: 'Group of max 16' },
-    { id: 17, name: 'Group of max 16 +1' },
-    { id: 18, name: 'Group of max 16 +2' },
-    { id: 30, name: 'Group of max 30' },
+    { id: 0, value: 0 ,name: 'Choise how many' },
+    { id: 8, value: 8 , name: 'Group of max 8' },
+    { id: 9, value: 9 , name: 'Group of max 8 +1' },
+    { id: 10, value: 10 , name: 'Group of max 8 +2' },
+    { id: 16, value: 16 , name: 'Group of max 16' },
+    { id: 17, value: 17 , name: 'Group of max 16 +1' },
+    { id: 18, value: 18 , name: 'Group of max 16 +2' },
+    { id: 30, value: 30 , name: 'Group of max 30' },
   ]
 
   const lateCheckout = [
@@ -239,7 +239,10 @@
             let reservations = response.data
                 this.reservations = reservations.map(element=>{
 
-                  return { start: new Date(element.startdate), end: new Date(element.finishdate) }
+                  let end = new Date(element.finishdate)
+                  end.setDate(end.getDate() - 1)
+
+                  return { start: new Date(element.startdate), end: end }
 
                 })
 

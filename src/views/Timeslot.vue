@@ -60,7 +60,7 @@
                     <transition leave-active-class="transition ease-in duration-100" leave-from-class="opacity-100" leave-to-class="opacity-0">
                       <ListboxOptions class="absolute z-10 mt-1 w-full bg-white shadow-lg max-h-60 rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none sm:text-sm">
                         <ListboxOption as="template" v-for="person in numberOfPeopleTimeSlot" :key="person.id" :value="person" v-slot="{ active, selected }">
-                          <li :class="[active ? 'text-white bg-indigo-600' : 'text-gray-900', 'cursor-default select-none relative py-2 pl-3 pr-9']">
+                          <li :class="[active ? 'text-white bg-indigo-600' : 'text-gray-900', 'cursor-default select-none relative py-2 pl-3 pr-9']" v-on:click="checknumberOfPeople(person.value)">
                             <span :class="[selected ? 'font-semibold' : 'font-normal', 'block truncate']">
                               {{ person.name }}
                             </span>
@@ -96,7 +96,7 @@
             <v-date-picker class="mycutomcalendar"
               is-expanded
               color="green"
-              :disabled-dates='{ weekdays: [6, 7] }'
+              :disabled-dates='disableCalendar'
               :min-date='new Date()'
               :attributes="attributes"
               v-model="date"
@@ -130,6 +130,12 @@
                 </RadioGroupOption>
               </div>
             </RadioGroup>
+
+
+            <div class="mt-6">
+              <button v-on:click="calculate()" type="button" class="w-full bg-indigo-600 border border-transparent rounded-md shadow-sm py-3 px-4 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-indigo-500">Calculate</button>
+            </div>
+
 
           </section>
           <!-- Order summary -->
@@ -206,66 +212,67 @@ const steps = [
   { name: 'Step 3', href: '#', status: 'upcoming' },
 ]
 const numberOfPeopleTimeSlot = [
-  { id: 1, name: '1' },
-  { id: 2, name: '2' },
-  { id: 3, name: '3' },
-  { id: 4, name: '4' },
-  { id: 5, name: '5' },
-  { id: 6, name: '6' },
-  { id: 7, name: '7' },
-  { id: 8, name: '8' },
-  { id: 9, name: '9' },
-  { id: 10, name: '10' },
-  { id: 1, name: '11' },
-  { id: 2, name: '12' },
-  { id: 3, name: '13' },
-  { id: 4, name: '14' },
-  { id: 5, name: '15' },
-  { id: 6, name: '16' },
-  { id: 7, name: '17' },
-  { id: 8, name: '18' },
-  { id: 9, name: '19' },
-  { id: 10, name: '20' },
-  { id: 1, name: '21' },
-  { id: 2, name: '22' },
-  { id: 3, name: '23' },
-  { id: 4, name: '24' },
-  { id: 5, name: '25' },
-  { id: 6, name: '26' },
-  { id: 7, name: '27' },
-  { id: 8, name: '28' },
-  { id: 9, name: '29' },
-  { id: 10, name: '30' },
-  { id: 1, name: '31' },
-  { id: 2, name: '32' },
-  { id: 3, name: '33' },
-  { id: 4, name: '34' },
-  { id: 5, name: '35' },
-  { id: 6, name: '36' },
-  { id: 7, name: '37' },
-  { id: 8, name: '38' },
-  { id: 9, name: '39' },
-  { id: 10, name: '40' },
-  { id: 1, name: '41' },
-  { id: 2, name: '42' },
-  { id: 3, name: '43' },
-  { id: 4, name: '44' },
-  { id: 5, name: '45' },
-  { id: 6, name: '46' },
-  { id: 7, name: '47' },
-  { id: 8, name: '48' },
-  { id: 9, name: '49' },
-  { id: 10, name: '50' },
-  { id: 1, name: '51' },
-  { id: 2, name: '52' },
-  { id: 3, name: '53' },
-  { id: 4, name: '54' },
-  { id: 5, name: '55' },
-  { id: 6, name: '56' },
-  { id: 7, name: '57' },
-  { id: 8, name: '58' },
-  { id: 9, name: '59' },
-  { id: 10, name: '60' },
+  { id: 1,  value: 0, name: 'Make your choise' },
+  { id: 2,  value: 1, name: '1' },
+  { id: 3,  value: 2, name: '2' },
+  { id: 4,  value: 3, name: '3' },
+  { id: 5,  value: 4, name: '4' },
+  { id: 6,  value: 5, name: '5' },
+  { id: 7,  value: 6, name: '6' },
+  { id: 8,  value: 7, name: '7' },
+  { id: 9,  value: 8, name: '8' },
+  { id: 10, value: 9, name: '9' },
+  { id: 11, value: 10, name: '10' },
+  { id: 12, value: 11, name: '11' },
+  { id: 13, value: 12, name: '12' },
+  { id: 14, value: 13, name: '13' },
+  { id: 15, value: 14, name: '14' },
+  { id: 16, value: 15, name: '15' },
+  { id: 17, value: 16, name: '16' },
+  { id: 18, value: 17, name: '17' },
+  { id: 19, value: 18, name: '18' },
+  { id: 20, value: 19, name: '19' },
+  { id: 21, value: 20, name: '20' },
+  { id: 22, value: 21, name: '21' },
+  { id: 23, value: 22, name: '22' },
+  { id: 24, value: 23, name: '23' },
+  { id: 25, value: 24, name: '24' },
+  { id: 26, value: 25, name: '25' },
+  { id: 27, value: 26, name: '26' },
+  { id: 28, value: 27, name: '27' },
+  { id: 29, value: 28, name: '28' },
+  { id: 30, value: 29, name: '29' },
+  { id: 31, value: 30, name: '30' },
+  { id: 32, value: 31, name: '31' },
+  { id: 33, value: 32, name: '32' },
+  { id: 34, value: 33, name: '33' },
+  { id: 35, value: 34, name: '34' },
+  { id: 36, value: 35, name: '35' },
+  { id: 37, value: 36, name: '36' },
+  { id: 38, value: 37, name: '37' },
+  { id: 39, value: 38, name: '38' },
+  { id: 40, value: 39, name: '39' },
+  { id: 41, value: 40, name: '40' },
+  { id: 42, value: 41, name: '41' },
+  { id: 43, value: 42, name: '42' },
+  { id: 44, value: 43, name: '43' },
+  { id: 45, value: 44, name: '44' },
+  { id: 46, value: 45, name: '45' },
+  { id: 47, value: 46, name: '46' },
+  { id: 48, value: 47, name: '47' },
+  { id: 49, value: 48, name: '48' },
+  { id: 50, value: 49, name: '49' },
+  { id: 51, value: 50, name: '50' },
+  { id: 52, value: 51, name: '51' },
+  { id: 53, value: 52, name: '52' },
+  { id: 54, value: 53, name: '53' },
+  { id: 55, value: 54, name: '54' },
+  { id: 56, value: 55, name: '55' },
+  { id: 57, value: 56, name: '56' },
+  { id: 58, value: 57, name: '57' },
+  { id: 59, value: 58, name: '58' },
+  { id: 60, value: 59, name: '59' },
+  { id: 61, value: 60, name: '60' },
 ]
 
 // const timeslots = [
@@ -292,43 +299,101 @@ export default {
 
 
   mounted() {
+
+
     this.axios.get(process.env.VUE_APP_URL_API + "api/timeslots")
         .then(response => {
           this.timeslots = response.data
         })
+
+    this.axios.get(process.env.VUE_APP_URL_API + "api/reservations")
+        .then(response => {
+
+          let reservations = response.data
+          this.reservations = reservations.map(element=>{
+
+            return { start: new Date(element.startdate), end: new Date(element.finishdate) }
+
+          })
+
+        })
+
+
+    this.axios.get(process.env.VUE_APP_URL_API + "api/products ")
+        .then(response => {
+          this.products = response.data
+        })
+
   },
 
   data() {
-  return {
-    selectedTimeSlots:'',
-    timeslots:'',
-    date:'',
-    attributes: [
-      {
-        key: 'today',
-        highlight: {
-          color: 'blue',
-          fillMode: 'solid',
+
+    return {
+      reservations:'',
+      products:'',
+      amount:'',
+      guests:'',
+      disableCalendar:'',
+      selectedTimeSlots:'',
+      timeslots:'',
+      date:'',
+      attributes: [
+        {
+          key: 'today',
+          highlight: {
+            color: 'blue',
+            fillMode: 'solid',
+          },
+          dates: new Date(),
         },
-        dates: new Date(),
-      },
-      {
-        highlight: {
-          color: 'green',
-          fillMode: 'solid',
-        },
-        dates: new Date(2022, 1, 13),
-      },
-      {
-        highlight: {
-          color: 'red',
-          fillMode: 'solid',
-        },
-        dates: new Date(2022, 1, 14),
-      },
-    ],
-  };
+      ],
+    };
 },
+
+  methods:{
+
+    checknumberOfPeople(e){
+
+
+      this.axios.get(process.env.VUE_APP_URL_API + "api/reservations")
+          .then(response => {
+
+            let reservations = response.data
+            this.reservations = reservations.map(element=>{
+              let end = new Date(element.finishdate)
+              end.setDate(end.getDate() - 1)
+
+              return { start: new Date(element.startdate), end: end }
+
+            })
+
+          })
+
+
+      this.guests = ''
+      this.amount = ''
+      this.range = ''
+
+      let disable =  [
+        this.reservations
+      ]
+      let weekend = {weekdays: [6, 7,]}
+      disable[0].unshift(weekend);
+      let bookeed =  [
+        disable[0]
+      ]
+      this.disableCalendar = bookeed[0]
+      this.guests = e
+
+    },
+
+    calculate(){
+
+      this.amount = this.products[0]['price'] * this.guests
+
+    }
+
+  },
 
   components: {
     CheckIcon,
@@ -349,7 +414,7 @@ export default {
     RadioGroupOption,
   },
   setup() {
-    const selected = ref(numberOfPeopleTimeSlot[5])
+    const selected = ref(numberOfPeopleTimeSlot[0])
     return {
       steps,
       numberOfPeopleTimeSlot,
