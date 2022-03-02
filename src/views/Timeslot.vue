@@ -48,7 +48,7 @@
               <!-- SELECT NUMBER OF PEOPLE -->
               <div>
                 <Listbox as="div" v-model="selected">
-                  <ListboxLabel class="block text-sm font-medium text-gray-700"> Number of people </ListboxLabel>
+                  <ListboxLabel class="block text-sm font-medium text-gray-700"> Number of people {{day}}</ListboxLabel>
                   <div class="mt-1 relative">
                     <ListboxButton class="bg-white relative w-full border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                       <span class="block truncate">{{ selected.name }}</span>
@@ -100,6 +100,10 @@
               :min-date='new Date()'
               :attributes="attributes"
               v-model="date"
+                           mode= 'dateTime'
+                           :valid-hours="blockhour" is24hr
+                           :minute-increment="60"
+                           v-on:click="input(date)"
             />
             <!-- <div class="w-full flex">
               <p>Legendary</p>
@@ -183,6 +187,7 @@
 </template>
 
 <script>
+import moment from 'moment'
 import 'v-calendar/dist/style.css';
 import { ref } from 'vue'
 import {
@@ -312,7 +317,8 @@ export default {
           let reservations = response.data
           this.reservations = reservations.map(element=>{
 
-            return { start: new Date(element.startdate), end: new Date(element.finishdate) }
+
+            return { start: new Date(element.startdate), end: new Date(element.finishdate), starttime: element.starttime, finishtime: element.finishtime }
 
           })
 
@@ -329,6 +335,10 @@ export default {
   data() {
 
     return {
+      day:'',
+      reservationDates:'',
+      blockhour:[10,15,20],
+      hour:'',
       reservations:'',
       products:'',
       amount:'',
@@ -352,6 +362,32 @@ export default {
 
   methods:{
 
+    input(){
+
+      let date = moment(this.date).format('YYYY-M-DD')
+
+
+      this.axios.post(process.env.VUE_APP_URL_API + 'api/slotdisponibility', {date}).then(response => {
+         this.day = response.data
+
+        console.log(this.day)
+
+        let result = this.day.map(a => a.starttime);
+        let sortResult = result.sort()
+         console.log(result.sort())
+
+        let slots = ['10','15','20']
+
+        let difference = slots.filter(x => !sortResult.includes(x));
+        let diff = difference.map(i=>Number(i))
+
+        this.blockhour = diff
+
+      })
+
+
+    },
+
     checknumberOfPeople(e){
 
 
@@ -359,23 +395,38 @@ export default {
           .then(response => {
 
             let reservations = response.data
+
+
             this.reservations = reservations.map(element=>{
               let end = new Date(element.finishdate)
               end.setDate(end.getDate() - 1)
 
-              return { start: new Date(element.startdate), end: end }
+               return { start: new Date(element.startdate), end: end, starttime: element.starttime, finishtime: element.finishtime }
+              // return { start: new Date(element.startdate), end: end }
 
             })
 
           })
 
 
+
       this.guests = ''
       this.amount = ''
-      this.range = ''
+
+      this.hour =  this.reservations.map(element=>{
+          return { start: element.starttime }
+        })
+
+
+
+      let date =  this.reservations.map(element=>{
+           return { start: new Date(element.start), end: element.end }
+      })
+
+
 
       let disable =  [
-        this.reservations
+        date
       ]
       let weekend = {weekdays: [6, 7,]}
       disable[0].unshift(weekend);
@@ -388,6 +439,7 @@ export default {
     },
 
     calculate(){
+      console.log(this.date)
 
       this.amount = this.products[0]['price'] * this.guests
 

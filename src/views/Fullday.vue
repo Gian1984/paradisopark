@@ -239,6 +239,8 @@
             let reservations = response.data
                 this.reservations = reservations.map(element=>{
 
+                  console.log(this.reservations)
+
                   let end = new Date(element.finishdate)
                   end.setDate(end.getDate() - 1)
 

@@ -12,6 +12,7 @@
     "@heroicons/vue": "^1.0.5",
     "axios": "^0.26.0",
     "core-js": "^3.6.5",
+    "moment": "^2.29.1",
     "v-calendar": "^3.0.0-alpha.8",
     "vue": "^3.0.0",
     "vue-axios": "^3.4.1",

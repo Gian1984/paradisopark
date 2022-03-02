@@ -6,5 +6,6 @@ import './index.css'
 import VCalendar from 'v-calendar';
 import axios from 'axios'
 import VueAxios from 'vue-axios'
+import moment from 'moment';
 
-createApp(App).use(store).use(router).use(VueAxios, axios).use(VCalendar,{}).mount('#app')
+createApp(App).use(store).use(router).use(VueAxios, axios).use(moment).use(VCalendar,{}).mount('#app')
