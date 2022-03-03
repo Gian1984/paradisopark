@@ -48,7 +48,7 @@
               <!-- SELECT NUMBER OF PEOPLE -->
               <div>
                 <Listbox as="div" v-model="selected">
-                  <ListboxLabel class="block text-sm font-medium text-gray-700"> Number of people</ListboxLabel>
+                  <ListboxLabel class="block text-sm font-medium text-gray-700"> Number of people {{timeslots}}</ListboxLabel>
                   <div class="mt-1 relative">
                     <ListboxButton class="bg-white relative w-full border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                       <span class="block truncate">{{ selected.name }}</span>
@@ -100,10 +100,11 @@
               :min-date='new Date()'
               :attributes="attributes"
               v-model="date"
+                           @click.stop
                            mode= 'dateTime'
                            :valid-hours="availableHourSlots" is24hr
                            :minute-increment="60"
-                           v-on:click="input(date)"
+                           v-on:click="input()"
             />
             <!-- <div class="w-full flex">
               <p>Legendary</p>
@@ -127,8 +128,8 @@
                         <RadioGroupDescription as="span" class="flex items-center text-sm text-gray-500">{{ timeslot.end }}:00</RadioGroupDescription>
                       </div>
                     </div>
-                    <LockClosedIcon :class="[checked ? 'invisible' : '', 'h-5 w-5 text-gray-500']" aria-hidden="true" />
-                   <!-- <LockOpenIcon vue-if="available()" :class="[checked ? 'invisible' : '', 'h-5 w-5 text-gray-500']" aria-hidden="true" />-->
+                    <LockClosedIcon v-if="timeslot.available == '0'" :class="[checked ? 'invisible' : '', 'h-5 w-5 text-gray-500']" aria-hidden="true" />
+                    <LockOpenIcon v-if="timeslot.available == '1'" :class="[checked ? 'invisible' : '', 'h-5 w-5 text-gray-500']" aria-hidden="true" />
                     <CheckCircleIcon  :class="[!checked ? 'invisible' : '', 'h-5 w-5 text-green-500']" aria-hidden="true" />
                     <div :class="[active ? 'border' : 'border-1', checked ? 'border-green-500' : 'border-transparent', 'absolute -inset-px pointer-events-none']" aria-hidden="true" />
                   </div>
@@ -211,6 +212,7 @@ import {
   QuestionMarkCircleIcon,
   LockClosedIcon,
   CheckCircleIcon,
+  LockOpenIcon,
 } from '@heroicons/vue/solid'
 const steps = [
   { name: 'Step 1', href: '/timeslot', status: 'current' },
@@ -367,12 +369,7 @@ export default {
 
 
     input(){
-
-      this.axios.get(process.env.VUE_APP_URL_API + "api/timeslots")
-          .then(response => {
-            this.timeslots = response.data
-          })
-
+      console.log("input called", new Date())
       let date = moment(this.date).format('YYYY-M-DD')
 
       // get all the reservations for the chosen day
@@ -381,48 +378,69 @@ export default {
 
         // for the chosen day get an array of starting hours reservation
         let result = this.day.map(a => a.starttime);  // 15 , 10, 20
-         console.log(result)
         let resultF = this.day.map(a => a.finishtime) // 19, 14, 24
-        console.log(resultF)
 
         // order hours min to max
         let sortResult = result.sort()  // 10, 15, 20
         let sortResultF = resultF.sort() // 14, 19, 24
-        console.log(sortResultF)
 
 
         // create a dynamic array with all the times start slots
         let slots = this.timeslots.map(a => a.start); // ==> get all the starting time of timeslot decide by the admin
         let slotsF = this.timeslots.map(a => a.end); // ==> get all the finishing time of timeslot decide by the admin
-        console.log(slotsF)
 
         // difference to understand available timeslot in array
         let difference = slots.filter(x => !sortResult.includes(x)); // ==> reservation starting time of the day - starting time decide by the admin
         let differenceF = slotsF.filter(x => !sortResultF.includes(x)); // ==> reservation finishing time of the day - finishing time decide by the admin
-        console.log(differenceF)
 
-        // covert array of string in array of number [ "20", "15" ]  ==> [ 20, 15 ]
+
+        // difference to understand booked timeslot in array
+        let rest = slots.filter(x => sortResult.includes(x)); // ==> booked slots starting time of the day - starting time decide by the admin
+        let restF = slotsF.filter(x => sortResultF.includes(x)); // ==> booked slots finishing time of the day - finishing time decide by the admin
+
+
+        // covert array of string in array of number free slots [ "20", "15" ]  ==> [ 20, 15 ]
         let diff = difference.map(i=>Number(i)) // starting time
         let diffF = differenceF.map(i=>Number(i)) // finishing time
+
+        // covert array of string in array of number booked slots [ "20", "15" ]  ==> [ 20, 15 ]
+        let occupied = rest.map(i=>Number(i)) // starting time
+        let occupiedF = restF.map(i=>Number(i)) // finishing time
+
 
         // binding the available hour slot to the timepicker
         this.availableHourSlots = diff
 
+
         // Count number of free slots
-        let slotSelector = this.timeslots
         let numFreeSlot = (` ${diff.length}`)
 
+        // Count number of book slots
+        let numBookSlot = (` ${occupied.length}`)
 
-        // create a dynamic array where each obj show active slots and relative value
-        let obj = []
+        // create a dynamic array where each obj show free slots and relative value
+        let free = []
         for(let i=0; i<numFreeSlot; i++)  {
-          obj.push({label: 'active', start: diff[i], end:diffF[i]});
+          free.push({label: 'active', start: diff[i], end:diffF[i], available:1 });
         }
 
-        this.timeslots = obj
+        // create a dynamic array where each obj show book slots and relative value
+        let book = []
+        for(let i=0; i<numBookSlot; i++)  {
+          book.push({label: 'book', start: occupied[i], end:occupiedF[i], available:0 });
+        }
 
-        console.log(obj)
-        console.log(slotSelector)
+        console.log("book", book)
+        console.log("free", free)
+
+        let information  = [...free, ...book]
+        // let information  = free
+
+        console.log("information", information)
+
+        this.timeslots = information
+
+
 
       })
 
@@ -495,6 +513,7 @@ export default {
     QuestionMarkCircleIcon,
     LockClosedIcon,
     CheckCircleIcon,
+    LockOpenIcon,
     Listbox,
     ListboxButton,
     ListboxLabel,
