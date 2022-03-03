@@ -372,6 +372,11 @@ export default {
       console.log("input called", new Date())
       let date = moment(this.date).format('YYYY-M-DD')
 
+      this.axios.get(process.env.VUE_APP_URL_API + "api/timeslots")
+          .then(response => {
+            this.timeslots = response.data
+          })
+
       // get all the reservations for the chosen day
       this.axios.post(process.env.VUE_APP_URL_API + 'api/slotdisponibility', {date}).then(response => {
          this.day = response.data
@@ -430,13 +435,8 @@ export default {
           book.push({label: 'book', start: occupied[i], end:occupiedF[i], available:0 });
         }
 
-        console.log("book", book)
-        console.log("free", free)
-
+        // Mergin 2 result
         let information  = [...free, ...book]
-        // let information  = free
-
-        console.log("information", information)
 
         this.timeslots = information
 
