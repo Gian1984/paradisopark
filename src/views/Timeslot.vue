@@ -48,7 +48,7 @@
               <!-- SELECT NUMBER OF PEOPLE -->
               <div>
                 <Listbox as="div" v-model="selected">
-                  <ListboxLabel class="block text-sm font-medium text-gray-700"> Number of people {{day}}</ListboxLabel>
+                  <ListboxLabel class="block text-sm font-medium text-gray-700"> Number of people</ListboxLabel>
                   <div class="mt-1 relative">
                     <ListboxButton class="bg-white relative w-full border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                       <span class="block truncate">{{ selected.name }}</span>
@@ -101,7 +101,7 @@
               :attributes="attributes"
               v-model="date"
                            mode= 'dateTime'
-                           :valid-hours="blockhour" is24hr
+                           :valid-hours="availableHourSlots" is24hr
                            :minute-increment="60"
                            v-on:click="input(date)"
             />
@@ -117,7 +117,7 @@
               <!-- <RadioGroupLabel class="text-base font-medium text-gray-900"> Select a time slot </RadioGroupLabel> -->
 
               <div class="grid grid-cols-1 gap-y-6 sm:grid-cols-3 sm:gap-x-4 bg-gray-50 mt-4 p-4">
-                <RadioGroupOption as="template" v-for="timeslot in timeslots" :key="timeslot.id" :value="timeslot" v-slot="{ checked, active }">
+                <RadioGroupOption as="template" v-for="timeslot in timeslots" :key="timeslot.start" :value="timeslot" v-slot="{ checked, active }">
                   <div :class="[checked ? 'border-green-500' : 'border-gray-300', active ? 'ring-1 ring-green-500' : '', 'relative bg-white border shadow-sm p-4 flex cursor-pointer focus:outline-none']">
                     <div class="flex-1 flex">
                       <div class="flex flex-col items-center justify-center text-center text-base font-medium text-gray-900">
@@ -128,7 +128,8 @@
                       </div>
                     </div>
                     <LockClosedIcon :class="[checked ? 'invisible' : '', 'h-5 w-5 text-gray-500']" aria-hidden="true" />
-                    <CheckCircleIcon :class="[!checked ? 'invisible' : '', 'h-5 w-5 text-green-500']" aria-hidden="true" />
+                   <!-- <LockOpenIcon vue-if="available()" :class="[checked ? 'invisible' : '', 'h-5 w-5 text-gray-500']" aria-hidden="true" />-->
+                    <CheckCircleIcon  :class="[!checked ? 'invisible' : '', 'h-5 w-5 text-green-500']" aria-hidden="true" />
                     <div :class="[active ? 'border' : 'border-1', checked ? 'border-green-500' : 'border-transparent', 'absolute -inset-px pointer-events-none']" aria-hidden="true" />
                   </div>
                 </RadioGroupOption>
@@ -298,6 +299,7 @@ const numberOfPeopleTimeSlot = [
 //     start: '20:00',
 //     end: '00:00',
 //   },
+
 // ]
 
 export default {
@@ -337,7 +339,7 @@ export default {
     return {
       day:'',
       reservationDates:'',
-      blockhour:[10,15,20],
+      availableHourSlots:[10,15,20],
       hour:'',
       reservations:'',
       products:'',
@@ -362,7 +364,14 @@ export default {
 
   methods:{
 
+
+
     input(){
+
+      this.axios.get(process.env.VUE_APP_URL_API + "api/timeslots")
+          .then(response => {
+            this.timeslots = response.data
+          })
 
       let date = moment(this.date).format('YYYY-M-DD')
 
@@ -370,25 +379,49 @@ export default {
       this.axios.post(process.env.VUE_APP_URL_API + 'api/slotdisponibility', {date}).then(response => {
          this.day = response.data
 
-
         // for the chosen day get an array of starting hours reservation
-        let result = this.day.map(a => a.starttime);
+        let result = this.day.map(a => a.starttime);  // 15 , 10, 20
+         console.log(result)
+        let resultF = this.day.map(a => a.finishtime) // 19, 14, 24
+        console.log(resultF)
 
         // order hours min to max
-        let sortResult = result.sort()
+        let sortResult = result.sort()  // 10, 15, 20
+        let sortResultF = resultF.sort() // 14, 19, 24
+        console.log(sortResultF)
+
 
         // create a dynamic array with all the times start slots
-        let slots = this.timeslots.map(a => a.start);
+        let slots = this.timeslots.map(a => a.start); // ==> get all the starting time of timeslot decide by the admin
+        let slotsF = this.timeslots.map(a => a.end); // ==> get all the finishing time of timeslot decide by the admin
+        console.log(slotsF)
 
         // difference to understand available timeslot in array
-        let difference = slots.filter(x => !sortResult.includes(x));
-        // covert array of string in array of number
-        let diff = difference.map(i=>Number(i))
+        let difference = slots.filter(x => !sortResult.includes(x)); // ==> reservation starting time of the day - starting time decide by the admin
+        let differenceF = slotsF.filter(x => !sortResultF.includes(x)); // ==> reservation finishing time of the day - finishing time decide by the admin
+        console.log(differenceF)
 
-        this.blockhour = diff
+        // covert array of string in array of number [ "20", "15" ]  ==> [ 20, 15 ]
+        let diff = difference.map(i=>Number(i)) // starting time
+        let diffF = differenceF.map(i=>Number(i)) // finishing time
 
+        // binding the available hour slot to the timepicker
+        this.availableHourSlots = diff
+
+        // Count number of free slots
         let slotSelector = this.timeslots
+        let numFreeSlot = (` ${diff.length}`)
 
+
+        // create a dynamic array where each obj show active slots and relative value
+        let obj = []
+        for(let i=0; i<numFreeSlot; i++)  {
+          obj.push({label: 'active', start: diff[i], end:diffF[i]});
+        }
+
+        this.timeslots = obj
+
+        console.log(obj)
         console.log(slotSelector)
 
       })
@@ -492,5 +525,9 @@ export default {
 /* .vc-weekday{
   color:#2D3748;
 } */
+
+.vc-time-picker{
+  visibility: hidden !important;
+}
 
 </style>
