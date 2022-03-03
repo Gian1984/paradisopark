@@ -122,9 +122,9 @@
                     <div class="flex-1 flex">
                       <div class="flex flex-col items-center justify-center text-center text-base font-medium text-gray-900">
                         <RadioGroupLabel as="span" class="text-sm font-medium text-gray-900 uppercase">de</RadioGroupLabel>
-                        <RadioGroupDescription as="span" class="flex items-center text-sm text-gray-500">{{ timeslot.start }}</RadioGroupDescription>
+                        <RadioGroupDescription as="span" class="flex items-center text-sm text-gray-500">{{ timeslot.start }}:00</RadioGroupDescription>
                         <RadioGroupDescription as="span" class="text-sm font-medium text-gray-900 uppercase">JUSQU'Á</RadioGroupDescription>
-                        <RadioGroupDescription as="span" class="flex items-center text-sm text-gray-500">{{ timeslot.end }}</RadioGroupDescription>
+                        <RadioGroupDescription as="span" class="flex items-center text-sm text-gray-500">{{ timeslot.end }}:00</RadioGroupDescription>
                       </div>
                     </div>
                     <LockClosedIcon :class="[checked ? 'invisible' : '', 'h-5 w-5 text-gray-500']" aria-hidden="true" />
@@ -366,22 +366,30 @@ export default {
 
       let date = moment(this.date).format('YYYY-M-DD')
 
-
+      // get all the reservations for the chosen day
       this.axios.post(process.env.VUE_APP_URL_API + 'api/slotdisponibility', {date}).then(response => {
          this.day = response.data
 
-        console.log(this.day)
 
+        // for the chosen day get an array of starting hours reservation
         let result = this.day.map(a => a.starttime);
+
+        // order hours min to max
         let sortResult = result.sort()
-         console.log(result.sort())
 
-        let slots = ['10','15','20']
+        // create a dynamic array with all the times start slots
+        let slots = this.timeslots.map(a => a.start);
 
+        // difference to understand available timeslot in array
         let difference = slots.filter(x => !sortResult.includes(x));
+        // covert array of string in array of number
         let diff = difference.map(i=>Number(i))
 
         this.blockhour = diff
+
+        let slotSelector = this.timeslots
+
+        console.log(slotSelector)
 
       })
 
@@ -439,7 +447,6 @@ export default {
     },
 
     calculate(){
-      console.log(this.date)
 
       this.amount = this.products[0]['price'] * this.guests
 
