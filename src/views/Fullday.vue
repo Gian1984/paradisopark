@@ -232,21 +232,61 @@
 
     mounted() {
 
+      this.axios.get(process.env.VUE_APP_URL_API + "api/timeslots")
+          .then(response => {
+            this.timeslots = response.data
+          })
 
-      this.axios.get(process.env.VUE_APP_URL_API + "api/reservations")
+      this.axios.post(process.env.VUE_APP_URL_API + "api/slots")
+
+          .then(response => {
+            let slots = response.data
+
+            this.slots = slots.map(element=>{
+
+              return { start: new Date(element.startdate), end: new Date(element.finishdate), starttime: element.starttime, finishtime: element.finishtime, slot: element.slot_id }
+
+            })
+
+          })
+
+
+      this.axios.post(process.env.VUE_APP_URL_API + "api/fulldays")
           .then(response => {
 
-            let reservations = response.data
-                this.reservations = reservations.map(element=>{
+              let fulldays = response.data
+              this.fulldays = fulldays.map(element=>{
 
-                  console.log(this.reservations)
+                return { start: new Date(element.startdate), end: new Date(element.finishdate), starttime: element.starttime, finishtime: element.finishtime, slot: element.slot_id }
 
-                  let end = new Date(element.finishdate)
+              })
+
+
+              let slot1 = this.fulldays.filter(it => it.slot.includes(1));
+              console.log(slot1)
+              slot1.map(function(item){
+                  let end =  new Date(item.end)
                   end.setDate(end.getDate() - 1)
+                  item.end = end
+                return item;
+              })
 
-                  return { start: new Date(element.startdate), end: end }
+              let otherSlot = this.fulldays.filter(it => it.slot  != 1);
 
-                })
+
+              let dates = [...slot1, ...otherSlot, ...this.slots]
+              this.dates = dates
+
+
+              let disable =  [
+                dates
+              ]
+              let weekend = {weekdays: [6, 7,]}
+              disable[0].unshift(weekend);
+              let bookeed =  [
+                disable[0]
+              ]
+              this.disableCalendar = bookeed[0]
 
           })
 
@@ -266,16 +306,30 @@
 
       checknumberOfPeople(e){
 
-
-        this.axios.get(process.env.VUE_APP_URL_API + "api/reservations")
+        this.axios.post(process.env.VUE_APP_URL_API + "api/fulldays")
             .then(response => {
 
-              let reservations = response.data
-              this.reservations = reservations.map(element=>{
+              let fulldays = response.data
+              this.fulldays = fulldays.map(element=>{
 
-                return { start: new Date(element.startdate), end: new Date(element.finishdate) }
+                return { start: new Date(element.startdate), end: new Date(element.finishdate), starttime: element.starttime, finishtime: element.finishtime, slot: element.slot_id }
 
               })
+
+
+              let slot1 = this.fulldays.filter(it => it.slot.includes(1));
+              slot1.map(function(item){
+                let end =  new Date(item.end)
+                end.setDate(end.getDate() - 1)
+                item.end = end
+                return item;
+              })
+
+              let otherSlot = this.fulldays.filter(it => it.slot  != 1);
+
+
+              let dates = [...slot1, ...otherSlot, ...this.slots]
+              this.dates = dates
 
             })
 
@@ -287,7 +341,7 @@
           this.range = ''
 
           let disable =  [
-            this.reservations
+            this.dates
           ]
           let weekend = {weekdays: [6, 7,]}
           disable[0].unshift(weekend);
@@ -303,8 +357,10 @@
           this.amount = ''
           this.range = ''
 
+          // this.dates.shift()
+
           let disable =  [
-            this.reservations
+            this.dates
           ]
           this.disableCalendar = disable[0]
           this.guests = e
@@ -336,6 +392,10 @@
 
     data() {
       return {
+        dates:'',
+        slots:'',
+        timeslots:'',
+        fulldays:'',
         guests:'',
         amount:'',
         products:'',

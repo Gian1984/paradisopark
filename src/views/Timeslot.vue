@@ -48,7 +48,7 @@
               <!-- SELECT NUMBER OF PEOPLE -->
               <div>
                 <Listbox as="div" v-model="selected">
-                  <ListboxLabel class="block text-sm font-medium text-gray-700"> Number of people {{timeslots}}</ListboxLabel>
+                  <ListboxLabel class="block text-sm font-medium text-gray-700"> Number of people </ListboxLabel>
                   <div class="mt-1 relative">
                     <ListboxButton class="bg-white relative w-full border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                       <span class="block truncate">{{ selected.name }}</span>
@@ -118,7 +118,7 @@
               <!-- <RadioGroupLabel class="text-base font-medium text-gray-900"> Select a time slot </RadioGroupLabel> -->
 
               <div class="grid grid-cols-1 gap-y-6 sm:grid-cols-3 sm:gap-x-4 bg-gray-50 mt-4 p-4">
-                <RadioGroupOption as="template" v-for="timeslot in timeslots" :key="timeslot.start" :value="timeslot" v-slot="{ checked, active }">
+                <RadioGroupOption as="template" v-for="timeslot in timeslots" :key="timeslot.start" :value="timeslot" v-slot="{ checked, active }" :disabled="timeslot.available == 0">
                   <div :class="[checked ? 'border-green-500' : 'border-gray-300', active ? 'ring-1 ring-green-500' : '', 'relative bg-white border shadow-sm p-4 flex cursor-pointer focus:outline-none']">
                     <div class="flex-1 flex">
                       <div class="flex flex-col items-center justify-center text-center text-base font-medium text-gray-900">
@@ -128,9 +128,9 @@
                         <RadioGroupDescription as="span" class="flex items-center text-sm text-gray-500">{{ timeslot.end }}:00</RadioGroupDescription>
                       </div>
                     </div>
-                    <LockClosedIcon v-if="timeslot.available == '0'" :class="[checked ? 'invisible' : '', 'h-5 w-5 text-gray-500']" aria-hidden="true" />
-                    <LockOpenIcon v-if="timeslot.available == '1'" :class="[checked ? 'invisible' : '', 'h-5 w-5 text-gray-500']" aria-hidden="true" />
-                    <CheckCircleIcon  :class="[!checked ? 'invisible' : '', 'h-5 w-5 text-green-500']" aria-hidden="true" />
+                    <LockClosedIcon v-if="timeslot.available == '0'" :class="[checked ? 'invisible' : '', 'h-5 w-5 text-gray-500 opacity-50']" aria-hidden="true" />
+                    <PlusCircleIcon v-if="timeslot.available == '1'" :class="[checked ? 'invisible' : '', 'h-5 w-5 text-gray-500']" aria-hidden="true" />
+                    <CheckCircleIcon :class="[!checked ? 'invisible' : '', 'h-5 w-5 text-green-500']" aria-hidden="true" />
                     <div :class="[active ? 'border' : 'border-1', checked ? 'border-green-500' : 'border-transparent', 'absolute -inset-px pointer-events-none']" aria-hidden="true" />
                   </div>
                 </RadioGroupOption>
@@ -202,6 +202,7 @@ import {
   RadioGroupDescription,
   RadioGroupLabel,
   RadioGroupOption,
+
 } from '@headlessui/vue'
 
 import {
@@ -212,8 +213,12 @@ import {
   QuestionMarkCircleIcon,
   LockClosedIcon,
   CheckCircleIcon,
-  LockOpenIcon,
 } from '@heroicons/vue/solid'
+
+import {
+  PlusCircleIcon,
+}from '@heroicons/vue/outline'
+
 const steps = [
   { name: 'Step 1', href: '/timeslot', status: 'current' },
   { name: 'Step 2', href: '/additionaltimeslot', status: 'upcoming' },
@@ -315,6 +320,60 @@ export default {
           this.timeslots = response.data
         })
 
+    this.axios.post(process.env.VUE_APP_URL_API + "api/slots")
+
+        .then(response => {
+          let slots = response.data
+
+          this.slots = slots.map(element=>{
+
+            return { start: new Date(element.startdate), end: new Date(element.finishdate), starttime: element.starttime, finishtime: element.finishtime, slot: element.slot_id }
+
+          })
+
+        })
+
+
+
+    this.axios.post(process.env.VUE_APP_URL_API + "api/fulldays")
+        .then(response => {
+
+          let fulldays = response.data
+          this.fulldays = fulldays.map(element=>{
+
+
+            return { start: new Date(element.startdate), end: new Date(element.finishdate), starttime: element.starttime, finishtime: element.finishtime, slot: element.slot_id }
+
+          })
+
+
+          let slot1 = this.fulldays.filter(it => it.slot.includes(1));
+          console.log(slot1)
+          slot1.map(function(item){
+            let end =  new Date(item.end)
+            end.setDate(end.getDate() - 1)
+            item.end = end
+            return item;
+          })
+
+          let otherSlot = this.fulldays.filter(it => it.slot  != 1);
+
+          let dates = [...slot1, ...otherSlot ]
+          this.dates = dates
+
+          let disable =  [
+            dates
+          ]
+          let weekend = {weekdays: [6, 7,]}
+          disable[0].unshift(weekend);
+          let bookeed =  [
+            disable[0]
+          ]
+
+          this.disableCalendar = bookeed[0]
+
+        })
+
     this.axios.get(process.env.VUE_APP_URL_API + "api/reservations")
         .then(response => {
 
@@ -339,10 +398,11 @@ export default {
   data() {
 
     return {
+      slots:'',
+      fulldays:'',
       day:'',
       reservationDates:'',
       availableHourSlots:[10,15,20],
-      hour:'',
       reservations:'',
       products:'',
       amount:'',
@@ -369,7 +429,7 @@ export default {
 
 
     input(){
-      console.log("input called", new Date())
+
       let date = moment(this.date).format('YYYY-M-DD')
 
       this.axios.get(process.env.VUE_APP_URL_API + "api/timeslots")
@@ -438,7 +498,10 @@ export default {
         // Mergin 2 result
         let information  = [...free, ...book]
 
-        this.timeslots = information
+        // Sort by min to max hour start slots
+        this.timeslots = information.sort(function (a, b) {
+          return a.start - b.start;
+        });
 
 
 
@@ -450,49 +513,28 @@ export default {
     checknumberOfPeople(e){
 
 
-      this.axios.get(process.env.VUE_APP_URL_API + "api/reservations")
-          .then(response => {
-
-            let reservations = response.data
-
-
-            this.reservations = reservations.map(element=>{
-              let end = new Date(element.finishdate)
-              end.setDate(end.getDate() - 1)
-
-               return { start: new Date(element.startdate), end: end, starttime: element.starttime, finishtime: element.finishtime }
-              // return { start: new Date(element.startdate), end: end }
-
-            })
-
-          })
+      // this.axios.get(process.env.VUE_APP_URL_API + "api/reservations")
+      //     .then(response => {
+      //
+      //       let reservations = response.data
+      //
+      //
+      //       this.reservations = reservations.map(element=>{
+      //         let end = new Date(element.finishdate)
+      //         end.setDate(end.getDate() - 1)
+      //
+      //          return { start: new Date(element.startdate), end: end, starttime: element.starttime, finishtime: element.finishtime }
+      //         // return { start: new Date(element.startdate), end: end }
+      //
+      //       })
+      //
+      //     })
 
 
 
       this.guests = ''
       this.amount = ''
 
-      this.hour =  this.reservations.map(element=>{
-          return { start: element.starttime }
-        })
-
-
-
-      let date =  this.reservations.map(element=>{
-           return { start: new Date(element.start), end: element.end }
-      })
-
-
-
-      let disable =  [
-        date
-      ]
-      let weekend = {weekdays: [6, 7,]}
-      disable[0].unshift(weekend);
-      let bookeed =  [
-        disable[0]
-      ]
-      this.disableCalendar = bookeed[0]
       this.guests = e
 
     },
@@ -513,7 +555,7 @@ export default {
     QuestionMarkCircleIcon,
     LockClosedIcon,
     CheckCircleIcon,
-    LockOpenIcon,
+    PlusCircleIcon,
     Listbox,
     ListboxButton,
     ListboxLabel,
