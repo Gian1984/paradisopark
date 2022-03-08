@@ -333,8 +333,6 @@ export default {
 
         })
 
-
-
     this.axios.post(process.env.VUE_APP_URL_API + "api/fulldays")
         .then(response => {
 
@@ -346,9 +344,9 @@ export default {
 
           })
 
-
+          // Filter all the fulldays where the reservation takes only the first slot of the checkout day
           let slot1 = this.fulldays.filter(it => it.slot.includes(1));
-          console.log(slot1)
+
           slot1.map(function(item){
             let end =  new Date(item.end)
             end.setDate(end.getDate() - 1)
@@ -356,14 +354,20 @@ export default {
             return item;
           })
 
+          // Filter all the fulldays where the the reservtion take more than first slot ( late checkout )
           let otherSlot = this.fulldays.filter(it => it.slot  != 1);
 
-          let dates = [...slot1, ...otherSlot ]
+          // merge de result in order to correctly populate the calendar daily based ( if standard checkout book only the first slot - else book the full day )
+          let dates = [...slot1, ...otherSlot]
+
+
           this.dates = dates
 
           let disable =  [
             dates
           ]
+
+          // Block the weekend days coz on timeslot we cannot get access to them
           let weekend = {weekdays: [6, 7,]}
           disable[0].unshift(weekend);
           let bookeed =  [
@@ -373,20 +377,6 @@ export default {
           this.disableCalendar = bookeed[0]
 
         })
-
-    this.axios.get(process.env.VUE_APP_URL_API + "api/reservations")
-        .then(response => {
-
-          let reservations = response.data
-          this.reservations = reservations.map(element=>{
-
-
-            return { start: new Date(element.startdate), end: new Date(element.finishdate), starttime: element.starttime, finishtime: element.finishtime }
-
-          })
-
-        })
-
 
     this.axios.get(process.env.VUE_APP_URL_API + "api/products ")
         .then(response => {
@@ -398,12 +388,12 @@ export default {
   data() {
 
     return {
+      EndOfDay:'',
+      fulldaysFinishSlot:[],
       slots:'',
       fulldays:'',
       day:'',
-      reservationDates:'',
-      availableHourSlots:[10,15,20],
-      reservations:'',
+      availableHourSlots:[],
       products:'',
       amount:'',
       guests:'',
@@ -426,8 +416,6 @@ export default {
 
   methods:{
 
-
-
     input(){
 
       let date = moment(this.date).format('YYYY-M-DD')
@@ -437,15 +425,17 @@ export default {
             this.timeslots = response.data
           })
 
-      // get all the reservations for the chosen day
-      this.axios.post(process.env.VUE_APP_URL_API + 'api/slotdisponibility', {date}).then(response => {
+      // get all the reservations for the chosen day by the finishdate ( In timeslot finish date & start date are the same - taking the finish date & time we can understand where finish the fullday reservation too )  )
+      this.axios.post(process.env.VUE_APP_URL_API + 'api/slotdisponibilityEnd ', {date}).then(response => {
          this.day = response.data
 
-        // for the chosen day get an array of starting hours reservation
+
+        //1 - for the chosen day get an array of starting hours reservation
         let result = this.day.map(a => a.starttime);  // 15 , 10, 20
         let resultF = this.day.map(a => a.finishtime) // 19, 14, 24
 
-        // order hours min to max
+
+        //2 - order hours min to max
         let sortResult = result.sort()  // 10, 15, 20
         let sortResultF = resultF.sort() // 14, 19, 24
 
@@ -498,39 +488,17 @@ export default {
         // Mergin 2 result
         let information  = [...free, ...book]
 
+
         // Sort by min to max hour start slots
         this.timeslots = information.sort(function (a, b) {
           return a.start - b.start;
         });
 
-
-
       })
-
 
     },
 
     checknumberOfPeople(e){
-
-
-      // this.axios.get(process.env.VUE_APP_URL_API + "api/reservations")
-      //     .then(response => {
-      //
-      //       let reservations = response.data
-      //
-      //
-      //       this.reservations = reservations.map(element=>{
-      //         let end = new Date(element.finishdate)
-      //         end.setDate(end.getDate() - 1)
-      //
-      //          return { start: new Date(element.startdate), end: end, starttime: element.starttime, finishtime: element.finishtime }
-      //         // return { start: new Date(element.startdate), end: end }
-      //
-      //       })
-      //
-      //     })
-
-
 
       this.guests = ''
       this.amount = ''

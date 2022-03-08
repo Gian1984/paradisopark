@@ -237,33 +237,28 @@
             this.timeslots = response.data
           })
 
+
+      // Receiving all the timeslots already booked
       this.axios.post(process.env.VUE_APP_URL_API + "api/slots")
 
           .then(response => {
             let slots = response.data
-
             this.slots = slots.map(element=>{
-
               return { start: new Date(element.startdate), end: new Date(element.finishdate), starttime: element.starttime, finishtime: element.finishtime, slot: element.slot_id }
-
             })
-
           })
 
 
       this.axios.post(process.env.VUE_APP_URL_API + "api/fulldays")
           .then(response => {
-
               let fulldays = response.data
               this.fulldays = fulldays.map(element=>{
-
                 return { start: new Date(element.startdate), end: new Date(element.finishdate), starttime: element.starttime, finishtime: element.finishtime, slot: element.slot_id }
-
               })
 
-
+            // Filter all the fulldays where the reservation takes only the first slot of the checkout day
               let slot1 = this.fulldays.filter(it => it.slot.includes(1));
-              console.log(slot1)
+
               slot1.map(function(item){
                   let end =  new Date(item.end)
                   end.setDate(end.getDate() - 1)
@@ -271,9 +266,12 @@
                 return item;
               })
 
+
+            // Filter all the fulldays where the the reservtion take more than first slot ( late checkout )
               let otherSlot = this.fulldays.filter(it => it.slot  != 1);
 
-
+            // merge de result in order to correctly populate the calendar daily based ( if standard checkout we can concat another fulldays reservation - else book the full day )
+            // slot1 = standard chekout , otherSlot = take all the day coz there is late checkout, this.slots = if there is a timeslot taken block the fullday
               let dates = [...slot1, ...otherSlot, ...this.slots]
               this.dates = dates
 
@@ -281,6 +279,7 @@
               let disable =  [
                 dates
               ]
+            // opening the page the default select it's on 8 person so we block the weekend days
               let weekend = {weekdays: [6, 7,]}
               disable[0].unshift(weekend);
               let bookeed =  [
@@ -308,15 +307,12 @@
 
         this.axios.post(process.env.VUE_APP_URL_API + "api/fulldays")
             .then(response => {
-
               let fulldays = response.data
               this.fulldays = fulldays.map(element=>{
-
                 return { start: new Date(element.startdate), end: new Date(element.finishdate), starttime: element.starttime, finishtime: element.finishtime, slot: element.slot_id }
-
               })
 
-
+              // Filter all the fulldays where the reservation takes only the first slot of the checkout day
               let slot1 = this.fulldays.filter(it => it.slot.includes(1));
               slot1.map(function(item){
                 let end =  new Date(item.end)
@@ -325,14 +321,19 @@
                 return item;
               })
 
+              // Filter all the fulldays where the the reservtion take more than first slot ( late checkout )
               let otherSlot = this.fulldays.filter(it => it.slot  != 1);
 
 
+
+              // merge de result in order to correctly populate the calendar daily based ( if standard checkout we can concat another fulldays reservation - else book the full day )
+              // slot1 = standard chekout , otherSlot = take all the day coz there is late checkout, this.slots = if there is a timeslot taken block the fullday
               let dates = [...slot1, ...otherSlot, ...this.slots]
               this.dates = dates
 
             })
 
+        // passing like event the number of select number of people and apply condition weekend => less than 16 no weekend
 
         if(e == "8" || e == "9" || e == "10"){
 
@@ -369,6 +370,7 @@
       },
 
       calculate(){
+
         let difference = this.range['start'] - this.range['end']
         let daysdifference = Math.ceil(difference / (1000 * 3600 * 24));
         let days = Math.abs(daysdifference )
