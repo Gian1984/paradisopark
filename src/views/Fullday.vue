@@ -190,6 +190,7 @@
     SelectorIcon,
     QuestionMarkCircleIcon,
   } from '@heroicons/vue/solid'
+  import moment from "moment";
 
   const steps = [
     { name: 'Step 1', href: '/fullday', status: 'current' },
@@ -277,15 +278,9 @@
 
 
               let disable =  [
-                dates
+                this.dates
               ]
-            // opening the page the default select it's on 8 person so we block the weekend days
-              let weekend = {weekdays: [6, 7,]}
-              disable[0].unshift(weekend);
-              let bookeed =  [
-                disable[0]
-              ]
-              this.disableCalendar = bookeed[0]
+              this.disableCalendar = disable[0]
 
           })
 
@@ -337,7 +332,7 @@
 
         if(e == "8" || e == "9" || e == "10"){
 
-          this.guests = ''
+          this.guests = e
           this.amount = ''
           this.range = ''
 
@@ -354,7 +349,7 @@
 
         } else {
 
-          this.guests = ''
+          this.guests = e
           this.amount = ''
           this.range = ''
 
@@ -371,11 +366,153 @@
 
       calculate(){
 
-        let difference = this.range['start'] - this.range['end']
-        let daysdifference = Math.ceil(difference / (1000 * 3600 * 24));
-        let days = Math.abs(daysdifference )
-        let amount = days * this.products[0]['price'] * this.guests
-        this.amount = amount
+        const specialday = [
+
+            { id: 1,
+              name: 'christmas',
+              day: '12-25',
+              month: '12',
+            },
+            {
+              id: 2,
+              name: 'newyear',
+              day: '12-31',
+              month: '12',
+            },
+            {
+              id: 3,
+              name: 'firstDayOfYear',
+              day: '1-1',
+              month: '01',
+            },
+          {
+            id: 3,
+            name: 'sValentine',
+            day: '02-14',
+            month: '02',
+          },
+
+        ]
+
+
+        let startDate = moment(this.range['start']).format('MM-DD')
+        let endDate = moment(this.range['end']).format('MM-DD')
+        console.log('result',startDate);
+        console.log('result',endDate);
+
+        let resultProductData = specialday.filter(a => {
+          let date = new Date(a.day);
+
+          if(date >= new Date(startDate) && date <= new Date(endDate)) {
+
+            return true
+          }
+
+        });
+        console.log('filter', resultProductData)
+
+
+
+        if (resultProductData != ''){
+          console.log('true')
+
+          let difference = this.range['start'] - this.range['end']
+          let daysdifference = Math.ceil(difference / (1000 * 3600 * 24));
+          let days = Math.abs(daysdifference )
+          let amount = days * this.products[0]['price'] * this.guests
+          this.amount =  (((amount / 100) * this.products[0].specialdayinflation) + amount)
+          console.log(this.amount)
+
+          //else normal price
+        } else {
+          console.log('false')
+
+          let difference = this.range['start'] - this.range['end']
+          let daysdifference = Math.ceil(difference / (1000 * 3600 * 24));
+          let days = Math.abs(daysdifference )
+          let amount = days * this.products[0]['price'] * this.guests
+          this.amount = amount
+        }
+
+
+
+        //
+        // //format starting & finishing range dates
+        // let dateFrom = moment(this.range['start']).format('DD/MM/YYYY')
+        // let dateTo = moment(this.range['end']).format('DD/MM/YYYY')
+        //
+        //
+        //
+        // //Set & formatting dates to check
+        // let christmas = `25/12/${new Date().getFullYear()}`
+        // let newyear =   `31/12/${new Date().getFullYear()}`
+        // let firstDayOfYear = `01/01/${new Date().getFullYear()+1}`
+        // let sValentine =`14/02/${new Date().getFullYear()}`
+        //
+        // let christmasPlusOne = `25/12/${new Date().getFullYear()+1}`
+        // let newyearPlusOne =   `31/12/${new Date().getFullYear()+1}`
+        // let sValentinePlusOne =`14/02/${new Date().getFullYear()+1}`
+        //
+        //
+        // let d1 = dateFrom.split("/");
+        // let d2 = dateTo.split("/");
+        // let c = christmas.split("/");
+        // let f = newyear.split("/");
+        // let g = firstDayOfYear.split("/");
+        // let h = sValentine.split("/");
+        // let i = christmasPlusOne.split("/");
+        // let l = newyearPlusOne.split("/");
+        // let m = sValentinePlusOne.split("/");
+        //
+        //
+        //
+        //
+        //
+        // let from = new Date(d1[2], parseInt(d1[1])-1, d1[0]);   // -1 because months are from 0 to 11
+        // let to   = new Date(d2[2], parseInt(d2[1])-1, d2[0]);   // -1 because months are from 0 to 11
+        // console.log('from',from)
+        //
+        // //christmas
+        // let check = new Date(c[2], parseInt(c[1])-1, c[0]);      // -1 because months are from 0 to 11
+        // //newyear
+        // let check1 = new Date(f[2], parseInt(f[1])-1, f[0]);      // -1 because months are from 0 to 11
+        // console.log('check',check1)
+        // //firstDayOfYear
+        // let check2 = new Date(g[2], parseInt(g[1])-1, g[0]);      // -1 because months are from 0 to 11
+        // //sValentine
+        // let check3 = new Date(h[2], parseInt(h[1])-1, h[0]);      // -1 because months are from 0 to 11
+        // //christmas + 1
+        // let check4 = new Date(i[2], parseInt(i[1])-1, i[0]);      // -1 because months are from 0 to 11
+        // //newyear +1
+        // let check5 = new Date(l[2], parseInt(l[1])-1, l[0]);      // -1 because months are from 0 to 11
+        // //sValentine + 1
+        // let check6 = new Date(m[2], parseInt(m[1])-1, m[0]);      // -1 because months are from 0 to 11
+        // console.log(check6)
+        //
+        // // Checking if selected range contain or equal to special dates
+        //
+        // //if true add special day inflation to the total amount
+        // if (check >= from && check <= to || check1 >= from && check1 <= to || check2 >= from && check2 <= to || check3 >= from && check3 <= to || check4 >= from && check4 <= to ||check5 >= from && check5 <= to || check6 >= from && check6 <= to){
+        //   console.log('true')
+        //
+        //   let difference = this.range['start'] - this.range['end']
+        //   let daysdifference = Math.ceil(difference / (1000 * 3600 * 24));
+        //   let days = Math.abs(daysdifference )
+        //   let amount = days * this.products[0]['price'] * this.guests
+        //   this.amount =  (((amount / 100) * this.products[0].specialdayinflation) + amount)
+        //   console.log(this.amount)
+        //
+        //   //else normal price
+        // } else {
+        //   console.log('false')
+        //
+        //   let difference = this.range['start'] - this.range['end']
+        //   let daysdifference = Math.ceil(difference / (1000 * 3600 * 24));
+        //   let days = Math.abs(daysdifference )
+        //   let amount = days * this.products[0]['price'] * this.guests
+        //   this.amount = amount
+        // }
+
       },
 
       next( range, amount, guests ){
