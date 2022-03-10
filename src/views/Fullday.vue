@@ -476,7 +476,7 @@
                     // Adding inflation for weekend nights
                     let weekendTotal = (((weekend / 100) * this.products[0].weekendinflation) + weekend)
                     // Number of week days
-                    let weekday = days - count
+                    let weekday = days - night
                     // Amount for week nights
                     let weekdayTotal = weekday * this.products[0]['price'] * this.guests
                     // Total
