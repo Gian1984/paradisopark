@@ -372,16 +372,16 @@
       calculate() {
 
         const specialday = [
-
+          //month - day
           {
             id: 1,
             name: 'christmas',
-            fromDate: '12-25',
-            toDate:'12-25',
+            fromDate: '12-31',
+            toDate:'12-20',
           },
           {
             id: 2,
-            name: 'newyear',
+            name: 'newYear',
             fromDate: '01-01',
             toDate:'01-07',
           },
@@ -391,101 +391,27 @@
             fromDate: '02-10',
             toDate:'02-20',
           },
-          {
-            id: 4,
-            name: 'neww',
-            fromDate: '12-20',
-            toDate:'12-31',
-          },
-
-
-
 
         ]
 
-        // this.matchSpecialDay == ''
-        //
-        // specialday.forEach(
-        //     element => {
-        //
-        //       let one = moment(element.fromDate).format('MM-DD')+'-'+moment(this.range['start']).format('YYYY')
-        //       let two = moment(element.toDate).format('MM-DD')+'-'+moment(this.range['end']).format('YYYY')
-        //
-        //       console.log('sa mere la pute',moment(moment(this.range['start']).format('MM-DD-YYYY')).isBetween(one, two))
-        //
-        //
-        //       if(moment(moment(this.range['start']).format('MM-DD-YYYY')).isBetween(one, two) || moment(moment(this.range['end']).format('MM-DD-YYYY')).isBetween(one, two)){
-        //         this.matchSpecialDay = 1
-        //         console.log('matchSpecialDay = '+this.matchSpecialDay)
-        //       } else {
-        //         this.matchSpecialDay = ''
-        //         console.log('matchSpecialDay = '+this.matchSpecialDay)
-        //       }
-        //     });
-
-
-        // let start1 = moment(moment(this.range['start']).format('MM-DD-YYYY')).isBetween('12-28-2022','01-07-2023')
-        // console.log('start this',this.range['start'])
-        // console.log('start',start1)
-        //
-        // let end2 = moment(moment(this.range['end']).format('MM-DD-YYYY')).isBetween('12-28-2022','01-07-2023')
-        // console.log('end',end2)
-        //
-        // let resultProduct = specialday.map(a => {
-        //
-        //   let start1 = moment(moment(this.range['start']).format('MM-DD')).isBetween(new Date(a.fromDate),new Date(a.toDate))
-        //   let end2 = moment(moment(this.range['end']).format('MM-DD')).isBetween(new Date(a.fromDate),new Date(a.toDate))
-        //   console.log(start1)
-        //   console.log(end2)
-        //
-        // })
-        //
-        // console.log('resultProduct',resultProduct)
-        //
-        //
-
-
+        // Formatting selected starting date
         let startDate = moment(this.range['start']).format('MM-DD-YYYY')
+        // Formatting selected ending date
         let toDate = moment(this.range['end']).format('MM-DD-YYYY')
-        console.log('Start date =>', startDate);
-        console.log('End date =>', toDate);
 
+        // Filter if selected starting date OR selected ending date are inside range of special day
         let resultProductData = specialday.filter(element => {
+          // Formatting special day starting range
           let fromDate = moment(element.fromDate).format('MM-DD')+'-'+moment(this.range['start']).format('YYYY')
+          // Formatting special day ending range
           let endDate = moment(element.toDate).format('MM-DD')+'-'+moment(this.range['end']).format('YYYY')
-
-          console.log('from Date =>', fromDate);
-          console.log('end Date =>', endDate);
-
-          // fromDate >= new Date(startDate) && fromDate <= new Date(endDate )
-
+          // check condition
           if  (  startDate >= fromDate && startDate <=  endDate ||  toDate >= fromDate && toDate <=  endDate  ){
-
+            // return an array with the special day period range hit by the day starting range or the day ending range
             return true
           }
 
         });
-
-        console.log(resultProductData)
-
-
-
-        // let startDate = moment(this.range['start']).format('MM-DD')
-        // let endDate = moment(this.range['end']).format('MM-DD')
-        // console.log('Start date', startDate);
-        // console.log('End date', endDate);
-        //
-        // let resultProductData = specialday.filter(a => {
-        //   let fromDate = new Date(a.fromDate);
-        //
-        //   // fromDate >= new Date(startDate) && fromDate <= new Date(endDate )
-        //
-        //   if  (  fromDate >= new Date(startDate) && fromDate <= new Date(endDate )  ){
-        //
-        //     return true
-        //   }
-        //
-        // });
 
 
         if (resultProductData != ''){
@@ -572,9 +498,6 @@
         this.$router.push({path: '/additionalfullday'})
         },
 
-
-
-
     },
 
     data() {
@@ -621,8 +544,6 @@
       }
     },
   }
-
-
 
 </script>
 <style>
