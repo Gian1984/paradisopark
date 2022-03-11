@@ -193,6 +193,10 @@
 
   import moment from "moment";
 
+
+
+
+
   const steps = [
     { name: 'Step 1', href: '/fullday', status: 'current' },
     { name: 'Step 2', href: '/additionalfullday', status: 'upcoming' },
@@ -372,45 +376,116 @@
           {
             id: 1,
             name: 'christmas',
-            day: '12-25',
-            month: '12',
+            fromDate: '12-25',
+            toDate:'12-25',
           },
           {
             id: 2,
             name: 'newyear',
-            day: '12-31',
-            month: '12',
-          },
-          {
-            id: 3,
-            name: 'firstDayOfYear',
-            day: '1-1',
-            month: '01',
+            fromDate: '01-01',
+            toDate:'01-07',
           },
           {
             id: 3,
             name: 'sValentine',
-            day: '02-14',
-            month: '02',
+            fromDate: '02-10',
+            toDate:'02-20',
           },
+          {
+            id: 4,
+            name: 'neww',
+            fromDate: '12-20',
+            toDate:'12-31',
+          },
+
+
+
 
         ]
 
+        // this.matchSpecialDay == ''
+        //
+        // specialday.forEach(
+        //     element => {
+        //
+        //       let one = moment(element.fromDate).format('MM-DD')+'-'+moment(this.range['start']).format('YYYY')
+        //       let two = moment(element.toDate).format('MM-DD')+'-'+moment(this.range['end']).format('YYYY')
+        //
+        //       console.log('sa mere la pute',moment(moment(this.range['start']).format('MM-DD-YYYY')).isBetween(one, two))
+        //
+        //
+        //       if(moment(moment(this.range['start']).format('MM-DD-YYYY')).isBetween(one, two) || moment(moment(this.range['end']).format('MM-DD-YYYY')).isBetween(one, two)){
+        //         this.matchSpecialDay = 1
+        //         console.log('matchSpecialDay = '+this.matchSpecialDay)
+        //       } else {
+        //         this.matchSpecialDay = ''
+        //         console.log('matchSpecialDay = '+this.matchSpecialDay)
+        //       }
+        //     });
 
-        let startDate = moment(this.range['start']).format('MM-DD')
-        let endDate = moment(this.range['end']).format('MM-DD')
-        console.log('result', startDate);
-        console.log('result', endDate);
 
-        let resultProductData = specialday.filter(a => {
-          let date = new Date(a.day);
+        // let start1 = moment(moment(this.range['start']).format('MM-DD-YYYY')).isBetween('12-28-2022','01-07-2023')
+        // console.log('start this',this.range['start'])
+        // console.log('start',start1)
+        //
+        // let end2 = moment(moment(this.range['end']).format('MM-DD-YYYY')).isBetween('12-28-2022','01-07-2023')
+        // console.log('end',end2)
+        //
+        // let resultProduct = specialday.map(a => {
+        //
+        //   let start1 = moment(moment(this.range['start']).format('MM-DD')).isBetween(new Date(a.fromDate),new Date(a.toDate))
+        //   let end2 = moment(moment(this.range['end']).format('MM-DD')).isBetween(new Date(a.fromDate),new Date(a.toDate))
+        //   console.log(start1)
+        //   console.log(end2)
+        //
+        // })
+        //
+        // console.log('resultProduct',resultProduct)
+        //
+        //
 
-          if (date >= new Date(startDate) && date <= new Date(endDate)) {
+
+        let startDate = moment(this.range['start']).format('MM-DD-YYYY')
+        let toDate = moment(this.range['end']).format('MM-DD-YYYY')
+        console.log('Start date =>', startDate);
+        console.log('End date =>', toDate);
+
+        let resultProductData = specialday.filter(element => {
+          let fromDate = moment(element.fromDate).format('MM-DD')+'-'+moment(this.range['start']).format('YYYY')
+          let endDate = moment(element.toDate).format('MM-DD')+'-'+moment(this.range['end']).format('YYYY')
+
+          console.log('from Date =>', fromDate);
+          console.log('end Date =>', endDate);
+
+          // fromDate >= new Date(startDate) && fromDate <= new Date(endDate )
+
+          if  (  startDate >= fromDate && startDate <=  endDate ||  toDate >= fromDate && toDate <=  endDate  ){
 
             return true
           }
 
         });
+
+        console.log(resultProductData)
+
+
+
+        // let startDate = moment(this.range['start']).format('MM-DD')
+        // let endDate = moment(this.range['end']).format('MM-DD')
+        // console.log('Start date', startDate);
+        // console.log('End date', endDate);
+        //
+        // let resultProductData = specialday.filter(a => {
+        //   let fromDate = new Date(a.fromDate);
+        //
+        //   // fromDate >= new Date(startDate) && fromDate <= new Date(endDate )
+        //
+        //   if  (  fromDate >= new Date(startDate) && fromDate <= new Date(endDate )  ){
+        //
+        //     return true
+        //   }
+        //
+        // });
 
 
         if (resultProductData != ''){
@@ -514,7 +589,8 @@
         disabledDays: [],
         disableCalendar:[],
         reservations:'',
-        range:''
+        range:'',
+        matchSpecialDay: '',
     };
   },
 
