@@ -14,71 +14,27 @@
             </button>
           </div>
 
-          <!-- Links -->
-          <TabGroup as="div" class="mt-2">
-            <div class="border-b border-gray-200">
-              <TabList class="-mb-px flex px-4 space-x-8">
-                <Tab as="template" v-for="category in navigation.categories" :key="category.name" v-slot="{ selected }">
-                  <button :class="[selected ? 'text-teal-600 border-teal-600' : 'text-white border-transparent', 'flex-1 whitespace-nowrap py-4 px-1 border-b-2 text-base font-medium']">
-                    {{ category.name }}
-                  </button>
-                </Tab>
-              </TabList>
-            </div>
-            <TabPanels as="template">
-              <TabPanel v-for="category in navigation.categories" :key="category.name" class="px-4 py-6 space-y-12">
-                <div class="grid grid-cols-2 gap-x-4 gap-y-10">
-                  <div v-for="item in category.featured" :key="item.name" class="group relative">
-                    <div class="aspect-w-1 aspect-h-1  rounded-md bg-gray-100 overflow-hidden group-hover:opacity-75">
-                      <img :src="item.imageSrc" :alt="item.imageAlt" class="object-center object-cover" />
-                    </div>
-                    <router-link :to="item.href" class="mt-6 block text-sm font-medium text-white" @click="mobileMenuOpen = false">
-                      <span class="absolute z-10 inset-0" aria-hidden="true" />
-                      {{ item.name }}
-                    </router-link>
-                    <p aria-hidden="true" class="mt-1 text-sm text-gray-500">{{ item.role }}</p>
-                  </div>
-                </div>
-              </TabPanel>
-            </TabPanels>
-          </TabGroup>
+          <!-- MOBILE Links -->
 
           <!-- ABOUT BTN-->
           <div class="border-t border-gray-200 py-6 px-4 space-y-6">
-            <div v-for="firstpage in navigation.firstpages" :key="firstpage.name" class="flow-root">
-              <router-link :to="firstpage.href" class="-m-2 p-2 block font-medium text-gray-900">{{ firstpage.name }}</router-link>
-            </div>
-          </div>
-          
-          <!-- OTHERS BTN -->
-          <div class="border-t border-gray-200 py-6 px-4 space-y-6">
-            <div v-for="page in navigation.pages" :key="page.name" class="flow-root">
-              <router-link :to="page.href" class="-m-2 p-2 block font-medium text-gray-900">{{ page.name }}</router-link>
+            <div v-for="mobilepage in navigation.mobilepages" :key="mobilepage.name" class="flow-root">
+              <router-link :to="mobilepage.href" class="-m-2 p-2 block font-medium text-white">{{ mobilepage.name }}</router-link>
             </div>
           </div>
 
           <div class="border-t border-gray-200 py-6 px-4 space-y-6">
             <div class="flow-root">
-              <router-link to="#" class="-m-2 p-2 block font-medium text-gray-900">Create an account</router-link>
+              <router-link to="/useraccount" class="-m-2 p-2 block font-medium text-white">My reservation</router-link>
             </div>
             <div class="flow-root">
-              <router-link to="#" class="-m-2 p-2 block font-medium text-gray-900">Sign in</router-link>
+              <router-link to="/register" class="-m-2 p-2 block font-medium text-white">Register</router-link>
+            </div>
+            <div class="flow-root">
+              <router-link to="/login" class="-m-2 p-2 block font-medium text-white">Sign in</router-link>
             </div>
           </div>
 
-          <div class="border-t border-gray-200 py-6 px-4 space-y-6">
-            <!-- languages selector -->
-            <form>
-              <div class="inline-block">
-                <label for="mobile-languages" class="sr-only">Languages</label>
-                <div class="-ml-2 group relative border-transparent rounded-md focus-within:ring-2 focus-within:ring-white">
-                  <select id="mobile-languages" name="language" class="bg-none border-transparent rounded-md py-0.5 pl-2 pr-5 flex items-center text-sm font-medium text-gray-700 group-hover:text-gray-800 focus:outline-none focus:ring-0 focus:border-transparent">
-                    <option v-for="language in languages" :key="language">{{ language }}</option>
-                  </select>
-                </div>
-              </div>
-            </form>
-          </div>
         </div>
       </TransitionChild>
     </Dialog>
@@ -95,26 +51,6 @@
     <!-- Navigation -->
     <header class="relative z-10">
       <nav aria-label="Top">
-        <!-- Top navigation -->
-        <div class="bg-gray-900">
-          <div class="max-w-7xl mx-auto h-10 px-4 flex items-center justify-between sm:px-6 lg:px-8">
-            <!-- languages selector -->
-            <form>
-              <div>
-                <label for="desktop-language" class="sr-only">Languages</label>
-                <div class="-ml-2 group relative bg-gray-900 border-transparent rounded-md focus-within:ring-2 focus-within:ring-white">
-                  <select id="desktop-language" name="language" class="bg-none bg-gray-900 border-transparent rounded-md py-0.5 pl-2 pr-5 flex items-center text-sm font-medium text-white group-hover:text-gray-100 focus:outline-none focus:ring-0 focus:border-transparent">
-                    <option v-for="language in languages" :key="language">{{ language}}</option>
-                  </select>
-                </div>
-              </div>
-            </form>
-            <div class="flex items-center space-x-6">
-              <router-link to="#" class="text-sm font-medium text-white hover:text-gray-100">Sign in</router-link>
-              <router-link to="#" class="text-sm font-medium text-white hover:text-gray-100">Create an account</router-link>
-            </div>
-          </div>
-        </div>
 
         <!-- Secondary navigation -->
         <div class="backdrop-blur-md backdrop-filter bg-opacity-10 bg-white">
@@ -199,16 +135,50 @@
                       <QuestionMarkCircleIcon class="w-6 h-6" aria-hidden="true" />
                     </a>
                     <a href="#" class="hidden text-sm font-medium text-white lg:block">Help</a> -->
-                    <router-link to="/contact">
-                    <MailIcon class="h-6 w-6 text-white"/>
-                  </router-link>
-                    <div class="ml-4 flow-root lg:ml-8">
-                      <router-link to="#" class="group -m-2 p-2 flex items-center">
-                        <ShoppingBagIcon class="flex-shrink-0 h-6 w-6 text-white" aria-hidden="true" />
-                        <span class="ml-2 text-sm font-medium text-white">0</span>
-                        <span class="sr-only">items in cart, view bag</span>
-                      </router-link>
+
+                    <!-- EMAIL ICON DESKTOP -->
+                    <router-link to="/contact" class="hidden lg:block">
+                      <MailIcon class="h-6 w-6 text-white"/>
+                    </router-link>
+
+                    <!-- LANGUAGES DESKTOP -->
+                    <div class="border-t border-gray-200 py-6 pl-4 space-y-6">
+                      <form>
+                        <div class="inline-block">
+                          <label for="mobile-languages" class="sr-only">Languages</label>
+                          <div class="-ml-2 group relative border-transparent focus-within:ring-0 focus-within:ring-none">
+                            <select id="mobile-languages" name="language" class="bg-transparent text-white border-transparent py-0.5 pl-2 pr-2 flex items-center text-sm font-medium group-hover:text-white focus:outline-none focus:ring-0 focus:border-transparent">
+                              <option v-for="language in languages" :key="language">{{ language }}</option>
+                            </select>
+                          </div>
+                        </div>
+                      </form>
                     </div>
+
+                    <!-- PROFIL DROPDOWN DESKTOP -->
+                    <Menu as="div" class="hidden lg:block ml-3 relative">
+                      <div>
+                        <MenuButton class="bg-transparent rounded-full flex text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                          <span class="sr-only">Open user menu</span>
+                          <UserCircleIcon class="h-8 w-8 text-white"/>
+                        </MenuButton>
+                      </div>
+                      <transition enter-active-class="transition ease-out duration-200" enter-from-class="transform opacity-0 scale-95" enter-to-class="transform opacity-100 scale-100" leave-active-class="transition ease-in duration-75" leave-from-class="transform opacity-100 scale-100" leave-to-class="transform opacity-0 scale-95">
+                        <MenuItems class="origin-top-right absolute right-0 mt-2 w-48 shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
+                          <MenuItem v-slot="{ active }">
+                            <a href="/useraccount" :class="[active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700']">My reservation</a>
+                          </MenuItem>
+                          <MenuItem v-slot="{ active }">
+                            <a href="#" :class="[active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700']">Settings</a>
+                          </MenuItem>
+                          <MenuItem v-slot="{ active }">
+                            <a href="/login" :class="[active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700']">Sign in</a>
+                          </MenuItem>
+                        </MenuItems>
+                      </transition>
+                    </Menu>
+
+
                   </div>
                 </div>
               </div>
@@ -218,7 +188,6 @@
       </nav>
     </header>
   </div>
-
 
   <router-view/>
 
@@ -337,8 +306,6 @@
     </div>
   </footer>
 
-
-
 </template>
 
 <script>
@@ -358,14 +325,30 @@ import {
   TabPanels,
   TransitionChild,
   TransitionRoot,
+  Disclosure, 
+  DisclosureButton, 
+  DisclosurePanel, 
+  Menu, 
+  MenuButton, 
+  MenuItem, 
+  MenuItems,
 } from '@headlessui/vue'
-import { MenuIcon, SearchIcon, ShoppingCartIcon, UserIcon, XIcon, QuestionMarkCircleIcon, ShoppingBagIcon  } from '@heroicons/vue/outline'
+import { MenuIcon, SearchIcon, ShoppingCartIcon, UserIcon, XIcon, QuestionMarkCircleIcon, ShoppingBagIcon, UserCircleIcon  } from '@heroicons/vue/outline'
 import { ChevronDownIcon,MailIcon } from '@heroicons/vue/solid'
 
 const languages = ['FR', 'EN', 'NL']
 
 
 const navigation = {
+  mobilepages: [
+    { name: 'About', href: '/about' },
+    { name: 'Chambres', href: '/rooms' },
+    { name: 'Soins', href: '/care' },
+    { name: 'Traiteur', href: '/catering' },
+    { name: 'Événements', href: '/events' },
+    { name: 'Réserver', href: '/booking' },
+    { name: 'Contact', href: '/contact' },
+  ],
   firstpages: [
     { name: 'About', href: '/about' },
   ],
@@ -382,13 +365,13 @@ const navigation = {
         },
         {
           name: 'Soins',
-          href: '#',
+          href: '/care',
           imageSrc: 'img/candles.jpg',
           imageAlt: 'Model wearing light heather gray t-shirt.',
         },
         {
           name: 'Traiteur',
-          href: '#',
+          href: '/catering',
           imageSrc: 'img/dish.jpg',
           imageAlt:
               'Grey 6-panel baseball hat with black brim, black mountain graphic on front, and light heather gray body.',
@@ -398,7 +381,6 @@ const navigation = {
   ],
   pages: [
     { name: 'Événements', href: '/events' },
-    { name: 'Espace Client', href: '#' },
     { name: 'Réserver', href: '/booking' },
   ],
 }
@@ -515,9 +497,17 @@ export default {
     TabPanels,
     TransitionChild,
     TransitionRoot,
+    Disclosure, 
+    DisclosureButton, 
+    DisclosurePanel, 
+    Menu, 
+    MenuButton, 
+    MenuItem, 
+    MenuItems,
     MenuIcon,
     SearchIcon,
     ShoppingCartIcon,
+    UserCircleIcon,
     UserIcon,
     XIcon,
     ChevronDownIcon,
@@ -528,12 +518,11 @@ export default {
   setup() {
     const mobileMenuOpen = ref(false)
 
-
     return {
       languages,
       navigation,
       footernavigation,
-      mobileMenuOpen
+      mobileMenuOpen,
     }
   },
 }
