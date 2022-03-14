@@ -99,7 +99,7 @@
         <dl class="mt-6 space-y-4">
           <div class="flex items-center justify-between">
             <dt class="text-sm text-gray-600">Number of guests</dt>
-            <dd class="text-sm font-medium text-gray-900">{{ guests }}</dd>
+            <dd class="text-sm font-medium text-gray-900">{{ reservation.get('guests') }}</dd>
           </div>
           <div class="border-t border-gray-200 pt-4 flex items-center justify-between">
             <dt class="flex items-center text-sm text-gray-600">
@@ -123,7 +123,7 @@
           </div>
           <div class="border-t border-gray-200 pt-4 flex items-center justify-between">
             <dt class="text-base font-medium text-gray-900">Order total</dt>
-            <dd class="text-base font-medium text-gray-900">{{ amount }} €</dd>
+            <dd class="text-base font-medium text-gray-900">{{ reservation.get('amount') }} €</dd>
           </div>
         </dl>
 
@@ -210,21 +210,21 @@ export default {
 
   computed: {
 
-    amount:{
+    reservation:{
       get(){
-        return this.$store.state.amount
+        return this.$store.state.reservation
       },
     },
-    range:{
-      get(){
-        return this.$store.state.range
-      }
-    },
-    guests:{
-      get(){
-        return this.$store.state.guests
-      }
-    }
+    // range:{
+    //   get(){
+    //     return this.$store.state.range
+    //   }
+    // },
+    // guests:{
+    //   get(){
+    //     return this.$store.state.guests
+    //   }
+    // }
   },
 
 
