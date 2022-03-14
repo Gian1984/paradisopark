@@ -6,6 +6,9 @@ import Care from '../views/Care.vue'
 import Catering from '../views/Catering.vue'
 import Events from '../views/Events.vue'
 import Contact from '../views/Contact.vue'
+import Login from '../views/Login.vue'
+import Register from '../views/Register.vue'
+import Resetpassword from '../views/Resetpassword.vue'
 import Dashboard from '../views/Dashboard.vue'
 import Useraccount from '../views/Useraccount.vue'
 import Booking from '../views/Booking.vue'
@@ -54,6 +57,21 @@ const routes = [
     path: '/contact',
     name: 'Contact',
     component: Contact
+  },
+  {
+    path: '/login',
+    name: 'Login',
+    component: Login
+  },
+  {
+    path: '/register',
+    name: 'Register',
+    component: Register
+  },
+  {
+    path: '/resetpassword',
+    name: 'Resetpassword',
+    component: Resetpassword
   },
   {
     path: '/dashboard',
