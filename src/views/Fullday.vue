@@ -511,7 +511,7 @@
               let count = 0;
 
               //loop through each day between the dates 86400000 = 1 day
-              for(let _from = from; _from < to; _from += 86400000){
+              for(var _from = from; _from < to; _from += 86400000){
                 //set the day
                 tempDate.setTime(_from);
                 //If it is a weekend add 1 to count
