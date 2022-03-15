@@ -60,7 +60,7 @@
                     <transition leave-active-class="transition ease-in duration-100" leave-from-class="opacity-100" leave-to-class="opacity-0">
                       <ListboxOptions class="absolute z-10 mt-1 w-full bg-white shadow-lg max-h-60 rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none sm:text-sm">
                         <ListboxOption as="template" v-for="person in numberOfPeopleTimeSlot" :key="person.id" :value="person" v-slot="{ active, selected }">
-                          <li :class="[active ? 'text-white bg-indigo-600' : 'text-gray-900', 'cursor-default select-none relative py-2 pl-3 pr-9']">
+                          <li :class="[active ? 'text-white bg-indigo-600' : 'text-gray-900', 'cursor-default select-none relative py-2 pl-3 pr-9']" v-on:click="checknumberOfPeople(person.value)">
                             <span :class="[selected ? 'font-semibold' : 'font-normal', 'block truncate']">
                               {{ person.name }}
                             </span>
@@ -96,10 +96,15 @@
             <v-date-picker class="mycutomcalendar"
               is-expanded
               color="green"
-              :disabled-dates='{ weekdays: [6, 7] }'
+              :disabled-dates='disableCalendar'
               :min-date='new Date()'
               :attributes="attributes"
               v-model="date"
+                           @click.stop
+                           mode= 'dateTime'
+                           :valid-hours="availableHourSlots" is24hr
+                           :minute-increment="60"
+                           v-on:click="input()"
             />
             <!-- <div class="w-full flex">
               <p>Legendary</p>
@@ -113,23 +118,30 @@
               <!-- <RadioGroupLabel class="text-base font-medium text-gray-900"> Select a time slot </RadioGroupLabel> -->
 
               <div class="grid grid-cols-1 gap-y-6 sm:grid-cols-3 sm:gap-x-4 bg-gray-50 mt-4 p-4">
-                <RadioGroupOption as="template" v-for="timeslot in timeslots" :key="timeslot.id" :value="timeslot" v-slot="{ checked, active }">
+                <RadioGroupOption as="template" v-for="timeslot in timeslots" :key="timeslot.start" :value="timeslot" v-slot="{ checked, active }" :disabled="timeslot.available == 0">
                   <div :class="[checked ? 'border-green-500' : 'border-gray-300', active ? 'ring-1 ring-green-500' : '', 'relative bg-white border shadow-sm p-4 flex cursor-pointer focus:outline-none']">
                     <div class="flex-1 flex">
                       <div class="flex flex-col items-center justify-center text-center text-base font-medium text-gray-900">
                         <RadioGroupLabel as="span" class="text-sm font-medium text-gray-900 uppercase">de</RadioGroupLabel>
-                        <RadioGroupDescription as="span" class="flex items-center text-sm text-gray-500">{{ timeslot.start }}</RadioGroupDescription>
+                        <RadioGroupDescription as="span" class="flex items-center text-sm text-gray-500">{{ timeslot.start }}:00</RadioGroupDescription>
                         <RadioGroupDescription as="span" class="text-sm font-medium text-gray-900 uppercase">JUSQU'Á</RadioGroupDescription>
-                        <RadioGroupDescription as="span" class="flex items-center text-sm text-gray-500">{{ timeslot.end }}</RadioGroupDescription>
+                        <RadioGroupDescription as="span" class="flex items-center text-sm text-gray-500">{{ timeslot.end }}:00</RadioGroupDescription>
                       </div>
                     </div>
-                    <LockClosedIcon :class="[checked ? 'invisible' : '', 'h-5 w-5 text-gray-500']" aria-hidden="true" />
+                    <LockClosedIcon v-if="timeslot.available == '0'" :class="[checked ? 'invisible' : '', 'h-5 w-5 text-gray-500 opacity-50']" aria-hidden="true" />
+                    <PlusCircleIcon v-if="timeslot.available == '1'" :class="[checked ? 'invisible' : '', 'h-5 w-5 text-gray-500']" aria-hidden="true" />
                     <CheckCircleIcon :class="[!checked ? 'invisible' : '', 'h-5 w-5 text-green-500']" aria-hidden="true" />
                     <div :class="[active ? 'border' : 'border-1', checked ? 'border-green-500' : 'border-transparent', 'absolute -inset-px pointer-events-none']" aria-hidden="true" />
                   </div>
                 </RadioGroupOption>
               </div>
             </RadioGroup>
+
+
+            <div class="mt-6">
+              <button v-on:click="calculate()" type="button" class="w-full bg-indigo-600 border border-transparent rounded-md shadow-sm py-3 px-4 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-indigo-500">Calculate</button>
+            </div>
+
 
           </section>
           <!-- Order summary -->
@@ -177,6 +189,7 @@
 </template>
 
 <script>
+import moment from 'moment'
 import 'v-calendar/dist/style.css';
 import { ref } from 'vue'
 import {
@@ -189,6 +202,7 @@ import {
   RadioGroupDescription,
   RadioGroupLabel,
   RadioGroupOption,
+
 } from '@headlessui/vue'
 
 import {
@@ -200,72 +214,78 @@ import {
   LockClosedIcon,
   CheckCircleIcon,
 } from '@heroicons/vue/solid'
+
+import {
+  PlusCircleIcon,
+}from '@heroicons/vue/outline'
+
 const steps = [
   { name: 'Step 1', href: '/timeslot', status: 'current' },
   { name: 'Step 2', href: '/additionaltimeslot', status: 'upcoming' },
   { name: 'Step 3', href: '#', status: 'upcoming' },
 ]
 const numberOfPeopleTimeSlot = [
-  { id: 1, name: '1' },
-  { id: 2, name: '2' },
-  { id: 3, name: '3' },
-  { id: 4, name: '4' },
-  { id: 5, name: '5' },
-  { id: 6, name: '6' },
-  { id: 7, name: '7' },
-  { id: 8, name: '8' },
-  { id: 9, name: '9' },
-  { id: 10, name: '10' },
-  { id: 1, name: '11' },
-  { id: 2, name: '12' },
-  { id: 3, name: '13' },
-  { id: 4, name: '14' },
-  { id: 5, name: '15' },
-  { id: 6, name: '16' },
-  { id: 7, name: '17' },
-  { id: 8, name: '18' },
-  { id: 9, name: '19' },
-  { id: 10, name: '20' },
-  { id: 1, name: '21' },
-  { id: 2, name: '22' },
-  { id: 3, name: '23' },
-  { id: 4, name: '24' },
-  { id: 5, name: '25' },
-  { id: 6, name: '26' },
-  { id: 7, name: '27' },
-  { id: 8, name: '28' },
-  { id: 9, name: '29' },
-  { id: 10, name: '30' },
-  { id: 1, name: '31' },
-  { id: 2, name: '32' },
-  { id: 3, name: '33' },
-  { id: 4, name: '34' },
-  { id: 5, name: '35' },
-  { id: 6, name: '36' },
-  { id: 7, name: '37' },
-  { id: 8, name: '38' },
-  { id: 9, name: '39' },
-  { id: 10, name: '40' },
-  { id: 1, name: '41' },
-  { id: 2, name: '42' },
-  { id: 3, name: '43' },
-  { id: 4, name: '44' },
-  { id: 5, name: '45' },
-  { id: 6, name: '46' },
-  { id: 7, name: '47' },
-  { id: 8, name: '48' },
-  { id: 9, name: '49' },
-  { id: 10, name: '50' },
-  { id: 1, name: '51' },
-  { id: 2, name: '52' },
-  { id: 3, name: '53' },
-  { id: 4, name: '54' },
-  { id: 5, name: '55' },
-  { id: 6, name: '56' },
-  { id: 7, name: '57' },
-  { id: 8, name: '58' },
-  { id: 9, name: '59' },
-  { id: 10, name: '60' },
+  { id: 1,  value: 0, name: 'Make your choise' },
+  { id: 2,  value: 1, name: '1' },
+  { id: 3,  value: 2, name: '2' },
+  { id: 4,  value: 3, name: '3' },
+  { id: 5,  value: 4, name: '4' },
+  { id: 6,  value: 5, name: '5' },
+  { id: 7,  value: 6, name: '6' },
+  { id: 8,  value: 7, name: '7' },
+  { id: 9,  value: 8, name: '8' },
+  { id: 10, value: 9, name: '9' },
+  { id: 11, value: 10, name: '10' },
+  { id: 12, value: 11, name: '11' },
+  { id: 13, value: 12, name: '12' },
+  { id: 14, value: 13, name: '13' },
+  { id: 15, value: 14, name: '14' },
+  { id: 16, value: 15, name: '15' },
+  { id: 17, value: 16, name: '16' },
+  { id: 18, value: 17, name: '17' },
+  { id: 19, value: 18, name: '18' },
+  { id: 20, value: 19, name: '19' },
+  { id: 21, value: 20, name: '20' },
+  { id: 22, value: 21, name: '21' },
+  { id: 23, value: 22, name: '22' },
+  { id: 24, value: 23, name: '23' },
+  { id: 25, value: 24, name: '24' },
+  { id: 26, value: 25, name: '25' },
+  { id: 27, value: 26, name: '26' },
+  { id: 28, value: 27, name: '27' },
+  { id: 29, value: 28, name: '28' },
+  { id: 30, value: 29, name: '29' },
+  { id: 31, value: 30, name: '30' },
+  { id: 32, value: 31, name: '31' },
+  { id: 33, value: 32, name: '32' },
+  { id: 34, value: 33, name: '33' },
+  { id: 35, value: 34, name: '34' },
+  { id: 36, value: 35, name: '35' },
+  { id: 37, value: 36, name: '36' },
+  { id: 38, value: 37, name: '37' },
+  { id: 39, value: 38, name: '38' },
+  { id: 40, value: 39, name: '39' },
+  { id: 41, value: 40, name: '40' },
+  { id: 42, value: 41, name: '41' },
+  { id: 43, value: 42, name: '42' },
+  { id: 44, value: 43, name: '43' },
+  { id: 45, value: 44, name: '44' },
+  { id: 46, value: 45, name: '45' },
+  { id: 47, value: 46, name: '46' },
+  { id: 48, value: 47, name: '47' },
+  { id: 49, value: 48, name: '48' },
+  { id: 50, value: 49, name: '49' },
+  { id: 51, value: 50, name: '50' },
+  { id: 52, value: 51, name: '51' },
+  { id: 53, value: 52, name: '52' },
+  { id: 54, value: 53, name: '53' },
+  { id: 55, value: 54, name: '54' },
+  { id: 56, value: 55, name: '55' },
+  { id: 57, value: 56, name: '56' },
+  { id: 58, value: 57, name: '57' },
+  { id: 59, value: 58, name: '58' },
+  { id: 60, value: 59, name: '59' },
+  { id: 61, value: 60, name: '60' },
 ]
 
 // const timeslots = [
@@ -286,49 +306,214 @@ const numberOfPeopleTimeSlot = [
 //     start: '20:00',
 //     end: '00:00',
 //   },
+
 // ]
 
 export default {
 
 
   mounted() {
+
+
     this.axios.get(process.env.VUE_APP_URL_API + "api/timeslots")
         .then(response => {
           this.timeslots = response.data
         })
+
+    this.axios.post(process.env.VUE_APP_URL_API + "api/slots")
+
+        .then(response => {
+          let slots = response.data
+
+          this.slots = slots.map(element=>{
+
+            return { start: new Date(element.startdate), end: new Date(element.finishdate), starttime: element.starttime, finishtime: element.finishtime, slot: element.slot_id }
+
+          })
+
+        })
+
+    this.axios.post(process.env.VUE_APP_URL_API + "api/fulldays")
+        .then(response => {
+
+          let fulldays = response.data
+          this.fulldays = fulldays.map(element=>{
+
+
+            return { start: new Date(element.startdate), end: new Date(element.finishdate), starttime: element.starttime, finishtime: element.finishtime, slot: element.slot_id }
+
+          })
+
+          // Filter all the fulldays where the reservation takes only the first slot of the checkout day
+          let slot1 = this.fulldays.filter(it => it.slot.includes(1));
+
+          slot1.map(function(item){
+            let end =  new Date(item.end)
+            end.setDate(end.getDate() - 1)
+            item.end = end
+            return item;
+          })
+
+          // Filter all the fulldays where the the reservtion take more than first slot ( late checkout )
+          let otherSlot = this.fulldays.filter(it => it.slot  != 1);
+
+          // merge de result in order to correctly populate the calendar daily based ( if standard checkout book only the first slot - else book the full day )
+          let dates = [...slot1, ...otherSlot]
+
+
+          this.dates = dates
+
+          let disable =  [
+            dates
+          ]
+
+          // Block the weekend days coz on timeslot we cannot get access to them
+          let weekend = {weekdays: [6, 7,]}
+          disable[0].unshift(weekend);
+          let bookeed =  [
+            disable[0]
+          ]
+
+          this.disableCalendar = bookeed[0]
+
+        })
+
+    this.axios.get(process.env.VUE_APP_URL_API + "api/products ")
+        .then(response => {
+          this.products = response.data
+        })
+
   },
 
   data() {
-  return {
-    selectedTimeSlots:'',
-    timeslots:'',
-    date:'',
-    attributes: [
-      {
-        key: 'today',
-        highlight: {
-          color: 'blue',
-          fillMode: 'solid',
+
+    return {
+      EndOfDay:'',
+      fulldaysFinishSlot:[],
+      slots:'',
+      fulldays:'',
+      day:'',
+      availableHourSlots:[],
+      products:'',
+      amount:'',
+      guests:'',
+      disableCalendar:'',
+      selectedTimeSlots:'',
+      timeslots:'',
+      date:'',
+      attributes: [
+        {
+          key: 'today',
+          highlight: {
+            color: 'blue',
+            fillMode: 'solid',
+          },
+          dates: new Date(),
         },
-        dates: new Date(),
-      },
-      {
-        highlight: {
-          color: 'green',
-          fillMode: 'solid',
-        },
-        dates: new Date(2022, 1, 13),
-      },
-      {
-        highlight: {
-          color: 'red',
-          fillMode: 'solid',
-        },
-        dates: new Date(2022, 1, 14),
-      },
-    ],
-  };
+      ],
+    };
 },
+
+  methods:{
+
+    input(){
+
+      let date = moment(this.date).format('YYYY-M-DD')
+
+      this.axios.get(process.env.VUE_APP_URL_API + "api/timeslots")
+          .then(response => {
+            this.timeslots = response.data
+          })
+
+      // get all the reservations for the chosen day by the finishdate ( In timeslot finish date & start date are the same - taking the finish date & time we can understand where finish the fullday reservation too )  )
+      this.axios.post(process.env.VUE_APP_URL_API + 'api/slotdisponibilityEnd ', {date}).then(response => {
+         this.day = response.data
+
+
+        //1 - for the chosen day get an array of starting hours reservation
+        let result = this.day.map(a => a.starttime);  // 15 , 10, 20
+        let resultF = this.day.map(a => a.finishtime) // 19, 14, 24
+
+
+        //2 - order hours min to max
+        let sortResult = result.sort()  // 10, 15, 20
+        let sortResultF = resultF.sort() // 14, 19, 24
+
+
+        // create a dynamic array with all the times start slots
+        let slots = this.timeslots.map(a => a.start); // ==> get all the starting time of timeslot decide by the admin
+        let slotsF = this.timeslots.map(a => a.end); // ==> get all the finishing time of timeslot decide by the admin
+
+        // difference to understand available timeslot in array
+        let difference = slots.filter(x => !sortResult.includes(x)); // ==> reservation starting time of the day - starting time decide by the admin
+        let differenceF = slotsF.filter(x => !sortResultF.includes(x)); // ==> reservation finishing time of the day - finishing time decide by the admin
+
+
+        // difference to understand booked timeslot in array
+        let rest = slots.filter(x => sortResult.includes(x)); // ==> booked slots starting time of the day - starting time decide by the admin
+        let restF = slotsF.filter(x => sortResultF.includes(x)); // ==> booked slots finishing time of the day - finishing time decide by the admin
+
+
+        // covert array of string in array of number free slots [ "20", "15" ]  ==> [ 20, 15 ]
+        let diff = difference.map(i=>Number(i)) // starting time
+        let diffF = differenceF.map(i=>Number(i)) // finishing time
+
+        // covert array of string in array of number booked slots [ "20", "15" ]  ==> [ 20, 15 ]
+        let occupied = rest.map(i=>Number(i)) // starting time
+        let occupiedF = restF.map(i=>Number(i)) // finishing time
+
+
+        // binding the available hour slot to the timepicker
+        this.availableHourSlots = diff
+
+
+        // Count number of free slots
+        let numFreeSlot = (` ${diff.length}`)
+
+        // Count number of book slots
+        let numBookSlot = (` ${occupied.length}`)
+
+        // create a dynamic array where each obj show free slots and relative value
+        let free = []
+        for(let i=0; i<numFreeSlot; i++)  {
+          free.push({label: 'active', start: diff[i], end:diffF[i], available:1 });
+        }
+
+        // create a dynamic array where each obj show book slots and relative value
+        let book = []
+        for(let i=0; i<numBookSlot; i++)  {
+          book.push({label: 'book', start: occupied[i], end:occupiedF[i], available:0 });
+        }
+
+        // Mergin 2 result
+        let information  = [...free, ...book]
+
+
+        // Sort by min to max hour start slots
+        this.timeslots = information.sort(function (a, b) {
+          return a.start - b.start;
+        });
+
+      })
+
+    },
+
+    checknumberOfPeople(e){
+
+      this.guests = ''
+      this.amount = ''
+
+      this.guests = e
+
+    },
+
+    calculate(){
+
+      this.amount = this.products[0]['price'] * this.guests
+
+    }
+
+  },
 
   components: {
     CheckIcon,
@@ -338,6 +523,7 @@ export default {
     QuestionMarkCircleIcon,
     LockClosedIcon,
     CheckCircleIcon,
+    PlusCircleIcon,
     Listbox,
     ListboxButton,
     ListboxLabel,
@@ -349,7 +535,7 @@ export default {
     RadioGroupOption,
   },
   setup() {
-    const selected = ref(numberOfPeopleTimeSlot[5])
+    const selected = ref(numberOfPeopleTimeSlot[0])
     return {
       steps,
       numberOfPeopleTimeSlot,
@@ -368,5 +554,9 @@ export default {
 /* .vc-weekday{
   color:#2D3748;
 } */
+
+.vc-time-picker{
+  visibility: hidden !important;
+}
 
 </style>

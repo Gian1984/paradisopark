@@ -13,6 +13,7 @@
     "@tailwindcss/forms": "^0.5.0",
     "axios": "^0.26.0",
     "core-js": "^3.6.5",
+    "moment": "^2.29.1",
     "tailwind-colors": "^1.1.0",
     "v-calendar": "^3.0.0-alpha.8",
     "vue": "^3.0.0",
