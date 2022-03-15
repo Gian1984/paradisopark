@@ -43,7 +43,7 @@
         <h2 id="cart-heading" class="sr-only">Items in your shopping cart</h2>
 
         <ul role="list" class="border-t border-b border-gray-200 divide-y divide-gray-200">
-          <li v-for="(product, productIdx) in additionals" :key="product.id" class="flex py-3 sm:py-4">
+          <li v-for="(product, productIdx) in additionals" :key="product.id" class="flex py-3 sm:py-4" @change="additional()">
             <div class="flex-shrink-0">
               <img :src="product.image" :alt="product.imageAlt" class="w-16 h-16 rounded-md object-center object-cover sm:w-20 sm:h-20" />
             </div>
@@ -68,25 +68,13 @@
 
                 <div class="mt-4 sm:mt-0 sm:pr-9 flex flex-col">
                   <label :for="`quantity-${productIdx}`" class="mt-3 text-sm text-gray-500">Quantity</label>
-                  <select :id="`quantity-${productIdx}`" :name="`quantity-${productIdx}`" class="max-w-full rounded-md border border-gray-300 py-1.5 text-base leading-5 font-medium text-gray-700 text-left shadow-sm focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                    <option value="6">6</option>
-                    <option value="7">7</option>
-                    <option value="8">8</option>
+                  <select v-model="product.quantity" :id="`quantity-${productIdx}`" :name="`quantity-${productIdx}`" class="max-w-full rounded-md border border-gray-300 py-1.5 text-base leading-5 font-medium text-gray-700 text-left shadow-sm focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                    <option  value="0">0</option>
+                    <option v-for="index in 60" :key="index" :value="index">{{index}}</option>
                   </select>
-
                 </div>
               </div>
 
-              <!-- <p class="mt-4 flex text-sm text-gray-700 space-x-2">
-                <CheckIcon v-if="product.inStock" class="flex-shrink-0 h-5 w-5 text-green-500" aria-hidden="true" />
-                <ClockIcon v-else class="flex-shrink-0 h-5 w-5 text-gray-300" aria-hidden="true" />
-                <span>{{ product.inStock ? 'In stock' : `Ships in ${product.leadTime}` }}</span>
-              </p> -->
             </div>
           </li>
         </ul>
@@ -102,28 +90,28 @@
             <dd class="text-sm font-medium text-gray-900">{{ reservation.get('guests') }}</dd>
           </div>
           <div class="border-t border-gray-200 pt-4 flex items-center justify-between">
-            <dt class="flex items-center text-sm text-gray-600">
-              <span>Shipping estimate</span>
-              <a href="#" class="ml-2 flex-shrink-0 text-gray-400 hover:text-gray-500">
-                <span class="sr-only">Learn more about how shipping is calculated</span>
-                <QuestionMarkCircleIcon class="h-5 w-5" aria-hidden="true" />
-              </a>
-            </dt>
-            <dd class="text-sm font-medium text-gray-900">$5.00</dd>
-          </div>
-          <div class="border-t border-gray-200 pt-4 flex items-center justify-between">
             <dt class="flex text-sm text-gray-600">
-              <span>Tax estimate</span>
+              <span>Total room</span>
               <a href="#" class="ml-2 flex-shrink-0 text-gray-400 hover:text-gray-500">
                 <span class="sr-only">Learn more about how tax is calculated</span>
                 <QuestionMarkCircleIcon class="h-5 w-5" aria-hidden="true" />
               </a>
             </dt>
-            <dd class="text-sm font-medium text-gray-900">$8.32</dd>
+            <dd class="text-sm font-medium text-gray-900">{{ reservation.get('amount')  }}</dd>
+          </div>
+          <div class="border-t border-gray-200 pt-4 flex items-center justify-between">
+            <dt class="flex items-center text-sm text-gray-600">
+              <span>Total additional</span>
+              <a href="#" class="ml-2 flex-shrink-0 text-gray-400 hover:text-gray-500">
+                <span class="sr-only">Learn more about how shipping is calculated</span>
+                <QuestionMarkCircleIcon class="h-5 w-5" aria-hidden="true" />
+              </a>
+            </dt>
+            <dd class="text-sm font-medium text-gray-900">{{ additionalAmount }} €</dd>
           </div>
           <div class="border-t border-gray-200 pt-4 flex items-center justify-between">
             <dt class="text-base font-medium text-gray-900">Order total</dt>
-            <dd class="text-base font-medium text-gray-900">{{ reservation.get('amount') }} €</dd>
+            <dd class="text-base font-medium text-gray-900">{{ amount }} €</dd>
           </div>
         </dl>
 
@@ -198,33 +186,57 @@ export default {
   mounted() {
     this.axios.get(process.env.VUE_APP_URL_API + "api/additionals")
         .then(response => {
-          this.additionals = response.data
+
+          let additionals = response.data
+          this.additionals = additionals.map(element=>{
+
+            return {id:element.id, name: element.name, description: element.description, price:element.price, image:element.image, language:element.language, quantity: 0 }
+
+          })
+
+
         })
   },
 
   data(){
     return{
-      additionals:''
+      additionals:'',
+      additionalAmount:'',
+      amount:'',
     }
   },
 
-  computed: {
+  methods:{
+    additional(){
+      // console.log(this.additionals)
+      let additionalAmount  = this.additionals.map(element => {
 
+          return{id:element.id, price:element.price, quantity: element.quantity, total:(element.price* element.quantity)}
+
+        });
+
+      // console.log('daicazzo',additionalAmount)
+
+      let total = additionalAmount.reduce(function(prev, cur) {
+        return prev + cur.total;
+      }, 0);
+
+      console.log('Total Messages:', total); // Total Messages: 461
+
+      this.additionalAmount = total
+
+      this.amount = parseInt(this.additionalAmount) + parseInt(this.reservation.get('amount'))
+    }
+
+  },
+
+
+  computed: {
     reservation:{
       get(){
         return this.$store.state.reservation
       },
     },
-    // range:{
-    //   get(){
-    //     return this.$store.state.range
-    //   }
-    // },
-    // guests:{
-    //   get(){
-    //     return this.$store.state.guests
-    //   }
-    // }
   },
 
 
