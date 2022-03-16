@@ -89,9 +89,50 @@
               </div>
             </div>
 
-
           </div>
         </div>
+
+
+        <div v-if="this.emptyGuests" class="rounded-md bg-red-50 p-4 mb-4">
+          <div class="flex">
+            <div class="flex-shrink-0">
+              <XCircleIcon class="h-5 w-5 text-red-400" aria-hidden="true" />
+            </div>
+            <div class="ml-3">
+              <p class="text-sm font-medium text-red-800">{{ emptyGuests }}</p>
+            </div>
+            <div class="ml-auto pl-3">
+              <div class="-mx-1.5 -my-1.5">
+                <button type="button" v-on:click="this.emptyGuests = ''" class="inline-flex bg-red-50 rounded-md p-1.5 text-red-500 hover:bg-red-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-red-50 focus:ring-red-600">
+                  <span class="sr-only">Dismiss</span>
+                  <XIcon class="h-5 w-5" aria-hidden="true" />
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <div v-if="this.emptyDates" class="rounded-md bg-red-50 p-4 mb-4">
+          <div class="flex">
+            <div class="flex-shrink-0">
+              <XCircleIcon class="h-5 w-5 text-red-400" aria-hidden="true" />
+            </div>
+            <div class="ml-3">
+              <p class="text-sm font-medium text-red-800">{{ emptyDates }}</p>
+            </div>
+            <div class="ml-auto pl-3">
+              <div class="-mx-1.5 -my-1.5">
+                <button type="button" v-on:click="this.emptyDates = ''" class="inline-flex bg-red-50 rounded-md p-1.5 text-red-500 hover:bg-red-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-red-50 focus:ring-red-600">
+                  <span class="sr-only">Dismiss</span>
+                  <XIcon class="h-5 w-5" aria-hidden="true" />
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
         <!-- DATE PICKER -->
         <v-date-picker class="mycutomcalendar"
                        is-expanded
@@ -133,6 +174,7 @@
                 <CheckCircleIcon :class="[!checked ? 'invisible' : '', 'h-5 w-5 text-green-500']" aria-hidden="true" />
                 <div :class="[active ? 'border' : 'border-1', checked ? 'border-green-500' : 'border-transparent', 'absolute -inset-px pointer-events-none']" aria-hidden="true" />
               </div>
+
             </RadioGroupOption>
           </div>
         </RadioGroup>
@@ -175,12 +217,13 @@
           </div>
           <div class="border-t border-gray-200 pt-4 flex items-center justify-between">
             <dt class="text-base font-medium text-gray-900">Order total</dt>
-            <dd class="text-base font-medium text-gray-900">$112.32</dd>
+
+            <dd class="text-base font-medium text-gray-900">{{ amount }} €</dd>
           </div>
         </dl>
 
         <div class="mt-6">
-          <button type="submit" class="w-full bg-indigo-600 border border-transparent rounded-md shadow-sm py-3 px-4 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-indigo-500">Add to cart</button>
+          <button v-on:click="next( date, amount, guests)" type="button" class="w-full bg-indigo-600 border border-transparent rounded-md shadow-sm py-3 px-4 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-indigo-500">Add to cart</button>
         </div>
       </section>
     </form>
@@ -204,6 +247,8 @@ import {
   RadioGroupOption,
 } from '@headlessui/vue'
 import {
+  XIcon,
+  XCircleIcon,
   CheckIcon,
   ChevronLeftIcon,
   SelectorIcon,
@@ -352,6 +397,8 @@ export default {
   },
   data() {
     return {
+      emptyGuests:'',
+      emptyDates:'',
       EndOfDay:'',
       fulldaysFinishSlot:[],
       slots:'',
@@ -433,15 +480,42 @@ export default {
       })
     },
     checknumberOfPeople(e){
+
+      this.emptyGuests = ''
+      this.emptyDates = ''
       this.guests = ''
       this.amount = ''
       this.guests = e
     },
+    
     calculate(){
-      this.amount = this.products[0]['price'] * this.guests
-    }
+      if(this.date == '') {
+        this.emptyDates = 'Please select a valid range of days'
+      } else {
+        if(this.guests ==''){
+          this.emptyGuests = 'Please select number of guests'
+        } else {
+          this.amount = this.products[0]['price'] * this.guests
+        }
+      }
+    },
+    
+    next( date, amount, guests ){
+      const book = new Map();
+      book.set('dates', date);
+      book.set('amount', amount);
+      book.set('guests', guests);
+      book.set('c', this.checkOutSlot);
+      this.$store.commit('setReservation',( book ))
+      // this.$store.commit('setReservationAmount',( amount ))
+      // this.$store.commit('setReservationGuests',( guests ))
+      this.$router.push({path: '/additionaltimeslot'})
+    },
+
   },
   components: {
+    XIcon,
+    XCircleIcon,
     CheckIcon,
     ChevronLeftIcon,
     SelectorIcon,
