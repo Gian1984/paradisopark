@@ -3,21 +3,19 @@ import { createStore } from 'vuex'
 export default createStore({
   state: {
     reservation:'',
-    // amount:'',
-    // range:'',
-    // guests:'',
+    additionals:'',
+    totalAmount:'',
   },
   mutations: {
     setReservation(state, book){
       state.reservation = book
     },
-    // setReservationAmount(state, amount){
-    //   state.amount = amount
-    // },
-    // setReservationGuests(state, guests){
-    //   state.guests = guests
-    // },
-
+    setAdditionals(state, additionals){
+      state.additionals = additionals
+    },
+    totalAmount(state, totalAmount){
+      state.totalAmount = totalAmount
+    },
   },
   actions: {
   },

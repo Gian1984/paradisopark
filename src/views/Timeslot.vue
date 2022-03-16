@@ -174,7 +174,6 @@
                 <CheckCircleIcon :class="[!checked ? 'invisible' : '', 'h-5 w-5 text-green-500']" aria-hidden="true" />
                 <div :class="[active ? 'border' : 'border-1', checked ? 'border-green-500' : 'border-transparent', 'absolute -inset-px pointer-events-none']" aria-hidden="true" />
               </div>
-
             </RadioGroupOption>
           </div>
         </RadioGroup>
@@ -217,7 +216,6 @@
           </div>
           <div class="border-t border-gray-200 pt-4 flex items-center justify-between">
             <dt class="text-base font-medium text-gray-900">Order total</dt>
-
             <dd class="text-base font-medium text-gray-900">{{ amount }} €</dd>
           </div>
         </dl>
@@ -480,15 +478,14 @@ export default {
       })
     },
     checknumberOfPeople(e){
-
       this.emptyGuests = ''
       this.emptyDates = ''
       this.guests = ''
       this.amount = ''
       this.guests = e
     },
-    
     calculate(){
+
       if(this.date == '') {
         this.emptyDates = 'Please select a valid range of days'
       } else {
@@ -499,19 +496,15 @@ export default {
         }
       }
     },
-    
     next( date, amount, guests ){
       const book = new Map();
       book.set('dates', date);
       book.set('amount', amount);
       book.set('guests', guests);
-      book.set('c', this.checkOutSlot);
+      book.set('slot', this.checkOutSlot);
       this.$store.commit('setReservation',( book ))
-      // this.$store.commit('setReservationAmount',( amount ))
-      // this.$store.commit('setReservationGuests',( guests ))
       this.$router.push({path: '/additionaltimeslot'})
     },
-
   },
   components: {
     XIcon,

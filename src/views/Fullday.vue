@@ -482,10 +482,8 @@ export default {
       book.set('dates', range);
       book.set('amount', amount);
       book.set('guests', guests);
-      book.set('c', this.checkOutSlot);
+      book.set('slot', this.checkOutSlot);
       this.$store.commit('setReservation',( book ))
-      // this.$store.commit('setReservationAmount',( amount ))
-      // this.$store.commit('setReservationGuests',( guests ))
       this.$router.push({path: '/additionalfullday'})
     },
   },

@@ -116,7 +116,7 @@
         </dl>
 
         <div class="mt-6">
-          <button type="submit" class="w-full bg-indigo-600 border border-transparent rounded-md shadow-sm py-3 px-4 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-indigo-500">Add to cart</button>
+          <button v-on:click="next()" type="button"  class="w-full bg-indigo-600 border border-transparent rounded-md shadow-sm py-3 px-4 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-indigo-500">Add to cart</button>
         </div>
       </section>
     </form>
@@ -133,8 +133,8 @@ import {
 } from '@heroicons/vue/solid'
 const steps = [
   { name: 'Step 1', href: '/timeslot', status: 'complete' },
-  { name: 'Step 2', href: 'additionaltimeslot', status: 'current' },
-  { name: 'Step 3', href: '#', status: 'upcoming' },
+  { name: 'Step 2', href: '/additionaltimeslot', status: 'current' },
+  { name: 'Step 3', href: '/checkouttimeslot', status: 'upcoming' },
 ]
 // const products = [
 //   {
@@ -190,6 +190,7 @@ export default {
   },
   data(){
     return{
+      add:'',
       additionals:'',
       additionalAmount:'',
       amount:'',
@@ -197,18 +198,27 @@ export default {
   },
   methods:{
     additional(){
-      // console.log(this.additionals)
+
       let additionalAmount  = this.additionals.map(element => {
-        return{id:element.id, price:element.price, quantity: element.quantity, total:(element.price* element.quantity)}
+        return{id:element.id, name:element.name, description:element.description, price:element.price, quantity: element.quantity, total:(element.price* element.quantity)}
       });
-      // console.log('daicazzo',additionalAmount)
+
+      this.add = additionalAmount
+
       let total = additionalAmount.reduce(function(prev, cur) {
         return prev + cur.total;
       }, 0);
-      console.log('Total Messages:', total); // Total Messages: 461
+
       this.additionalAmount = total
       this.amount = parseInt(this.additionalAmount) + parseInt(this.reservation.get('amount'))
-    }
+    },
+    next(){
+      const additionals = this.add
+      const totalAmount = this.amount
+      this.$store.commit('setAdditionals',( additionals ))
+      this.$store.commit('totalAmount',( totalAmount ))
+      this.$router.push({path: '/checkoutfullday'})
+    },
   },
   computed: {
     reservation:{
