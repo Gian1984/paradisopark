@@ -1,191 +1,191 @@
 <template>
-    <section class="max-w-xl mx-auto pt-24 pb-8 px-4 sm:pt-32 sm:px-6 lg:max-w-7xl lg:px-8">
+  <section class="max-w-xl mx-auto pt-24 pb-8 px-4 sm:pt-32 sm:px-6 lg:max-w-7xl lg:px-8">
 
-        <nav aria-label="Progress" class="relative flex justify-center">
-          <router-link to="/booking" class="absolute left-0 inline-flex items-center px-3 py-2 border border-transparent shadow-sm text-sm leading-4 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 ">
-            <ChevronLeftIcon class="-ml-0.5 mr-2 h-4 w-4" aria-hidden="true" />
-            Back
-          </router-link>
-          <ol role="list" class="flex items-center mx-auto">
-            <li v-for="(step, stepIdx) in steps" :key="step.name" :class="[stepIdx !== steps.length - 1 ? 'pr-8 sm:pr-20' : '', 'relative']">
-              <template v-if="step.status === 'complete'">
-                <div class="absolute inset-0 flex items-center" aria-hidden="true">
-                  <div class="h-0.5 w-full bg-indigo-600" />
-                </div>
-                <router-link :to="step.href" class="relative w-8 h-8 flex items-center justify-center bg-indigo-600 rounded-full hover:bg-indigo-900">
-                  <CheckIcon class="w-5 h-5 text-white" aria-hidden="true" />
-                  <span class="sr-only">{{ step.name }}</span>
-                </router-link>
-              </template>
-              <template v-else-if="step.status === 'current'" condition="step.status === 'current'">
-                <div class="absolute inset-0 flex items-center" aria-hidden="true">
-                  <div class="h-0.5 w-full bg-gray-200" />
-                </div>
-                <router-link :to="step.href" class="relative w-8 h-8 flex items-center justify-center bg-white border-2 border-indigo-600 rounded-full" aria-current="step">
-                  <span class="h-2.5 w-2.5 bg-indigo-600 rounded-full" aria-hidden="true" />
-                  <span class="sr-only">{{ step.name }}</span>
-                </router-link>
-              </template>
-              <template v-else>
-                <div class="absolute inset-0 flex items-center" aria-hidden="true">
-                  <div class="h-0.5 w-full bg-gray-200" />
-                </div>
-                <router-link :to="step.href" class="group relative w-8 h-8 flex items-center justify-center bg-white border-2 border-gray-300 rounded-full hover:border-gray-400">
-                  <span class="h-2.5 w-2.5 bg-transparent rounded-full group-hover:bg-gray-300" aria-hidden="true" />
-                  <span class="sr-only">{{ step.name }}</span>
-                </router-link>
-              </template>
-            </li>
-          </ol>
-        </nav>
+    <nav aria-label="Progress" class="relative flex justify-center">
+      <router-link to="/booking" class="absolute left-0 inline-flex items-center px-3 py-2 border border-transparent shadow-sm text-sm leading-4 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 ">
+        <ChevronLeftIcon class="-ml-0.5 mr-2 h-4 w-4" aria-hidden="true" />
+        Back
+      </router-link>
+      <ol role="list" class="flex items-center mx-auto">
+        <li v-for="(step, stepIdx) in steps" :key="step.name" :class="[stepIdx !== steps.length - 1 ? 'pr-8 sm:pr-20' : '', 'relative']">
+          <template v-if="step.status === 'complete'">
+            <div class="absolute inset-0 flex items-center" aria-hidden="true">
+              <div class="h-0.5 w-full bg-indigo-600" />
+            </div>
+            <router-link :to="step.href" class="relative w-8 h-8 flex items-center justify-center bg-indigo-600 rounded-full hover:bg-indigo-900">
+              <CheckIcon class="w-5 h-5 text-white" aria-hidden="true" />
+              <span class="sr-only">{{ step.name }}</span>
+            </router-link>
+          </template>
+          <template v-else-if="step.status === 'current'" condition="step.status === 'current'">
+            <div class="absolute inset-0 flex items-center" aria-hidden="true">
+              <div class="h-0.5 w-full bg-gray-200" />
+            </div>
+            <router-link :to="step.href" class="relative w-8 h-8 flex items-center justify-center bg-white border-2 border-indigo-600 rounded-full" aria-current="step">
+              <span class="h-2.5 w-2.5 bg-indigo-600 rounded-full" aria-hidden="true" />
+              <span class="sr-only">{{ step.name }}</span>
+            </router-link>
+          </template>
+          <template v-else>
+            <div class="absolute inset-0 flex items-center" aria-hidden="true">
+              <div class="h-0.5 w-full bg-gray-200" />
+            </div>
+            <router-link :to="step.href" class="group relative w-8 h-8 flex items-center justify-center bg-white border-2 border-gray-300 rounded-full hover:border-gray-400">
+              <span class="h-2.5 w-2.5 bg-transparent rounded-full group-hover:bg-gray-300" aria-hidden="true" />
+              <span class="sr-only">{{ step.name }}</span>
+            </router-link>
+          </template>
+        </li>
+      </ol>
+    </nav>
 
-        <!-- <h1 class="mt-8 text-3xl text-center font-extrabold tracking-tight text-gray-900 sm:text-4xl">Time slot</h1>
-        <h2 class="text-center">Book your wellness moment here easily and quickly</h2> -->
-        <form class="mt-8 lg:grid lg:grid-cols-12 lg:gap-x-12 lg:items-start xl:gap-x-16">
-          <section aria-labelledby="cart-heading" class="lg:col-span-7">
-            <h2 id="cart-heading" class="sr-only">Items in your shopping cart</h2>
-            <div class="items-center bg-gray-50 mb-4 p-4">
-              <!-- SELECT NUMBER OF PEOPLE -->
-              <div>
-                <Listbox as="div" v-model="selected">
-                  <ListboxLabel class="block text-sm font-medium text-gray-700"> Number of people </ListboxLabel>
-                  <div class="mt-1 relative">
-                    <ListboxButton class="bg-white relative w-full border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                      <span class="block truncate">{{ selected.name }}</span>
-                      <span class="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
+    <!-- <h1 class="mt-8 text-3xl text-center font-extrabold tracking-tight text-gray-900 sm:text-4xl">Time slot</h1>
+    <h2 class="text-center">Book your wellness moment here easily and quickly</h2> -->
+    <form class="mt-8 lg:grid lg:grid-cols-12 lg:gap-x-12 lg:items-start xl:gap-x-16">
+      <section aria-labelledby="cart-heading" class="lg:col-span-7">
+        <h2 id="cart-heading" class="sr-only">Items in your shopping cart</h2>
+        <div class="items-center bg-gray-50 mb-4 p-4">
+          <!-- SELECT NUMBER OF PEOPLE -->
+          <div>
+            <Listbox as="div" v-model="selected">
+              <ListboxLabel class="block text-sm font-medium text-gray-700"> Number of people </ListboxLabel>
+              <div class="mt-1 relative">
+                <ListboxButton class="bg-white relative w-full border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                  <span class="block truncate">{{ selected.name }}</span>
+                  <span class="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
                         <SelectorIcon class="h-5 w-5 text-gray-400" aria-hidden="true" />
                       </span>
-                    </ListboxButton>
+                </ListboxButton>
 
-                    <transition leave-active-class="transition ease-in duration-100" leave-from-class="opacity-100" leave-to-class="opacity-0">
-                      <ListboxOptions class="absolute z-10 mt-1 w-full bg-white shadow-lg max-h-60 rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none sm:text-sm">
-                        <ListboxOption as="template" v-for="person in numberOfPeopleTimeSlot" :key="person.id" :value="person" v-slot="{ active, selected }">
-                          <li :class="[active ? 'text-white bg-indigo-600' : 'text-gray-900', 'cursor-default select-none relative py-2 pl-3 pr-9']" v-on:click="checknumberOfPeople(person.value)">
+                <transition leave-active-class="transition ease-in duration-100" leave-from-class="opacity-100" leave-to-class="opacity-0">
+                  <ListboxOptions class="absolute z-10 mt-1 w-full bg-white shadow-lg max-h-60 rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none sm:text-sm">
+                    <ListboxOption as="template" v-for="person in numberOfPeopleTimeSlot" :key="person.id" :value="person" v-slot="{ active, selected }">
+                      <li :class="[active ? 'text-white bg-indigo-600' : 'text-gray-900', 'cursor-default select-none relative py-2 pl-3 pr-9']" v-on:click="checknumberOfPeople(person.value)">
                             <span :class="[selected ? 'font-semibold' : 'font-normal', 'block truncate']">
                               {{ person.name }}
                             </span>
 
-                            <span v-if="selected" :class="[active ? 'text-white' : 'text-indigo-600', 'absolute inset-y-0 right-0 flex items-center pr-4']">
+                        <span v-if="selected" :class="[active ? 'text-white' : 'text-indigo-600', 'absolute inset-y-0 right-0 flex items-center pr-4']">
                               <CheckIcon class="h-5 w-5" aria-hidden="true" />
                             </span>
-                          </li>
-                        </ListboxOption>
-                      </ListboxOptions>
-                    </transition>
-                  </div>
-                </Listbox>
-                <small class="text-gray-400">The minimum price start for a group of 6 persons.</small>
+                      </li>
+                    </ListboxOption>
+                  </ListboxOptions>
+                </transition>
+              </div>
+            </Listbox>
+            <small class="text-gray-400">The minimum price start for a group of 6 persons.</small>
 
-                <!-- BTN CONTACT-->
-                <div class="mx-auto">
-                  <div class="mt-4 flex mx-auto text-center">
-                    <p class="text-center text-sm mt-1">More than 60 persons?</p>
-                    <div class="text-center">
-                      <router-link to="/contact" class="ml-2 inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                        <MailIcon class="-ml-0.5 mr-2 h-4 w-4" aria-hidden="true" />
-                        Contact us
-                      </router-link>
-                    </div>
+            <!-- BTN CONTACT-->
+            <div class="mx-auto">
+              <div class="mt-4 flex mx-auto text-center">
+                <p class="text-center text-sm mt-1">More than 60 persons?</p>
+                <div class="text-center">
+                  <router-link to="/contact" class="ml-2 inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                    <MailIcon class="-ml-0.5 mr-2 h-4 w-4" aria-hidden="true" />
+                    Contact us
+                  </router-link>
+                </div>
+              </div>
+            </div>
+
+
+          </div>
+        </div>
+        <!-- DATE PICKER -->
+        <v-date-picker class="mycutomcalendar"
+                       is-expanded
+                       color="green"
+                       :disabled-dates='disableCalendar'
+                       :min-date='new Date()'
+                       :attributes="attributes"
+                       v-model="date"
+                       @click.stop
+                       mode= 'dateTime'
+                       :valid-hours="availableHourSlots" is24hr
+                       :minute-increment="60"
+                       v-on:click="input()"
+        />
+        <!-- <div class="w-full flex">
+          <p>Legendary</p>
+          <p class="bg-blue-500 rounded-2xl py-1 px-3 text-white mx-4">Today</p>
+          <p class="bg-green-500 rounded-2xl py-1 px-3 text-white mx-4">Selection</p>
+          <p class="bg-red-600 rounded-2xl py-1 px-3 text-white mx-4">Not available</p>
+        </div> -->
+
+        <!-- TIME SLOT CARDS -->
+        <RadioGroup v-model="selectedTimeSlots">
+          <!-- <RadioGroupLabel class="text-base font-medium text-gray-900"> Select a time slot </RadioGroupLabel> -->
+
+          <div class="grid grid-cols-1 gap-y-6 sm:grid-cols-3 sm:gap-x-4 bg-gray-50 mt-4 p-4">
+            <RadioGroupOption as="template" v-for="timeslot in timeslots" :key="timeslot.start" :value="timeslot" v-slot="{ checked, active }" :disabled="timeslot.available == 0">
+              <div :class="[checked ? 'border-green-500' : 'border-gray-300', active ? 'ring-1 ring-green-500' : '', 'relative bg-white border shadow-sm p-4 flex cursor-pointer focus:outline-none']">
+                <div class="flex-1 flex">
+                  <div class="flex flex-col items-center justify-center text-center text-base font-medium text-gray-900">
+                    <RadioGroupLabel as="span" class="text-sm font-medium text-gray-900 uppercase">de</RadioGroupLabel>
+                    <RadioGroupDescription as="span" class="flex items-center text-sm text-gray-500">{{ timeslot.start }}:00</RadioGroupDescription>
+                    <RadioGroupDescription as="span" class="text-sm font-medium text-gray-900 uppercase">JUSQU'Á</RadioGroupDescription>
+                    <RadioGroupDescription as="span" class="flex items-center text-sm text-gray-500">{{ timeslot.end }}:00</RadioGroupDescription>
                   </div>
                 </div>
-
-
+                <LockClosedIcon v-if="timeslot.available == '0'" :class="[checked ? 'invisible' : '', 'h-5 w-5 text-gray-500 opacity-50']" aria-hidden="true" />
+                <PlusCircleIcon v-if="timeslot.available == '1'" :class="[checked ? 'invisible' : '', 'h-5 w-5 text-gray-500']" aria-hidden="true" />
+                <CheckCircleIcon :class="[!checked ? 'invisible' : '', 'h-5 w-5 text-green-500']" aria-hidden="true" />
+                <div :class="[active ? 'border' : 'border-1', checked ? 'border-green-500' : 'border-transparent', 'absolute -inset-px pointer-events-none']" aria-hidden="true" />
               </div>
-            </div>
-            <!-- DATE PICKER -->
-            <v-date-picker class="mycutomcalendar"
-              is-expanded
-              color="green"
-              :disabled-dates='disableCalendar'
-              :min-date='new Date()'
-              :attributes="attributes"
-              v-model="date"
-                           @click.stop
-                           mode= 'dateTime'
-                           :valid-hours="availableHourSlots" is24hr
-                           :minute-increment="60"
-                           v-on:click="input()"
-            />
-            <!-- <div class="w-full flex">
-              <p>Legendary</p>
-              <p class="bg-blue-500 rounded-2xl py-1 px-3 text-white mx-4">Today</p>
-              <p class="bg-green-500 rounded-2xl py-1 px-3 text-white mx-4">Selection</p>
-              <p class="bg-red-600 rounded-2xl py-1 px-3 text-white mx-4">Not available</p>
-            </div> -->
-
-            <!-- TIME SLOT CARDS -->
-            <RadioGroup v-model="selectedTimeSlots">
-              <!-- <RadioGroupLabel class="text-base font-medium text-gray-900"> Select a time slot </RadioGroupLabel> -->
-
-              <div class="grid grid-cols-1 gap-y-6 sm:grid-cols-3 sm:gap-x-4 bg-gray-50 mt-4 p-4">
-                <RadioGroupOption as="template" v-for="timeslot in timeslots" :key="timeslot.start" :value="timeslot" v-slot="{ checked, active }" :disabled="timeslot.available == 0">
-                  <div :class="[checked ? 'border-green-500' : 'border-gray-300', active ? 'ring-1 ring-green-500' : '', 'relative bg-white border shadow-sm p-4 flex cursor-pointer focus:outline-none']">
-                    <div class="flex-1 flex">
-                      <div class="flex flex-col items-center justify-center text-center text-base font-medium text-gray-900">
-                        <RadioGroupLabel as="span" class="text-sm font-medium text-gray-900 uppercase">de</RadioGroupLabel>
-                        <RadioGroupDescription as="span" class="flex items-center text-sm text-gray-500">{{ timeslot.start }}:00</RadioGroupDescription>
-                        <RadioGroupDescription as="span" class="text-sm font-medium text-gray-900 uppercase">JUSQU'Á</RadioGroupDescription>
-                        <RadioGroupDescription as="span" class="flex items-center text-sm text-gray-500">{{ timeslot.end }}:00</RadioGroupDescription>
-                      </div>
-                    </div>
-                    <LockClosedIcon v-if="timeslot.available == '0'" :class="[checked ? 'invisible' : '', 'h-5 w-5 text-gray-500 opacity-50']" aria-hidden="true" />
-                    <PlusCircleIcon v-if="timeslot.available == '1'" :class="[checked ? 'invisible' : '', 'h-5 w-5 text-gray-500']" aria-hidden="true" />
-                    <CheckCircleIcon :class="[!checked ? 'invisible' : '', 'h-5 w-5 text-green-500']" aria-hidden="true" />
-                    <div :class="[active ? 'border' : 'border-1', checked ? 'border-green-500' : 'border-transparent', 'absolute -inset-px pointer-events-none']" aria-hidden="true" />
-                  </div>
-                </RadioGroupOption>
-              </div>
-            </RadioGroup>
+            </RadioGroupOption>
+          </div>
+        </RadioGroup>
 
 
-            <div class="mt-6">
-              <button v-on:click="calculate()" type="button" class="w-full bg-indigo-600 border border-transparent rounded-md shadow-sm py-3 px-4 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-indigo-500">Calculate</button>
-            </div>
+        <div class="mt-6">
+          <button v-on:click="calculate()" type="button" class="w-full bg-indigo-600 border border-transparent rounded-md shadow-sm py-3 px-4 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-indigo-500">Calculate</button>
+        </div>
 
 
-          </section>
-          <!-- Order summary -->
-          <section aria-labelledby="summary-heading" class="mt-16 bg-gray-50 px-4 py-6 sm:p-6 lg:p-8 lg:mt-0 lg:col-span-5">
-            <h2 id="summary-heading" class="text-lg font-medium text-gray-900">Order summary</h2>
+      </section>
+      <!-- Order summary -->
+      <section aria-labelledby="summary-heading" class="mt-16 bg-gray-50 px-4 py-6 sm:p-6 lg:p-8 lg:mt-0 lg:col-span-5">
+        <h2 id="summary-heading" class="text-lg font-medium text-gray-900">Order summary</h2>
 
-            <dl class="mt-6 space-y-4">
-              <div class="flex items-center justify-between">
-                <dt class="text-sm text-gray-600">Subtotal</dt>
-                <dd class="text-sm font-medium text-gray-900">$99.00</dd>
-              </div>
-              <div class="border-t border-gray-200 pt-4 flex items-center justify-between">
-                <dt class="flex items-center text-sm text-gray-600">
-                  <span>Shipping estimate</span>
-                  <a href="#" class="ml-2 flex-shrink-0 text-gray-400 hover:text-gray-500">
-                    <span class="sr-only">Learn more about how shipping is calculated</span>
-                    <QuestionMarkCircleIcon class="h-5 w-5" aria-hidden="true" />
-                  </a>
-                </dt>
-                <dd class="text-sm font-medium text-gray-900">$5.00</dd>
-              </div>
-              <div class="border-t border-gray-200 pt-4 flex items-center justify-between">
-                <dt class="flex text-sm text-gray-600">
-                  <span>Tax estimate</span>
-                  <a href="#" class="ml-2 flex-shrink-0 text-gray-400 hover:text-gray-500">
-                    <span class="sr-only">Learn more about how tax is calculated</span>
-                    <QuestionMarkCircleIcon class="h-5 w-5" aria-hidden="true" />
-                  </a>
-                </dt>
-                <dd class="text-sm font-medium text-gray-900">$8.32</dd>
-              </div>
-              <div class="border-t border-gray-200 pt-4 flex items-center justify-between">
-                <dt class="text-base font-medium text-gray-900">Order total</dt>
-                <dd class="text-base font-medium text-gray-900">$112.32</dd>
-              </div>
-            </dl>
+        <dl class="mt-6 space-y-4">
+          <div class="flex items-center justify-between">
+            <dt class="text-sm text-gray-600">Subtotal</dt>
+            <dd class="text-sm font-medium text-gray-900">$99.00</dd>
+          </div>
+          <div class="border-t border-gray-200 pt-4 flex items-center justify-between">
+            <dt class="flex items-center text-sm text-gray-600">
+              <span>Shipping estimate</span>
+              <a href="#" class="ml-2 flex-shrink-0 text-gray-400 hover:text-gray-500">
+                <span class="sr-only">Learn more about how shipping is calculated</span>
+                <QuestionMarkCircleIcon class="h-5 w-5" aria-hidden="true" />
+              </a>
+            </dt>
+            <dd class="text-sm font-medium text-gray-900">$5.00</dd>
+          </div>
+          <div class="border-t border-gray-200 pt-4 flex items-center justify-between">
+            <dt class="flex text-sm text-gray-600">
+              <span>Tax estimate</span>
+              <a href="#" class="ml-2 flex-shrink-0 text-gray-400 hover:text-gray-500">
+                <span class="sr-only">Learn more about how tax is calculated</span>
+                <QuestionMarkCircleIcon class="h-5 w-5" aria-hidden="true" />
+              </a>
+            </dt>
+            <dd class="text-sm font-medium text-gray-900">$8.32</dd>
+          </div>
+          <div class="border-t border-gray-200 pt-4 flex items-center justify-between">
+            <dt class="text-base font-medium text-gray-900">Order total</dt>
+            <dd class="text-base font-medium text-gray-900">$112.32</dd>
+          </div>
+        </dl>
 
-            <div class="mt-6">
-              <button type="submit" class="w-full bg-indigo-600 border border-transparent rounded-md shadow-sm py-3 px-4 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-indigo-500">Add to cart</button>
-            </div>
-          </section>
-        </form>
+        <div class="mt-6">
+          <button type="submit" class="w-full bg-indigo-600 border border-transparent rounded-md shadow-sm py-3 px-4 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-indigo-500">Add to cart</button>
+        </div>
+      </section>
+    </form>
 
-    </section>
+  </section>
 </template>
 
 <script>
@@ -202,9 +202,7 @@ import {
   RadioGroupDescription,
   RadioGroupLabel,
   RadioGroupOption,
-
 } from '@headlessui/vue'
-
 import {
   CheckIcon,
   ChevronLeftIcon,
@@ -214,11 +212,9 @@ import {
   LockClosedIcon,
   CheckCircleIcon,
 } from '@heroicons/vue/solid'
-
 import {
   PlusCircleIcon,
 }from '@heroicons/vue/outline'
-
 const steps = [
   { name: 'Step 1', href: '/timeslot', status: 'current' },
   { name: 'Step 2', href: '/additionaltimeslot', status: 'upcoming' },
@@ -287,7 +283,6 @@ const numberOfPeopleTimeSlot = [
   { id: 60, value: 59, name: '59' },
   { id: 61, value: 60, name: '60' },
 ]
-
 // const timeslots = [
 //   { id: 1,
 //     name: '10-14',
@@ -306,87 +301,56 @@ const numberOfPeopleTimeSlot = [
 //     start: '20:00',
 //     end: '00:00',
 //   },
-
 // ]
-
 export default {
-
-
   mounted() {
-
-
     this.axios.get(process.env.VUE_APP_URL_API + "api/timeslots")
         .then(response => {
           this.timeslots = response.data
         })
-
     this.axios.post(process.env.VUE_APP_URL_API + "api/slots")
-
         .then(response => {
           let slots = response.data
-
           this.slots = slots.map(element=>{
-
             return { start: new Date(element.startdate), end: new Date(element.finishdate), starttime: element.starttime, finishtime: element.finishtime, slot: element.slot_id }
-
           })
-
         })
-
     this.axios.post(process.env.VUE_APP_URL_API + "api/fulldays")
         .then(response => {
-
           let fulldays = response.data
           this.fulldays = fulldays.map(element=>{
-
-
             return { start: new Date(element.startdate), end: new Date(element.finishdate), starttime: element.starttime, finishtime: element.finishtime, slot: element.slot_id }
-
           })
-
           // Filter all the fulldays where the reservation takes only the first slot of the checkout day
           let slot1 = this.fulldays.filter(it => it.slot.includes(1));
-
           slot1.map(function(item){
             let end =  new Date(item.end)
             end.setDate(end.getDate() - 1)
             item.end = end
             return item;
           })
-
           // Filter all the fulldays where the the reservtion take more than first slot ( late checkout )
           let otherSlot = this.fulldays.filter(it => it.slot  != 1);
-
           // merge de result in order to correctly populate the calendar daily based ( if standard checkout book only the first slot - else book the full day )
           let dates = [...slot1, ...otherSlot]
-
-
           this.dates = dates
-
           let disable =  [
             dates
           ]
-
           // Block the weekend days coz on timeslot we cannot get access to them
           let weekend = {weekdays: [6, 7,]}
           disable[0].unshift(weekend);
           let bookeed =  [
             disable[0]
           ]
-
           this.disableCalendar = bookeed[0]
-
         })
-
     this.axios.get(process.env.VUE_APP_URL_API + "api/products ")
         .then(response => {
           this.products = response.data
         })
-
   },
-
   data() {
-
     return {
       EndOfDay:'',
       fulldaysFinishSlot:[],
@@ -412,109 +376,71 @@ export default {
         },
       ],
     };
-},
-
+  },
   methods:{
-
     input(){
-
       let date = moment(this.date).format('YYYY-M-DD')
-
       this.axios.get(process.env.VUE_APP_URL_API + "api/timeslots")
           .then(response => {
             this.timeslots = response.data
           })
-
       // get all the reservations for the chosen day by the finishdate ( In timeslot finish date & start date are the same - taking the finish date & time we can understand where finish the fullday reservation too )  )
       this.axios.post(process.env.VUE_APP_URL_API + 'api/slotdisponibilityEnd ', {date}).then(response => {
-         this.day = response.data
-
-
+        this.day = response.data
         //1 - for the chosen day get an array of starting hours reservation
         let result = this.day.map(a => a.starttime);  // 15 , 10, 20
         let resultF = this.day.map(a => a.finishtime) // 19, 14, 24
-
-
         //2 - order hours min to max
         let sortResult = result.sort()  // 10, 15, 20
         let sortResultF = resultF.sort() // 14, 19, 24
-
-
         // create a dynamic array with all the times start slots
         let slots = this.timeslots.map(a => a.start); // ==> get all the starting time of timeslot decide by the admin
         let slotsF = this.timeslots.map(a => a.end); // ==> get all the finishing time of timeslot decide by the admin
-
         // difference to understand available timeslot in array
         let difference = slots.filter(x => !sortResult.includes(x)); // ==> reservation starting time of the day - starting time decide by the admin
         let differenceF = slotsF.filter(x => !sortResultF.includes(x)); // ==> reservation finishing time of the day - finishing time decide by the admin
-
-
         // difference to understand booked timeslot in array
         let rest = slots.filter(x => sortResult.includes(x)); // ==> booked slots starting time of the day - starting time decide by the admin
         let restF = slotsF.filter(x => sortResultF.includes(x)); // ==> booked slots finishing time of the day - finishing time decide by the admin
-
-
         // covert array of string in array of number free slots [ "20", "15" ]  ==> [ 20, 15 ]
         let diff = difference.map(i=>Number(i)) // starting time
         let diffF = differenceF.map(i=>Number(i)) // finishing time
-
         // covert array of string in array of number booked slots [ "20", "15" ]  ==> [ 20, 15 ]
         let occupied = rest.map(i=>Number(i)) // starting time
         let occupiedF = restF.map(i=>Number(i)) // finishing time
-
-
         // binding the available hour slot to the timepicker
         this.availableHourSlots = diff
-
-
         // Count number of free slots
         let numFreeSlot = (` ${diff.length}`)
-
         // Count number of book slots
         let numBookSlot = (` ${occupied.length}`)
-
         // create a dynamic array where each obj show free slots and relative value
         let free = []
         for(let i=0; i<numFreeSlot; i++)  {
           free.push({label: 'active', start: diff[i], end:diffF[i], available:1 });
         }
-
         // create a dynamic array where each obj show book slots and relative value
         let book = []
         for(let i=0; i<numBookSlot; i++)  {
           book.push({label: 'book', start: occupied[i], end:occupiedF[i], available:0 });
         }
-
         // Mergin 2 result
         let information  = [...free, ...book]
-
-
         // Sort by min to max hour start slots
         this.timeslots = information.sort(function (a, b) {
           return a.start - b.start;
         });
-
       })
-
     },
-
     checknumberOfPeople(e){
-
       this.guests = ''
       this.amount = ''
-
       this.guests = e
-
     },
-
     calculate(){
-
       this.amount = this.products[0]['price'] * this.guests
-
     }
-
   },
-
   components: {
     CheckIcon,
     ChevronLeftIcon,
@@ -554,9 +480,7 @@ export default {
 /* .vc-weekday{
   color:#2D3748;
 } */
-
 .vc-time-picker{
   visibility: hidden !important;
 }
-
 </style>
