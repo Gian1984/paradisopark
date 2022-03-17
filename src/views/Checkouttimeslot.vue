@@ -56,9 +56,11 @@
 
             <dl class="text-sm font-medium text-gray-500 mt-10 space-y-6">
 
-              <div v-for="additional in additionals" :key="additional.id" class="flex justify-between">
+              <div v-for="additional in additionals" :key="additional.id">
+              <div v-if="additional.total != 0" class="flex justify-between">
                 <dt>{{additional.name}}</dt>
                 <dd class="text-gray-900">{{ additional.total }} €</dd>
+              </div>
               </div>
 
               <div class="flex justify-between">
@@ -66,14 +68,13 @@
                 <dd class="text-gray-900">{{ reservation.get('amount') }} €</dd>
               </div>
 
-
             </dl>
 
           </DisclosurePanel>
 
           <p class="flex items-center justify-between text-sm font-medium text-gray-900 border-t border-gray-200 pt-6 mt-6">
             <span class="text-base">Total</span>
-            <span class="text-base">{{ totalAmount }}</span>
+            <span class="text-base">{{ totalAmount }} €</span>
           </p>
 
         </Disclosure>
@@ -87,9 +88,11 @@
 
           <dl class="text-sm font-medium text-gray-500 mt-10 space-y-6">
 
-            <div v-for="additional in additionals" :key="additional.id" class="flex justify-between">
-              <dt>{{additional.name}}</dt>
-              <dd class="text-gray-900">{{ additional.total }} €</dd>
+            <div v-for="additional in additionals" :key="additional.id">
+              <div v-if="additional.total != 0" class="flex justify-between">
+                <dt>{{additional.name}}</dt>
+                <dd class="text-gray-900">{{ additional.total }} €</dd>
+              </div>
             </div>
 
             <div class="flex justify-between">
@@ -99,11 +102,10 @@
 
             <div class="flex items-center justify-between border-t border-gray-200 text-gray-900 pt-6">
               <dt class="text-base">Total</dt>
-              <dd class="text-base">{{ totalAmount }}</dd>
+              <dd class="text-base">{{ totalAmount }} € </dd>
             </div>
 
           </dl>
-
         </div>
       </section>
 
@@ -138,7 +140,7 @@
 
           <!--          APPLE PAY BUTTON MOBILE-->
 
-          <form class="mt-6">
+          <form @submit.prevent="placeOrder" class="mt-6">
             <div class="grid grid-cols-12 gap-y-6 gap-x-4">
               <div class="col-span-full">
                 <label for="email-address" class="block text-sm font-medium text-gray-700">Email address</label>
@@ -161,17 +163,10 @@
                 </div>
               </div>
 
-              <div class="col-span-8 sm:col-span-9">
-                <label for="expiration-date" class="block text-sm font-medium text-gray-700">Expiration date (MM/YY)</label>
+              <div class="col-span-full">
+                <label for="card-number" class="block text-sm font-medium text-gray-700">Card number</label>
                 <div class="mt-1">
-                  <input type="text" name="expiration-date" id="expiration-date" autocomplete="cc-exp" class="block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
-                </div>
-              </div>
-
-              <div class="col-span-4 sm:col-span-3">
-                <label for="cvc" class="block text-sm font-medium text-gray-700">CVC</label>
-                <div class="mt-1">
-                  <input type="text" name="cvc" id="cvc" autocomplete="csc" class="block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
+                  <div id="card-element"></div>
                 </div>
               </div>
 
@@ -211,13 +206,77 @@
               <label for="same-as-shipping" class="text-sm font-medium text-gray-900">Billing address is the same as shipping address</label>
             </div>
 
-            <button type="submit" class="w-full mt-6 bg-indigo-600 border border-transparent rounded-md shadow-sm py-2 px-4 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Pay {{ total }}</button>
+            <button type="submit" class="w-full mt-6 bg-indigo-600 border border-transparent rounded-md shadow-sm py-2 px-4 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Pay € {{ totalAmount  }}</button>
 
             <p class="flex justify-center text-sm font-medium text-gray-500 mt-6">
               <LockClosedIcon class="w-5 h-5 text-gray-400 mr-1.5" aria-hidden="true" />
               Payment details stored in plain text
             </p>
           </form>
+
+
+
+          <div v-if="error  != 0" class="rounded-md bg-red-50 p-4 mt-10">
+            <div class="flex">
+              <div class="flex-shrink-0">
+                <XCircleIcon class="h-5 w-5 text-red-400" aria-hidden="true" />
+              </div>
+              <div class="ml-3">
+                <h3 class="text-sm font-medium text-red-800">
+                  error
+                </h3>
+                <div class="mt-2 text-sm text-red-700">
+                  {{ error }}
+                </div>
+              </div>
+              <div class="ml-auto pl-3">
+                <div class="-mx-1.5 -my-1.5">
+                  <button v-on:click="closeError()" type="button" class="inline-flex bg-red-50 rounded-md p-1.5 text-red-500 hover:bg-red-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-red-50 focus:ring-red-600">
+                    <span class="sr-only">Dismiss</span>
+                    <XIcon class="h-5 w-5" aria-hidden="true" />
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-4" v-if="loading">
+            <!-- here put a spinner or whatever you want to indicate that a request is in progress -->
+            <div class="flex justify-center items-center">
+              <div
+                  class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-bord"
+              ></div>
+            </div>
+          </div>
+
+          <div v-else>
+            <!-- request finished -->
+            <div class="col-span-6 sm:col-span-6 px-4">
+              <div v-if="alertOpen" class="rounded-md bg-green-50 p-4">
+                <div class="flex">
+                  <div class="flex-shrink-0">
+                    <CheckCircleIcon class="h-5 w-5 text-green-400" aria-hidden="true" />
+                  </div>
+                  <div class="ml-3">
+                    <p class="text-sm font-medium text-green-800">
+                      success
+                    </p>
+                  </div>
+                  <div class="ml-auto pl-3">
+                    <div class="-mx-1.5 -my-1.5">
+                      <button v-on:click="closeAlert()" type="button" class="inline-flex bg-red-50 rounded-md p-1.5 text-red-500 hover:bg-red-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-red-50 focus:ring-red-600">
+                        <span class="sr-only">Dismiss</span>
+                        <XIcon class="h-5 w-5" aria-hidden="true" />
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+
         </div>
       </section>
     </main>
@@ -225,8 +284,11 @@
 </template>
 
 <script>
+import { loadStripe } from '@stripe/stripe-js';
 import { Disclosure, DisclosureButton, DisclosurePanel } from '@headlessui/vue'
-import { LockClosedIcon, CheckIcon } from '@heroicons/vue/solid'
+import { LockClosedIcon, CheckCircleIcon, XIcon, XCircleIcon,  } from '@heroicons/vue/solid'
+import { CheckIcon, } from '@heroicons/vue/outline'
+import moment from "moment";
 
 const steps = [
   { name: 'Step 1', href: '/timeslot', status: 'complete' },
@@ -240,7 +302,137 @@ const taxes = '$23.68'
 const shipping = '$22.00'
 const total = '$341.68'
 
+
 export default {
+
+  async mounted() {
+    // this.isLoggedIn = localStorage.getItem('bigStore.jwt') != null
+    this.stripe = await loadStripe(process.env.VUE_APP_STRIPE_KEY);
+    const elements = this.stripe.elements();
+    this.cardElement = elements.create('card', {
+      classes: {
+        base: 'rounded border border-gray-300 focus:border-indigo-500 text-base outline-none text-gray-700 p-3 leading-8 transition-colors duration-200 ease-in-out'
+      },
+      hidePostalCode:true
+    });
+    this.cardElement.mount('#card-element');
+  },
+
+  methods:{
+
+    closeError(){
+      this.error="";
+    },
+
+
+    closeAlert: function(){
+      this.alertOpen = false;
+    },
+
+
+
+    async placeOrder(e) {
+      e.preventDefault()
+      this.loading = true
+      this.paymentProcessing = true;
+
+      const {paymentMethod, error} = await this.stripe.createPaymentMethod(
+          'card', this.cardElement, {
+            billing_details: {
+              name: 'gianluca' + ' ' + 'tiengo',
+              email: 'gl.tiengo@gmail.com',
+              phone: '3494257041',
+              address: {
+                line1: 'via aldo bronx 3',
+                city: 'bruxelles',
+                state: 'belgium',
+                postal_code: '1050'
+              }
+            }
+          }
+      );
+
+      if (error) {
+        //test
+        this.paymentProcessing = false;
+        this.loading = false
+        console.error(error);
+      } else {
+        this.paymentMethod = paymentMethod
+        let language = 'EN'
+        let transactionID = paymentMethod.id
+        let cardBrand = paymentMethod.card.brand
+        let lastFour = paymentMethod.card.last4
+        let expire = paymentMethod.card.exp_year
+        let user_id = '1'
+        let product_id = '1'
+        let startdate = moment(this.reservation.get('date')).format('YYYY-M-DD')
+        let finishdate = moment(this.reservation.get('date')).format('YYYY-M-DD')
+        let starttime = '10'
+        let finishtime = '14'
+        let slot_id = '1'
+        let fullday = '0'
+        let guests = this.reservation.get('guests')
+        let amount = this.totalAmount
+        let payment_method_id = paymentMethod.id;
+
+        this.axios.post(process.env.VUE_APP_URL_API + 'api/reservations',
+            {
+              user_id,
+              product_id,
+              startdate,
+              finishdate,
+              starttime,
+              finishtime,
+              slot_id,
+              fullday,
+              guests,
+              transactionID,
+              cardBrand,
+              lastFour,
+              expire,
+              amount,
+              payment_method_id,
+              language
+            })
+            .then((response) => {
+              this.paymentProcessing = false;
+              this.loading = false
+              console.log(response.data.id)
+              this.$router.push({path:'/'})
+            })
+            .catch((error) => {
+              this.paymentProcessing = false;
+              this.loading = false
+              this.error = error.response.data.message;
+            });
+      }
+
+    },
+
+  },
+
+  data(){
+    return {
+      order:'',
+      stripe: {},
+      cardElement: {},
+      customer: {
+        email: '',
+        phone : '',
+      },
+      user:'',
+      loading: false,
+      paymentProcessing: false,
+      paymentMethod:'',
+      error:'',
+      isLoggedIn : null,
+      product : [],
+      checked: false,
+      alertOpen:'',
+      alertsOpen: true,
+    }
+  },
 
   computed: {
     reservation:{
@@ -265,6 +457,9 @@ export default {
     Disclosure,
     DisclosureButton,
     DisclosurePanel,
+    XCircleIcon,
+    XIcon,
+    CheckCircleIcon,
     LockClosedIcon,
     CheckIcon
   },
