@@ -191,28 +191,14 @@
 
         <dl class="mt-6 space-y-4">
           <div class="flex items-center justify-between">
-            <dt class="text-sm text-gray-600">Subtotal</dt>
-            <dd class="text-sm font-medium text-gray-900">$99.00</dd>
-          </div>
-          <div class="border-t border-gray-200 pt-4 flex items-center justify-between">
-            <dt class="flex items-center text-sm text-gray-600">
-              <span>Shipping estimate</span>
-              <a href="#" class="ml-2 flex-shrink-0 text-gray-400 hover:text-gray-500">
-                <span class="sr-only">Learn more about how shipping is calculated</span>
-                <QuestionMarkCircleIcon class="h-5 w-5" aria-hidden="true" />
-              </a>
-            </dt>
-            <dd class="text-sm font-medium text-gray-900">$5.00</dd>
+            <dt class="text-sm text-gray-600">Guests</dt>
+            <dd class="text-sm font-medium text-gray-900">{{ guests }}</dd>
           </div>
           <div class="border-t border-gray-200 pt-4 flex items-center justify-between">
             <dt class="flex text-sm text-gray-600">
-              <span>Tax estimate</span>
-              <a href="#" class="ml-2 flex-shrink-0 text-gray-400 hover:text-gray-500">
-                <span class="sr-only">Learn more about how tax is calculated</span>
-                <QuestionMarkCircleIcon class="h-5 w-5" aria-hidden="true" />
-              </a>
+              <span>Total room</span>
             </dt>
-            <dd class="text-sm font-medium text-gray-900">$8.32</dd>
+            <dd class="text-sm font-medium text-gray-900">{{ amount }}</dd>
           </div>
           <div class="border-t border-gray-200 pt-4 flex items-center justify-between">
             <dt class="text-base font-medium text-gray-900">Order total</dt>
@@ -223,6 +209,28 @@
         <div class="mt-6">
           <button v-on:click="next( date, amount, guests)" type="button" class="w-full bg-indigo-600 border border-transparent rounded-md shadow-sm py-3 px-4 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-indigo-500">Add to cart</button>
         </div>
+
+
+        <div v-if="this.emptySelection" class="rounded-md bg-red-50 p-4 mb-4">
+          <div class="flex">
+            <div class="flex-shrink-0">
+              <XCircleIcon class="h-5 w-5 text-red-400" aria-hidden="true" />
+            </div>
+            <div class="ml-3">
+              <p class="text-sm font-medium text-red-800">{{ emptySelection }}</p>
+            </div>
+            <div class="ml-auto pl-3">
+              <div class="-mx-1.5 -my-1.5">
+                <button type="button" v-on:click="this.emptySelection = ''" class="inline-flex bg-red-50 rounded-md p-1.5 text-red-500 hover:bg-red-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-red-50 focus:ring-red-600">
+                  <span class="sr-only">Dismiss</span>
+                  <XIcon class="h-5 w-5" aria-hidden="true" />
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
       </section>
     </form>
 
@@ -251,7 +259,6 @@ import {
   ChevronLeftIcon,
   SelectorIcon,
   MailIcon,
-  QuestionMarkCircleIcon,
   LockClosedIcon,
   CheckCircleIcon,
 } from '@heroicons/vue/solid'
@@ -366,6 +373,7 @@ export default {
           })
           // Filter all the fulldays where the reservation takes only the first slot of the checkout day
           let slot1 = this.fulldays.filter(it => it.slot.includes(1));
+          console.log(slot1)
           slot1.map(function(item){
             let end =  new Date(item.end)
             end.setDate(end.getDate() - 1)
@@ -395,6 +403,7 @@ export default {
   },
   data() {
     return {
+      emptySelection:'',
       emptyGuests:'',
       emptyDates:'',
       EndOfDay:'',
@@ -478,6 +487,7 @@ export default {
       })
     },
     checknumberOfPeople(e){
+      this.emptySelection = ''
       this.emptyGuests = ''
       this.emptyDates = ''
       this.guests = ''
@@ -497,13 +507,17 @@ export default {
       }
     },
     next( date, amount, guests ){
-      const book = new Map();
-      book.set('dates', date);
-      book.set('amount', amount);
-      book.set('guests', guests);
-      book.set('slot', this.checkOutSlot);
-      this.$store.commit('setReservation',( book ))
-      this.$router.push({path: '/additionaltimeslot'})
+      if(this.amount == ''){
+        this.emptySelection = 'Please fill all the field necessary to complete your reservation '
+      } else {
+        const book = new Map();
+        book.set('date', date);
+        book.set('amount', amount);
+        book.set('guests', guests);
+        book.set('slot', this.checkOutSlot);
+        this.$store.commit('setReservation', (book))
+        this.$router.push({path: '/additionaltimeslot'})
+      }
     },
   },
   components: {
@@ -513,7 +527,6 @@ export default {
     ChevronLeftIcon,
     SelectorIcon,
     MailIcon,
-    QuestionMarkCircleIcon,
     LockClosedIcon,
     CheckCircleIcon,
     PlusCircleIcon,
