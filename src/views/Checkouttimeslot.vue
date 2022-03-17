@@ -353,6 +353,7 @@ export default {
       );
 
       if (error) {
+        //test
         this.paymentProcessing = false;
         this.loading = false
         console.error(error);
