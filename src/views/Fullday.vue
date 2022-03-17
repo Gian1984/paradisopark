@@ -507,7 +507,13 @@ export default {
       if(this.amount == ''){
         this.emptySelection = 'Please fill all the field necessary to complete your reservation '
       } else {
+
+        let fromDate = range.start
+        let toDate = range.end
+
         const book = new Map();
+        book.set('start',fromDate)
+        book.set('end',toDate)
         book.set('dates', range);
         book.set('amount', amount);
         book.set('guests', guests);

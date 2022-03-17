@@ -56,9 +56,11 @@
 
             <dl class="text-sm font-medium text-gray-500 mt-10 space-y-6">
 
-              <div v-for="additional in additionals" :key="additional.id" class="flex justify-between">
+              <div v-for="additional in additionals" :key="additional.id">
+              <div v-if="additional.total != 0" class="flex justify-between">
                 <dt>{{additional.name}}</dt>
                 <dd class="text-gray-900">{{ additional.total }} €</dd>
+              </div>
               </div>
 
               <div class="flex justify-between">
@@ -72,7 +74,7 @@
 
           <p class="flex items-center justify-between text-sm font-medium text-gray-900 border-t border-gray-200 pt-6 mt-6">
             <span class="text-base">Total</span>
-            <span class="text-base">{{ totalAmount }}</span>
+            <span class="text-base">{{ totalAmount }} €</span>
           </p>
 
         </Disclosure>
@@ -86,9 +88,11 @@
 
           <dl class="text-sm font-medium text-gray-500 mt-10 space-y-6">
 
-            <div v-for="additional in additionals" :key="additional.id" class="flex justify-between">
-              <dt>{{additional.name}}</dt>
-              <dd class="text-gray-900">{{ additional.total }} €</dd>
+            <div v-for="additional in additionals" :key="additional.id">
+              <div v-if="additional.total != 0" class="flex justify-between">
+                <dt>{{additional.name}}</dt>
+                <dd class="text-gray-900">{{ additional.total }} €</dd>
+              </div>
             </div>
 
             <div class="flex justify-between">
@@ -98,7 +102,7 @@
 
             <div class="flex items-center justify-between border-t border-gray-200 text-gray-900 pt-6">
               <dt class="text-base">Total</dt>
-              <dd class="text-base">{{ totalAmount }}</dd>
+              <dd class="text-base">{{ totalAmount }} € </dd>
             </div>
 
           </dl>
@@ -202,7 +206,7 @@
               <label for="same-as-shipping" class="text-sm font-medium text-gray-900">Billing address is the same as shipping address</label>
             </div>
 
-            <button type="submit" class="w-full mt-6 bg-indigo-600 border border-transparent rounded-md shadow-sm py-2 px-4 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Pay {{ total }}</button>
+            <button type="submit" class="w-full mt-6 bg-indigo-600 border border-transparent rounded-md shadow-sm py-2 px-4 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Pay € {{ totalAmount  }}</button>
 
             <p class="flex justify-center text-sm font-medium text-gray-500 mt-6">
               <LockClosedIcon class="w-5 h-5 text-gray-400 mr-1.5" aria-hidden="true" />
@@ -284,6 +288,7 @@ import { loadStripe } from '@stripe/stripe-js';
 import { Disclosure, DisclosureButton, DisclosurePanel } from '@headlessui/vue'
 import { LockClosedIcon, CheckCircleIcon, XIcon, XCircleIcon,  } from '@heroicons/vue/solid'
 import { CheckIcon, } from '@heroicons/vue/outline'
+import moment from "moment";
 
 const steps = [
   { name: 'Step 1', href: '/timeslot', status: 'complete' },
@@ -360,13 +365,13 @@ export default {
         let expire = paymentMethod.card.exp_year
         let user_id = '1'
         let product_id = '1'
-        let startdate ='2022-5-21'
-        let finishdate = '2022-5-24'
+        let startdate = moment(this.reservation.get('date')).format('YYYY-M-DD')
+        let finishdate = moment(this.reservation.get('date')).format('YYYY-M-DD')
         let starttime = '10'
         let finishtime = '14'
         let slot_id = '1'
-        let fullday = '1'
-        let guests = '2'
+        let fullday = '0'
+        let guests = this.reservation.get('guests')
         let amount = this.totalAmount
         let payment_method_id = paymentMethod.id;
 
