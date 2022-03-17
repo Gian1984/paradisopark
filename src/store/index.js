@@ -5,6 +5,7 @@ export default createStore({
     reservation:'',
     additionals:'',
     totalAmount:'',
+    lateCheckout:''
   },
   mutations: {
     setReservation(state, book){
@@ -15,6 +16,9 @@ export default createStore({
     },
     totalAmount(state, totalAmount){
       state.totalAmount = totalAmount
+    },
+    lateCheckout(state, lateCheckout){
+      state.lateCheckout = lateCheckout
     },
   },
   actions: {

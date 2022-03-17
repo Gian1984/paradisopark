@@ -110,6 +110,7 @@
         </div>
 
 
+        <!--ERROR No guests selected-->
         <div v-if="this.emptyGuests" class="rounded-md bg-red-50 p-4 mb-4">
           <div class="flex">
             <div class="flex-shrink-0">
@@ -129,7 +130,7 @@
           </div>
         </div>
 
-
+        <!--ERROR No date selected-->
         <div v-if="this.emptyDates" class="rounded-md bg-red-50 p-4 mb-4">
           <div class="flex">
             <div class="flex-shrink-0">
@@ -181,25 +182,17 @@
             <dt class="text-sm text-gray-600">Numbers of guest</dt>
             <dd class="text-sm font-medium text-gray-900">{{ guests }}</dd>
           </div>
-          <div class="border-t border-gray-200 pt-4 flex items-center justify-between">
+          <div v-if="onlyRoomPrice" class="border-t border-gray-200 pt-4 flex items-center justify-between">
             <dt class="flex items-center text-sm text-gray-600">
-              <span>Shipping estimate</span>
-              <a href="#" class="ml-2 flex-shrink-0 text-gray-400 hover:text-gray-500">
-                <span class="sr-only">Learn more about how shipping is calculated</span>
-                <QuestionMarkCircleIcon class="h-5 w-5" aria-hidden="true" />
-              </a>
+              <span>Room total</span>
             </dt>
-            <dd class="text-sm font-medium text-gray-900">$5.00</dd>
+            <dd class="text-sm font-medium text-gray-900">{{ onlyRoomPrice }} €</dd>
           </div>
-          <div class="border-t border-gray-200 pt-4 flex items-center justify-between">
+          <div v-if="checkoutPrice" class="border-t border-gray-200 pt-4 flex items-center justify-between">
             <dt class="flex text-sm text-gray-600">
-              <span>Tax estimate</span>
-              <a href="#" class="ml-2 flex-shrink-0 text-gray-400 hover:text-gray-500">
-                <span class="sr-only">Learn more about how tax is calculated</span>
-                <QuestionMarkCircleIcon class="h-5 w-5" aria-hidden="true" />
-              </a>
+              <span>Late checkout</span>
             </dt>
-            <dd class="text-sm font-medium text-gray-900">$8.32</dd>
+            <dd class="text-sm font-medium text-gray-900">{{ checkoutPrice }} €</dd>
           </div>
           <div class="border-t border-gray-200 pt-4 flex items-center justify-between">
             <dt class="text-base font-medium text-gray-900">Order total</dt>
@@ -208,8 +201,32 @@
         </dl>
 
         <div class="mt-6">
-          <button v-on:click="next( range, amount, guests)" type="button" class="w-full bg-indigo-600 border border-transparent rounded-md shadow-sm py-3 px-4 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-indigo-500">Add to cart</button>
+          <button v-on:click="next( range, amount, guests)" type="button" class="w-full bg-indigo-600 border border-transparent rounded-md shadow-sm py-3 px-4 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-indigo-500">Next</button>
         </div>
+
+
+        <!--ERROR No all the field are filled-->
+        <div v-if="this.emptySelection" class="rounded-md bg-red-50 p-4 mb-4 mt-4">
+          <div class="flex">
+            <div class="flex-shrink-0">
+              <XCircleIcon class="h-5 w-5 text-red-400" aria-hidden="true" />
+            </div>
+            <div class="ml-3">
+              <p class="text-sm font-medium text-red-800">{{ emptySelection }}</p>
+            </div>
+            <div class="ml-auto pl-3">
+              <div class="-mx-1.5 -my-1.5">
+                <button type="button" v-on:click="this.emptySelection = ''" class="inline-flex bg-red-50 rounded-md p-1.5 text-red-500 hover:bg-red-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-red-50 focus:ring-red-600">
+                  <span class="sr-only">Dismiss</span>
+                  <XIcon class="h-5 w-5" aria-hidden="true" />
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+
       </section>
     </form>
 
@@ -230,7 +247,6 @@ import {
   CheckIcon,
   ChevronLeftIcon,
   SelectorIcon,
-  QuestionMarkCircleIcon,
   XCircleIcon,
   XIcon,
 } from '@heroicons/vue/solid'
@@ -314,6 +330,7 @@ export default {
   },
   methods:{
     latecheckout(price, slot){
+      this.onlyRoomPrice=''
       this.amount = ''
       this.range = ''
       this.checkoutPrice = price
@@ -323,6 +340,7 @@ export default {
       console.log(this.range)
     },
     checknumberOfPeople(e){
+      this.onlyRoomPrice=''
       this.amount = ''
       this.emptyDates = ''
       this.emptyGuests = ''
@@ -425,6 +443,9 @@ export default {
             let daysdifference = Math.ceil(difference / (1000 * 3600 * 24));
             let days = Math.abs(daysdifference )
             let amount = days * this.products[0]['price'] * this.guests
+            // Partial total wihtout late checkout
+            this.onlyRoomPrice = (((amount / 100) * this.products[0].specialdayinflation) + amount)
+            //Total
             this.amount =  (((amount / 100) * this.products[0].specialdayinflation) + amount) + this.checkoutPrice
           } else {
             // NO SPECIAL DATE IN THE SELECTED RANGE OF DATE
@@ -453,6 +474,9 @@ export default {
               let days = Math.abs(daysdifference )
               // Total
               let amount = days * this.products[0]['price'] * this.guests
+              // Partial total wihtout late checkout
+              this.onlyRoomPrice = amount
+              // Total
               this.amount = amount + this.checkoutPrice
             } else {
               // THERE IS WEEKEND BETWEEN RANGE OF DATE
@@ -470,6 +494,8 @@ export default {
               let weekday = days - night
               // Amount for week nights
               let weekdayTotal = weekday * this.products[0]['price'] * this.guests
+              // Partial total wihtout late checkout
+              this.onlyRoomPrice = weekendTotal + weekdayTotal
               // Total
               this.amount = weekendTotal + weekdayTotal + this.checkoutPrice
             }
@@ -478,17 +504,29 @@ export default {
       }
     },
     next( range, amount, guests ){
-      const book = new Map();
-      book.set('dates', range);
-      book.set('amount', amount);
-      book.set('guests', guests);
-      book.set('slot', this.checkOutSlot);
-      this.$store.commit('setReservation',( book ))
-      this.$router.push({path: '/additionalfullday'})
+      if(this.amount == ''){
+        this.emptySelection = 'Please fill all the field necessary to complete your reservation '
+      } else {
+        const book = new Map();
+        book.set('dates', range);
+        book.set('amount', amount);
+        book.set('guests', guests);
+        book.set('slot', this.checkOutSlot);
+        book.set('onlyRoomPrice', this.onlyRoomPrice);
+        book.set('checkoutPrice', this.checkoutPrice);
+        book.set('slot', this.checkOutSlot);
+
+        // this.$store.commit('lateCheckout', (this.checkoutPrice))
+
+        this.$store.commit('setReservation', (book))
+        this.$router.push({path: '/additionalfullday'})
+      }
     },
   },
   data() {
     return {
+      emptySelection:'',
+      onlyRoomPrice:'',
       checkoutPrice:'',
       checkOutSlot: 1,
       emptyGuests:'',
@@ -511,7 +549,6 @@ export default {
     CheckIcon,
     ChevronLeftIcon,
     SelectorIcon,
-    QuestionMarkCircleIcon,
     XCircleIcon,
     XIcon,
     Listbox,

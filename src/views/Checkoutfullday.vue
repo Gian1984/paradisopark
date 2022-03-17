@@ -93,7 +93,12 @@
 
             <div class="flex justify-between">
               <dt>Room</dt>
-              <dd class="text-gray-900">{{ reservation.get('amount') }} €</dd>
+              <dd class="text-gray-900">{{ reservation.get('onlyRoomPrice') }} €</dd>
+            </div>
+
+            <div v-if="reservation.get('checkoutPrice')" class="flex justify-between">
+              <dt>Room</dt>
+              <dd class="text-gray-900">{{ reservation.get('checkoutPrice') }} €</dd>
             </div>
 
             <div class="flex items-center justify-between border-t border-gray-200 text-gray-900 pt-6">
@@ -114,6 +119,12 @@
           <h1 class="text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl">Checkout</h1>
 
           {{ additionals }}
+          -----------------
+          {{ reservation }}
+
+          ----------------
+          {{ totalAmount }}
+
 
           <!--          APPLE PAY BUTTON MOBILE-->
 
