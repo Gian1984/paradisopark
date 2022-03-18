@@ -368,9 +368,9 @@ export default {
         let product_id = '1'
         let startdate = moment(this.reservation.get('date')).format('YYYY-M-DD')
         let finishdate = moment(this.reservation.get('date')).format('YYYY-M-DD')
-        let starttime = '10'
-        let finishtime = '14'
-        let slot_id = '1'
+        let starttime = this.reservation.get('start')
+        let finishtime = this.reservation.get('end')
+        let slot_id = this.reservation.get('slot')
         let fullday = '0'
         let guests = this.reservation.get('guests')
         let amount = this.totalAmount

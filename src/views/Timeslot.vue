@@ -160,7 +160,7 @@
 
           <div class="grid grid-cols-1 gap-y-6 sm:grid-cols-3 sm:gap-x-4 bg-gray-50 mt-4 p-4">
             <RadioGroupOption as="template" v-for="timeslot in timeslots" :key="timeslot.start" :value="timeslot" v-slot="{ checked, active }" :disabled="timeslot.available == 0">
-              <div :class="[checked ? 'border-green-500' : 'border-gray-300', active ? 'ring-1 ring-green-500' : '', 'relative bg-white border shadow-sm p-4 flex cursor-pointer focus:outline-none']">
+              <div :class="[checked ? 'border-green-500' : 'border-gray-300', active ? 'ring-1 ring-green-500' : '', 'relative bg-white border shadow-sm p-4 flex cursor-pointer focus:outline-none']" v-on:click="ex(timeslot.start, timeslot.end, timeslot.id)">
                 <div class="flex-1 flex">
                   <div class="flex flex-col items-center justify-center text-center text-base font-medium text-gray-900">
                     <RadioGroupLabel as="span" class="text-sm font-medium text-gray-900 uppercase">de</RadioGroupLabel>
@@ -177,12 +177,6 @@
             </RadioGroupOption>
           </div>
         </RadioGroup>
-
-
-        <div class="mt-6">
-          <button v-on:click="calculate()" type="button" class="w-full bg-indigo-600 border border-transparent rounded-md shadow-sm py-3 px-4 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-indigo-500">Calculate</button>
-        </div>
-
 
       </section>
       <!-- Order summary -->
@@ -207,7 +201,7 @@
         </dl>
 
         <div class="mt-6">
-          <button v-on:click="next( date, amount, guests)" type="button" class="w-full bg-indigo-600 border border-transparent rounded-md shadow-sm py-3 px-4 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-indigo-500">Add to cart</button>
+          <button v-on:click="next( date, amount, guests)" type="button" class="w-full bg-indigo-600 border border-transparent rounded-md shadow-sm py-3 px-4 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-indigo-500">Next</button>
         </div>
 
 
@@ -403,6 +397,9 @@ export default {
   },
   data() {
     return {
+      setectedSlotId:'',
+      setectedSlotStart:'',
+      setectedSlotEnd:'',
       emptySelection:'',
       emptyGuests:'',
       emptyDates:'',
@@ -486,6 +483,25 @@ export default {
         });
       })
     },
+
+    ex(start, end, id){
+
+      this.setectedSlotEnd = end
+      this.setectedSlotStart = start
+      this.setectedSlotId = id
+
+      if(this.date == '') {
+        this.emptyDates = 'Please select a valid range of days'
+      } else {
+        if(this.guests ==''){
+          this.emptyGuests = 'Please select number of guests'
+          this.date = ''
+        } else {
+          this.amount = this.products[0]['price'] * this.guests
+        }
+      }
+    },
+
     checknumberOfPeople(e){
       this.emptySelection = ''
       this.emptyGuests = ''
@@ -494,18 +510,7 @@ export default {
       this.amount = ''
       this.guests = e
     },
-    calculate(){
 
-      if(this.date == '') {
-        this.emptyDates = 'Please select a valid range of days'
-      } else {
-        if(this.guests ==''){
-          this.emptyGuests = 'Please select number of guests'
-        } else {
-          this.amount = this.products[0]['price'] * this.guests
-        }
-      }
-    },
     next( date, amount, guests ){
       if(this.amount == ''){
         this.emptySelection = 'Please fill all the field necessary to complete your reservation '
@@ -514,7 +519,9 @@ export default {
         book.set('date', date);
         book.set('amount', amount);
         book.set('guests', guests);
-        book.set('slot', this.checkOutSlot);
+        book.set('slot', this.setectedSlotId);
+        book.set('start', this.setectedSlotStart);
+        book.set('end', this.setectedSlotEnd);
         this.$store.commit('setReservation', (book))
         this.$router.push({path: '/additionaltimeslot'})
       }

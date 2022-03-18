@@ -91,6 +91,18 @@
           </div>
           <div class="border-t border-gray-200 pt-4 flex items-center justify-between">
             <dt class="flex text-sm text-gray-600">
+              <span>From</span>
+            </dt>
+            <dd class="text-sm font-medium text-gray-900">{{ moment(reservation.get('start')).format('DD-MM-YYYY')}} </dd>
+          </div>
+          <div class="border-t border-gray-200 pt-4 flex items-center justify-between">
+            <dt class="flex text-sm text-gray-600">
+              <span>To</span>
+            </dt>
+            <dd class="text-sm font-medium text-gray-900">{{ moment(reservation.get('end')).format('DD-MM-YYYY')}} </dd>
+          </div>
+          <div class="border-t border-gray-200 pt-4 flex items-center justify-between">
+            <dt class="flex text-sm text-gray-600">
               <span>Total room</span>
             </dt>
             <dd class="text-sm font-medium text-gray-900">{{ reservation.get('onlyRoomPrice')  }} €</dd>
@@ -127,6 +139,7 @@
 import {
   CheckIcon,
 } from '@heroicons/vue/solid'
+import moment from "moment";
 const steps = [
   { name: 'Step 1', href: '/timeslot', status: 'complete' },
   { name: 'Step 2', href: '/additionaltimeslot', status: 'current' },
@@ -195,6 +208,7 @@ export default {
   },
   methods:{
     additional(){
+      console.log(this.reservation)
 
       let additionalAmount  = this.additionals.map(element => {
         return{id:element.id, name:element.name, description:element.description, price:element.price, quantity: element.quantity, total:(element.price* element.quantity)}
@@ -235,6 +249,7 @@ export default {
   setup() {
     return {
       steps,
+      moment
     }
   },
 }
