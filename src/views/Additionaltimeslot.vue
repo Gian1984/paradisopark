@@ -92,20 +92,12 @@
           <div class="border-t border-gray-200 pt-4 flex items-center justify-between">
             <dt class="flex text-sm text-gray-600">
               <span>Total room</span>
-              <a href="#" class="ml-2 flex-shrink-0 text-gray-400 hover:text-gray-500">
-                <span class="sr-only">Learn more about how tax is calculated</span>
-                <QuestionMarkCircleIcon class="h-5 w-5" aria-hidden="true" />
-              </a>
             </dt>
-            <dd class="text-sm font-medium text-gray-900">{{ reservation.get('amount')  }}</dd>
+            <dd class="text-sm font-medium text-gray-900">{{ reservation.get('amount')  }} €</dd>
           </div>
           <div class="border-t border-gray-200 pt-4 flex items-center justify-between">
             <dt class="flex items-center text-sm text-gray-600">
               <span>Total additional</span>
-              <a href="#" class="ml-2 flex-shrink-0 text-gray-400 hover:text-gray-500">
-                <span class="sr-only">Learn more about how shipping is calculated</span>
-                <QuestionMarkCircleIcon class="h-5 w-5" aria-hidden="true" />
-              </a>
             </dt>
             <dd class="text-sm font-medium text-gray-900">{{ additionalAmount }} €</dd>
           </div>
@@ -128,8 +120,6 @@
 <script>
 import {
   CheckIcon,
-  // ClockIcon,
-  QuestionMarkCircleIcon,
 } from '@heroicons/vue/solid'
 const steps = [
   { name: 'Step 1', href: '/timeslot', status: 'complete' },
@@ -230,7 +220,6 @@ export default {
   },
   components: {
     CheckIcon,
-    QuestionMarkCircleIcon,
   },
   setup() {
     return {

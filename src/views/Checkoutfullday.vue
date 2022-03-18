@@ -56,11 +56,19 @@
 
             <dl class="text-sm font-medium text-gray-500 mt-10 space-y-6">
 
-              <div  v-for="additional in additionals" :key="additional.id" >
-                <div v-if="additional.total != '0' " class="flex justify-between">
-                  <dt>{{additional.name}}</dt>
-                  <dd class="text-gray-900">{{ additional.total }} €</dd>
-                </div>
+              <div class="flex justify-between">
+                <dt>Guests</dt>
+                <dd class="text-gray-900">{{ reservation.get('guests') }}</dd>
+              </div>
+
+              <div class="flex justify-between">
+                <dt>From</dt>
+                <dd class="text-gray-900">{{ moment(reservation.get('start')).format('DD-MM-YYYY')}}</dd>
+              </div>
+
+              <div class="flex justify-between">
+                <dt>To</dt>
+                <dd class="text-gray-900">{{ moment(reservation.get('end')).format('DD-MM-YYYY')}}</dd>
               </div>
 
               <div class="flex justify-between">
@@ -71,6 +79,13 @@
               <div v-if="reservation.get('checkoutPrice')" class="flex justify-between">
                 <dt>Late Checkout</dt>
                 <dd class="text-gray-900">{{ reservation.get('checkoutPrice') }} €</dd>
+              </div>
+
+              <div  v-for="additional in additionals" :key="additional.id" >
+                <div v-if="additional.total != '0' " class="flex justify-between">
+                  <dt>{{additional.name}}</dt>
+                  <dd class="text-gray-900">{{ additional.total }} €</dd>
+                </div>
               </div>
 
             </dl>
@@ -92,12 +107,19 @@
         <div class="sticky bottom-0 flex-none bg-gray-50 border-gray-200 p-6">
 
           <dl class="text-sm font-medium text-gray-500 mt-10 space-y-6">
+            <div class="flex justify-between">
+              <dt>Guests</dt>
+              <dd class="text-gray-900">{{ reservation.get('guests') }} </dd>
+            </div>
 
-            <div  v-for="additional in additionals" :key="additional.id" >
-              <div v-if="additional.total != 0" class="flex justify-between">
-                <dt>{{additional.name}}</dt>
-                <dd class="text-gray-900">{{ additional.total }} €</dd>
-              </div>
+            <div class="flex justify-between">
+              <dt>From</dt>
+              <dd class="text-gray-900">{{ moment(reservation.get('start')).format('DD-MM-YYYY')}} </dd>
+            </div>
+
+            <div class="flex justify-between">
+              <dt>To</dt>
+              <dd class="text-gray-900">{{ moment(reservation.get('end')).format('DD-MM-YYYY')}} </dd>
             </div>
 
             <div class="flex justify-between">
@@ -109,6 +131,14 @@
               <dt>Late Checkout</dt>
               <dd class="text-gray-900">{{ reservation.get('checkoutPrice') }} €</dd>
             </div>
+
+            <div  v-for="additional in additionals" :key="additional.id" >
+              <div v-if="additional.total != 0" class="flex justify-between">
+                <dt>{{additional.name}}</dt>
+                <dd class="text-gray-900">{{ additional.total }} €</dd>
+              </div>
+            </div>
+
 
             <div class="flex items-center justify-between border-t border-gray-200 text-gray-900 pt-6">
               <dt class="text-base">Total</dt>
@@ -489,6 +519,7 @@ export default {
       taxes,
       shipping,
       total,
+      moment
     }
   },
 }
