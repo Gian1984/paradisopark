@@ -160,10 +160,11 @@
 
           <div class="grid grid-cols-1 gap-y-6 sm:grid-cols-3 sm:gap-x-4 bg-gray-50 mt-4 p-4">
             <RadioGroupOption as="template" v-for="timeslot in timeslots" :key="timeslot.start" :value="timeslot" v-slot="{ checked, active }" :disabled="timeslot.available == 0">
-              <div :class="[checked ? 'border-green-500' : 'border-gray-300', active ? 'ring-1 ring-green-500' : '', 'relative bg-white border shadow-sm p-4 flex cursor-pointer focus:outline-none']" v-on:click="ex(timeslot.start, timeslot.end, timeslot.id)">
+              <div :class="[checked ? 'border-green-500' : 'border-gray-300', active ? 'ring-1 ring-green-500' : '', 'relative bg-white border shadow-sm p-4 flex cursor-pointer focus:outline-none']" v-on:click="ex(timeslot.start, timeslot.end, timeslot.slot_id)">
                 <div class="flex-1 flex">
                   <div class="flex flex-col items-center justify-center text-center text-base font-medium text-gray-900">
                     <RadioGroupLabel as="span" class="text-sm font-medium text-gray-900 uppercase">de</RadioGroupLabel>
+                    <RadioGroupLabel as="span" class="text-sm font-medium text-gray-900 uppercase hidden">{{ timeslot.slot_id }}</RadioGroupLabel>
                     <RadioGroupDescription as="span" class="flex items-center text-sm text-gray-500">{{ timeslot.start }}:00</RadioGroupDescription>
                     <RadioGroupDescription as="span" class="text-sm font-medium text-gray-900 uppercase">JUSQU'Á</RadioGroupDescription>
                     <RadioGroupDescription as="span" class="flex items-center text-sm text-gray-500">{{ timeslot.end }}:00</RadioGroupDescription>
@@ -187,6 +188,12 @@
           <div class="flex items-center justify-between">
             <dt class="text-sm text-gray-600">Guests</dt>
             <dd class="text-sm font-medium text-gray-900">{{ guests }}</dd>
+          </div>
+          <div v-if="date" class="border-t border-gray-200 pt-4 flex items-center justify-between">
+            <dt class="flex text-sm text-gray-600">
+              <span>Date</span>
+            </dt>
+            <dd class="text-sm font-medium text-gray-900">{{ moment(date).format('DD-MM-YYYY') }}</dd>
           </div>
           <div class="border-t border-gray-200 pt-4 flex items-center justify-between">
             <dt class="flex text-sm text-gray-600">
@@ -367,7 +374,6 @@ export default {
           })
           // Filter all the fulldays where the reservation takes only the first slot of the checkout day
           let slot1 = this.fulldays.filter(it => it.slot.includes(1));
-          console.log(slot1)
           slot1.map(function(item){
             let end =  new Date(item.end)
             end.setDate(end.getDate() - 1)
@@ -438,57 +444,48 @@ export default {
       // get all the reservations for the chosen day by the finishdate ( In timeslot finish date & start date are the same - taking the finish date & time we can understand where finish the fullday reservation too )  )
       this.axios.post(process.env.VUE_APP_URL_API + 'api/slotdisponibilityEnd ', {date}).then(response => {
         this.day = response.data
-        //1 - for the chosen day get an array of starting hours reservation
-        let result = this.day.map(a => a.starttime);  // 15 , 10, 20
-        let resultF = this.day.map(a => a.finishtime) // 19, 14, 24
+
+        //take slot booked slots form reservation table
+        let hourFrom = this.day.map(a=>{ return { start:a.starttime, end:a.finishtime, slot_id:a.slot_id}})
+
         //2 - order hours min to max
-        let sortResult = result.sort()  // 10, 15, 20
-        let sortResultF = resultF.sort() // 14, 19, 24
-        // create a dynamic array with all the times start slots
-        let slots = this.timeslots.map(a => a.start); // ==> get all the starting time of timeslot decide by the admin
-        let slotsF = this.timeslots.map(a => a.end); // ==> get all the finishing time of timeslot decide by the admin
-        // difference to understand available timeslot in array
-        let difference = slots.filter(x => !sortResult.includes(x)); // ==> reservation starting time of the day - starting time decide by the admin
-        let differenceF = slotsF.filter(x => !sortResultF.includes(x)); // ==> reservation finishing time of the day - finishing time decide by the admin
-        // difference to understand booked timeslot in array
-        let rest = slots.filter(x => sortResult.includes(x)); // ==> booked slots starting time of the day - starting time decide by the admin
-        let restF = slotsF.filter(x => sortResultF.includes(x)); // ==> booked slots finishing time of the day - finishing time decide by the admin
-        // covert array of string in array of number free slots [ "20", "15" ]  ==> [ 20, 15 ]
-        let diff = difference.map(i=>Number(i)) // starting time
-        let diffF = differenceF.map(i=>Number(i)) // finishing time
-        // covert array of string in array of number booked slots [ "20", "15" ]  ==> [ 20, 15 ]
-        let occupied = rest.map(i=>Number(i)) // starting time
-        let occupiedF = restF.map(i=>Number(i)) // finishing time
-        // binding the available hour slot to the timepicker
-        this.availableHourSlots = diff
-        // Count number of free slots
-        let numFreeSlot = (` ${diff.length}`)
-        // Count number of book slots
-        let numBookSlot = (` ${occupied.length}`)
-        // create a dynamic array where each obj show free slots and relative value
-        let free = []
-        for(let i=0; i<numFreeSlot; i++)  {
-          free.push({label: 'active', start: diff[i], end:diffF[i], available:1 });
-        }
-        // create a dynamic array where each obj show book slots and relative value
-        let book = []
-        for(let i=0; i<numBookSlot; i++)  {
-          book.push({label: 'book', start: occupied[i], end:occupiedF[i], available:0 });
-        }
-        // Mergin 2 result
-        let information  = [...free, ...book]
-        // Sort by min to max hour start slots
-        this.timeslots = information.sort(function (a, b) {
+        const from = hourFrom.sort(function(a, b) {
           return a.start - b.start;
-        });
+        })
+
+        //taking all the timeslot how set by admin in admin pabel
+        let slotsFrom = this.timeslots.map(a => { return { start:a.start, end:a.end, slot_id:a.id}})
+
+        //difference to understand available timeslot in array - free slots
+        let valuesB = from.reduce(function(a,c){a[c.start] = c.start; return a; }, {});
+        let valuesA = slotsFrom.reduce(function(a,c){a[c.start] = c.start; return a; }, {});
+        let slotsFree = slotsFrom.filter(function(c){ return !valuesB[c.start]}).concat(from.filter(function(c){ return !valuesA[c.start]}));
+
+        //adding available key set to 1 to recognise on css free slots
+        const slotsFreeActive = slotsFree.map(v => ({...v, available:1}))
+
+        // difference to understand booked timeslot in array -  booked slots
+        let valueB = from.reduce(function(a,c){a[c.start] = c.start; return a; }, {});
+        let valueA = slotsFrom.reduce(function(a,c){a[c.start] = c.start; return a; }, {});
+        let slotsTaken = slotsFrom.filter(function(c){ return valueB[c.start]}).concat(from.filter(function(c){ return !valueA[c.start]}));
+
+        //adding available key set to o to recognise on css booked slots
+        const slotsTakenInactive = slotsTaken.map(v => ({...v, available:0}))
+
+        // Mergin 2 result
+        let todaySLOTS = [...slotsFreeActive, ...slotsTakenInactive]
+
+        // Sort by min to max hour start slots
+        let todaySorted = todaySLOTS.sort(function(a, b) {
+          return a.start - b.start;
+        })
+
+        this.timeslots = todaySorted
+
       })
     },
 
     ex (start, end, id){
-
-      console.log(id)
-      console.log(start)
-      console.log(end)
 
       this.setectedSlotEnd = end
       this.setectedSlotStart = start
@@ -519,8 +516,6 @@ export default {
       if(this.amount == ''){
         this.emptySelection = 'Please fill all the field necessary to complete your reservation '
       } else {
-
-        console.log(this.setectedSlotId)
 
         const book =
             {
@@ -563,6 +558,7 @@ export default {
       steps,
       numberOfPeopleTimeSlot,
       selected,
+      moment,
     }
   },
 }

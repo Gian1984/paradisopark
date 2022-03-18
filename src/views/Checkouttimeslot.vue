@@ -56,16 +56,26 @@
 
             <dl class="text-sm font-medium text-gray-500 mt-10 space-y-6">
 
-              <div v-for="additional in additionals" :key="additional.id">
-              <div v-if="additional.total != 0" class="flex justify-between">
-                <dt>{{additional.name}}</dt>
-                <dd class="text-gray-900">{{ additional.total }} €</dd>
+              <div class="flex justify-between">
+                <dt>Guests</dt>
+                <dd class="text-gray-900">{{ reservation.guests }}</dd>
               </div>
+
+              <div class="flex justify-between">
+                <dt>Date</dt>
+                <dd class="text-gray-900">{{ moment(reservation.date).format('DD-MM-YYYY') }} €</dd>
               </div>
 
               <div class="flex justify-between">
                 <dt>Room</dt>
                 <dd class="text-gray-900">{{ reservation.amount }} €</dd>
+              </div>
+
+              <div v-for="additional in additionals" :key="additional.id">
+                <div v-if="additional.total != 0" class="flex justify-between">
+                  <dt>{{additional.name}}</dt>
+                  <dd class="text-gray-900">{{ additional.total }} €</dd>
+                </div>
               </div>
 
             </dl>
@@ -88,16 +98,26 @@
 
           <dl class="text-sm font-medium text-gray-500 mt-10 space-y-6">
 
-            <div v-for="additional in additionals" :key="additional.id">
-              <div v-if="additional.total != 0" class="flex justify-between">
-                <dt>{{additional.name}}</dt>
-                <dd class="text-gray-900">{{ additional.total }} €</dd>
-              </div>
+            <div class="flex justify-between">
+              <dt>Guests</dt>
+              <dd class="text-gray-900">{{ reservation.guests }}</dd>
+            </div>
+
+            <div class="flex justify-between">
+              <dt>Guests</dt>
+              <dd class="text-gray-900">{{ moment(reservation.date).format('DD-MM-YYYY') }}</dd>
             </div>
 
             <div class="flex justify-between">
               <dt>Room</dt>
               <dd class="text-gray-900">{{ reservation.amount }} €</dd>
+            </div>
+
+            <div v-for="additional in additionals" :key="additional.id">
+              <div v-if="additional.total != 0" class="flex justify-between">
+                <dt>{{additional.name}}</dt>
+                <dd class="text-gray-900">{{ additional.total }} €</dd>
+              </div>
             </div>
 
             <div class="flex items-center justify-between border-t border-gray-200 text-gray-900 pt-6">
@@ -112,12 +132,8 @@
       <!-- Checkout form -->
       <section aria-labelledby="payment-heading" class="flex-auto overflow-y-auto px-4 pt-12 pb-16 sm:px-6 sm:pt-16 lg:px-8 lg:pt-0 lg:pb-24">
 
-
         <div class="max-w-lg mx-auto">
-
           <h1 class="text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl">Checkout</h1>
-
-          {{ additionals }}
 
           <!--          APPLE PAY BUTTON MOBILE-->
 
@@ -214,8 +230,6 @@
             </p>
           </form>
 
-
-
           <div v-if="error  != 0" class="rounded-md bg-red-50 p-4 mt-10">
             <div class="flex">
               <div class="flex-shrink-0">
@@ -274,8 +288,6 @@
               </div>
             </div>
           </div>
-
-
 
         </div>
       </section>
@@ -471,6 +483,7 @@ export default {
       taxes,
       shipping,
       total,
+      moment
     }
   },
 }

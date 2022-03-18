@@ -91,11 +91,17 @@
           </div>
           <div class="border-t border-gray-200 pt-4 flex items-center justify-between">
             <dt class="flex text-sm text-gray-600">
+              <span>Date</span>
+            </dt>
+            <dd class="text-sm font-medium text-gray-900">{{ moment(reservation.date).format('DD-MM-YYYY') }} </dd>
+          </div>
+          <div class="border-t border-gray-200 pt-4 flex items-center justify-between">
+            <dt class="flex text-sm text-gray-600">
               <span>Total room</span>
             </dt>
             <dd class="text-sm font-medium text-gray-900">{{ reservation.amount }} €</dd>
           </div>
-          <div class="border-t border-gray-200 pt-4 flex items-center justify-between">
+          <div v-if="additionalAmount" class="border-t border-gray-200 pt-4 flex items-center justify-between">
             <dt class="flex items-center text-sm text-gray-600">
               <span>Total additional</span>
             </dt>
@@ -118,9 +124,8 @@
 </template>
 
 <script>
-import {
-  CheckIcon,
-} from '@heroicons/vue/solid'
+import { CheckIcon,} from '@heroicons/vue/solid'
+import moment from 'moment'
 const steps = [
   { name: 'Step 1', href: '/timeslot', status: 'complete' },
   { name: 'Step 2', href: '/additionaltimeslot', status: 'current' },
@@ -177,6 +182,7 @@ export default {
             return {id:element.id, name: element.name, description: element.description, price:element.price, image:element.image, language:element.language, quantity: 0 }
           })
         })
+    this.amount = this.reservation.amount
   },
   data(){
     return{
@@ -224,6 +230,7 @@ export default {
   setup() {
     return {
       steps,
+      moment
     }
   },
 }
