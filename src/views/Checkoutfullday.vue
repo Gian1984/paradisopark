@@ -58,27 +58,27 @@
 
               <div class="flex justify-between">
                 <dt>Guests</dt>
-                <dd class="text-gray-900">{{ reservation.get('guests') }}</dd>
+                <dd class="text-gray-900">{{ reservation.guests }}</dd>
               </div>
 
               <div class="flex justify-between">
                 <dt>From</dt>
-                <dd class="text-gray-900">{{ moment(reservation.get('start')).format('DD-MM-YYYY')}}</dd>
+                <dd class="text-gray-900">{{ moment(reservation.start).format('DD-MM-YYYY')}}</dd>
               </div>
 
               <div class="flex justify-between">
                 <dt>To</dt>
-                <dd class="text-gray-900">{{ moment(reservation.get('end')).format('DD-MM-YYYY')}}</dd>
+                <dd class="text-gray-900">{{ moment(reservation.end).format('DD-MM-YYYY')}}</dd>
               </div>
 
               <div class="flex justify-between">
                 <dt>Room</dt>
-                <dd class="text-gray-900">{{ reservation.get('onlyRoomPrice') }} €</dd>
+                <dd class="text-gray-900">{{ reservation.onlyRoomPrice }} €</dd>
               </div>
 
-              <div v-if="reservation.get('checkoutPrice')" class="flex justify-between">
+              <div v-if="reservation.checkoutPrice" class="flex justify-between">
                 <dt>Late Checkout</dt>
-                <dd class="text-gray-900">{{ reservation.get('checkoutPrice') }} €</dd>
+                <dd class="text-gray-900">{{ reservation.checkoutPrice }} €</dd>
               </div>
 
               <div  v-for="additional in additionals" :key="additional.id" >
@@ -109,27 +109,27 @@
           <dl class="text-sm font-medium text-gray-500 mt-10 space-y-6">
             <div class="flex justify-between">
               <dt>Guests</dt>
-              <dd class="text-gray-900">{{ reservation.get('guests') }} </dd>
+              <dd class="text-gray-900">{{ reservation.guests }} </dd>
             </div>
 
             <div class="flex justify-between">
               <dt>From</dt>
-              <dd class="text-gray-900">{{ moment(reservation.get('start')).format('DD-MM-YYYY')}} </dd>
+              <dd class="text-gray-900">{{ moment(reservation.start).format('DD-MM-YYYY')}} </dd>
             </div>
 
             <div class="flex justify-between">
               <dt>To</dt>
-              <dd class="text-gray-900">{{ moment(reservation.get('end')).format('DD-MM-YYYY')}} </dd>
+              <dd class="text-gray-900">{{ moment(reservation.end).format('DD-MM-YYYY')}} </dd>
             </div>
 
             <div class="flex justify-between">
               <dt>Room</dt>
-              <dd class="text-gray-900">{{ reservation.get('onlyRoomPrice') }} €</dd>
+              <dd class="text-gray-900">{{ reservation.onlyRoomPrice }} €</dd>
             </div>
 
-            <div v-if="reservation.get('checkoutPrice')" class="flex justify-between">
+            <div v-if="reservation.checkoutPrice" class="flex justify-between">
               <dt>Late Checkout</dt>
-              <dd class="text-gray-900">{{ reservation.get('checkoutPrice') }} €</dd>
+              <dd class="text-gray-900">{{ reservation.checkoutPrice }} €</dd>
             </div>
 
             <div  v-for="additional in additionals" :key="additional.id" >
@@ -413,13 +413,13 @@ export default {
         let expire = paymentMethod.card.exp_year
         let user_id = '1'
         let product_id = '1'
-        let startdate = moment(this.reservation.get('start')).format('YYYY-M-DD')
-        let finishdate = moment(this.reservation.get('end')).format('YYYY-M-DD')
+        let startdate = moment(this.reservation.start).format('YYYY-M-DD')
+        let finishdate = moment(this.reservation.end).format('YYYY-M-DD')
         let starttime = '10'
         let finishtime = '14'
-        let slot_id = this.reservation.get('slot')
+        let slot_id = this.reservation.slot
         let fullday = '1'
-        let guests = this.reservation.get('guests')
+        let guests = this.reservation.guests
         let amount = parseInt(this.totalAmount) * 100
         let payment_method_id = paymentMethod.id;
 

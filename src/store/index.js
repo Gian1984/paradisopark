@@ -1,12 +1,15 @@
 import { createStore } from 'vuex'
+import createPersistedState from "vuex-persistedstate";
 
 export default createStore({
   state: {
     reservation:'',
     additionals:'',
     totalAmount:'',
-    lateCheckout:''
+    lateCheckout:'',
+    setTest:''
   },
+  plugins: [createPersistedState()],
   mutations: {
     setReservation(state, book){
       state.reservation = book
@@ -24,5 +27,5 @@ export default createStore({
   actions: {
   },
   modules: {
-  }
+  },
 })

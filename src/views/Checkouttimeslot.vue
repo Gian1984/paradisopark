@@ -65,7 +65,7 @@
 
               <div class="flex justify-between">
                 <dt>Room</dt>
-                <dd class="text-gray-900">{{ reservation.get('amount') }} €</dd>
+                <dd class="text-gray-900">{{ reservation.amount }} €</dd>
               </div>
 
             </dl>
@@ -97,7 +97,7 @@
 
             <div class="flex justify-between">
               <dt>Room</dt>
-              <dd class="text-gray-900">{{ reservation.get('amount') }} €</dd>
+              <dd class="text-gray-900">{{ reservation.amount }} €</dd>
             </div>
 
             <div class="flex items-center justify-between border-t border-gray-200 text-gray-900 pt-6">
@@ -366,13 +366,13 @@ export default {
         let expire = paymentMethod.card.exp_year
         let user_id = '1'
         let product_id = '1'
-        let startdate = moment(this.reservation.get('date')).format('YYYY-M-DD')
-        let finishdate = moment(this.reservation.get('date')).format('YYYY-M-DD')
-        let starttime = this.reservation.get('start')
-        let finishtime = this.reservation.get('end')
-        let slot_id = this.reservation.get('slot')
+        let startdate = moment(this.reservation.date).format('YYYY-M-DD')
+        let finishdate = moment(this.reservation.date).format('YYYY-M-DD')
+        let starttime = this.reservation.start
+        let finishtime = this.reservation.end
+        let slot_id = this.reservation.slot
         let fullday = '0'
-        let guests = this.reservation.get('guests')
+        let guests = this.reservation.guests
         let amount = this.totalAmount
         let payment_method_id = paymentMethod.id;
 

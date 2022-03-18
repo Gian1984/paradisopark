@@ -519,21 +519,20 @@ export default {
 
         let fromDate = this.range.start
         let toDate = this.range.end
-        console.log(fromDate)
 
-        const book = new Map();
-        book.set('start',fromDate)
-        book.set('end',toDate)
-        book.set('dates', range);
-        book.set('amount', amount);
-        book.set('guests', guests);
-        book.set('slot', this.checkOutSlot);
-        book.set('onlyRoomPrice', this.onlyRoomPrice);
-        book.set('checkoutPrice', this.checkoutPrice);
-        book.set('slot', this.checkOutSlot);
+        const book =
+            {
+              start: fromDate,
+              end:toDate,
+              dates: range,
+              amount: amount,
+              guests: guests,
+              slot: this.checkOutSlot,
+              onlyRoomPrice: this.onlyRoomPrice,
+              checkoutPrice: this.checkoutPrice,
+            }
 
         // this.$store.commit('lateCheckout', (this.checkoutPrice))
-
         this.$store.commit('setReservation', (book))
         this.$router.push({path: '/additionalfullday'})
       }

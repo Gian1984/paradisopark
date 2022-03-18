@@ -87,31 +87,31 @@
         <dl class="mt-6 space-y-4">
           <div class="flex items-center justify-between">
             <dt class="text-sm text-gray-600">Number of guests</dt>
-            <dd class="text-sm font-medium text-gray-900">{{ reservation.get('guests') }}</dd>
+            <dd class="text-sm font-medium text-gray-900">{{ reservation.guests }}</dd>
           </div>
           <div class="border-t border-gray-200 pt-4 flex items-center justify-between">
             <dt class="flex text-sm text-gray-600">
               <span>From</span>
             </dt>
-            <dd class="text-sm font-medium text-gray-900">{{ moment(reservation.get('start')).format('DD-MM-YYYY')}} </dd>
+            <dd class="text-sm font-medium text-gray-900">{{ moment(reservation.start).format('DD-MM-YYYY')}} </dd>
           </div>
           <div class="border-t border-gray-200 pt-4 flex items-center justify-between">
             <dt class="flex text-sm text-gray-600">
               <span>To</span>
             </dt>
-            <dd class="text-sm font-medium text-gray-900">{{ moment(reservation.get('end')).format('DD-MM-YYYY')}} </dd>
+            <dd class="text-sm font-medium text-gray-900">{{ moment(reservation.end).format('DD-MM-YYYY')}} </dd>
           </div>
           <div class="border-t border-gray-200 pt-4 flex items-center justify-between">
             <dt class="flex text-sm text-gray-600">
               <span>Total room</span>
             </dt>
-            <dd class="text-sm font-medium text-gray-900">{{ reservation.get('onlyRoomPrice')  }} €</dd>
+            <dd class="text-sm font-medium text-gray-900">{{ reservation.onlyRoomPrice  }} €</dd>
           </div>
-          <div v-if="reservation.get('checkoutPrice')" class="border-t border-gray-200 pt-4 flex items-center justify-between">
+          <div v-if="reservation.checkoutPrice" class="border-t border-gray-200 pt-4 flex items-center justify-between">
             <dt class="flex text-sm text-gray-600">
               <span>Late checkout</span>
             </dt>
-            <dd class="text-sm font-medium text-gray-900">{{ reservation.get('checkoutPrice')  }} €</dd>
+            <dd class="text-sm font-medium text-gray-900">{{ reservation.checkoutPrice  }} €</dd>
           </div>
           <div class="border-t border-gray-200 pt-4 flex items-center justify-between">
             <dt class="flex items-center text-sm text-gray-600">
@@ -196,7 +196,7 @@ export default {
             return {id:element.id, name: element.name, description: element.description, price:element.price, image:element.image, language:element.language, quantity: 0 }
           })
         })
-    this.amount = this.reservation.get('amount')
+    this.amount = this.reservation.amount
   },
   data(){
     return{
@@ -221,7 +221,7 @@ export default {
       }, 0);
 
       this.additionalAmount = total
-      this.amount = parseInt(this.additionalAmount) + parseInt(this.reservation.get('amount'))
+      this.amount = parseInt(this.additionalAmount) + parseInt(this.reservation.amount)
     },
     next(){
       const additionals = this.add

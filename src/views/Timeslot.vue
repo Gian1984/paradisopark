@@ -484,7 +484,11 @@ export default {
       })
     },
 
-    ex(start, end, id){
+    ex (start, end, id){
+
+      console.log(id)
+      console.log(start)
+      console.log(end)
 
       this.setectedSlotEnd = end
       this.setectedSlotStart = start
@@ -515,13 +519,19 @@ export default {
       if(this.amount == ''){
         this.emptySelection = 'Please fill all the field necessary to complete your reservation '
       } else {
-        const book = new Map();
-        book.set('date', date);
-        book.set('amount', amount);
-        book.set('guests', guests);
-        book.set('slot', this.setectedSlotId);
-        book.set('start', this.setectedSlotStart);
-        book.set('end', this.setectedSlotEnd);
+
+        console.log(this.setectedSlotId)
+
+        const book =
+            {
+              date: date,
+              amount: amount,
+              guests: guests,
+              slot:this.setectedSlotId,
+              start: this.setectedSlotStart,
+              end: this.setectedSlotEnd,
+            }
+
         this.$store.commit('setReservation', (book))
         this.$router.push({path: '/additionaltimeslot'})
       }

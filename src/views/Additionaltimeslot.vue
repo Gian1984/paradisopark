@@ -87,13 +87,13 @@
         <dl class="mt-6 space-y-4">
           <div class="flex items-center justify-between">
             <dt class="text-sm text-gray-600">Number of guests</dt>
-            <dd class="text-sm font-medium text-gray-900">{{ reservation.get('guests') }}</dd>
+            <dd class="text-sm font-medium text-gray-900">{{ reservation.guests }}</dd>
           </div>
           <div class="border-t border-gray-200 pt-4 flex items-center justify-between">
             <dt class="flex text-sm text-gray-600">
               <span>Total room</span>
             </dt>
-            <dd class="text-sm font-medium text-gray-900">{{ reservation.get('amount')  }} €</dd>
+            <dd class="text-sm font-medium text-gray-900">{{ reservation.amount }} €</dd>
           </div>
           <div class="border-t border-gray-200 pt-4 flex items-center justify-between">
             <dt class="flex items-center text-sm text-gray-600">
@@ -108,7 +108,7 @@
         </dl>
 
         <div class="mt-6">
-          <button v-on:click="next()" type="button" class="w-full bg-indigo-600 border border-transparent rounded-md shadow-sm py-3 px-4 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-indigo-500">Add to cart</button>
+          <button v-on:click="next()" type="button" class="w-full bg-indigo-600 border border-transparent rounded-md shadow-sm py-3 px-4 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-indigo-500">Next</button>
         </div>
       </section>
     </form>
@@ -201,7 +201,7 @@ export default {
       }, 0);
 
       this.additionalAmount = total
-      this.amount = parseInt(this.additionalAmount) + parseInt(this.reservation.get('amount'))
+      this.amount = parseInt(this.additionalAmount) + parseInt(this.reservation.amount)
     },
     next(){
       const additionals = this.add
