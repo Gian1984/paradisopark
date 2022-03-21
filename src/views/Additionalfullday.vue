@@ -208,7 +208,6 @@ export default {
   },
   methods:{
     additional(){
-      console.log(this.reservation)
 
       let additionalAmount  = this.additionals.map(element => {
         return{id:element.id, name:element.name, description:element.description, price:element.price, quantity: element.quantity, total:(element.price* element.quantity)}

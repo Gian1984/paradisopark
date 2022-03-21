@@ -14,6 +14,8 @@
             {{ tab.name }}
           </a>
         </nav>
+
+        {{reservations}}
       </div>
     </div>
   </div>
@@ -30,6 +32,21 @@ const tabs = [
 ]
 
 export default {
+
+  mounted() {
+    this.axios.get(process.env.VUE_APP_URL_API + "api/reservations")
+        .then(response => {
+          this.reservations = response.data
+        })
+  },
+
+  data(){
+    return{
+      reservations:''
+    }
+  },
+
+
   setup() {
     return {
       tabs,
