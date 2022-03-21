@@ -280,7 +280,7 @@ let data = {
 }
 export default {
   mounted() {
-    this.axios.get(process.env.VUE_APP_URL_API + "api/timeslots")
+    this.axios.get(process.env.VUE_APP_URL_API + "api/timeslots",)
         .then(response => {
           this.timeslots = response.data
         })
