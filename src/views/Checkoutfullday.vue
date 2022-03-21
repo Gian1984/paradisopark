@@ -443,20 +443,12 @@ export default {
               language
             })
             .then((response) => {
-
-
               let extras = this.additionals.map(element => this.axios.post(process.env.VUE_APP_URL_API + 'api/extras',{reservation_id: response.data.id, name: element.name, price:element.price, quantity:element.quantity  }))
               console.log(extras)
 
-
-
-
-
-
               this.paymentProcessing = false;
               this.loading = false
-              console.log(response.data.id)
-              // this.$router.push({path:'/'})
+              this.$router.push({path:'/'})
             })
             .catch((error) => {
               this.paymentProcessing = false;
