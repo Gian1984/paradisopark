@@ -7,10 +7,12 @@ import VCalendar from 'v-calendar';
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 import moment from 'moment';
+import VueCookieComply from 'vue-cookie-comply';
 import createPersistedState from 'vuex-persistedstate';
+import 'vue-cookie-comply/dist/style.css'
 import i18n from './i18n'
 
 
 
 
-createApp(App).use(store).use(router).use(VueAxios, axios).use(moment).use(VCalendar,{}).use(createPersistedState).use(i18n).mount('#app')
+createApp(App).use(store).use(router).use(VueAxios, axios).use(moment).use(VCalendar,{}).use(createPersistedState).use(VueCookieComply).use(i18n).mount('#app')

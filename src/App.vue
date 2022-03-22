@@ -305,6 +305,52 @@
         <p class="mt-8 text-base text-gray-400 md:mt-0 md:order-1">&copy; {{new Date().getFullYear()}} Artexa Agency, Inc. All rights reserved.</p>
       </div>
     </div>
+
+
+    <vue-cookie-comply
+        :preferences="[
+            {
+              title: 'Required Information / Information requise',
+              description:
+                'Personal information collected such as names, telephone numbers and places are mandatory to allow the application to function properly and will in no way be disclosed to third parties. / Les informations personnelles collectées telles que noms, numéros de téléphone et lieux sont obligatoires pour permettre le bon fonctionnement de l\'application et ne seront en aucun cas divulguées à des tiers.',
+              items: [{ label: 'Active', value: 'I understand / je comprend ', isRequired: true }],
+            },
+            {
+              title: 'GoogleAnalytics',
+              description:
+                  'We ask for permission to collect statistical information relating to our site in a completely anonymous form to understand on average how many users use our application, the type of browser used or the type of device used (smartphone rather than PC) in order to improve our service. / Nous demandons l\'autorisation de collecter des informations statistiques relatives à notre site sous une forme totalement anonyme pour comprendre en moyenne combien d\'utilisateurs utilisent notre application, le type de navigateur utilisé ou le type d\'appareil utilisé (smartphone plutôt que PC) afin d\'améliorer notre service. ',
+              items: [
+                { label: 'GoogleAnalytics', value: 'Allow / Permettre ?' },
+              ],
+            },
+          ]"
+    >
+      <template v-slot:header class="bg-white">
+        <header>{{ $t('cookies.title') }}</header>
+
+        <footer class="mt-1">
+          <p class="text-xs text-gray-500">{{ $t('cookies.click') }} <a href="/Terms" class="text-artexa-teal-400">{{ $t('cookies.terms') }}</a> {{ $t('cookies.and') }} <a href="/Privacy" class="text-artexa-teal-400">{{ $t('cookies.privacy') }}</a> {{ $t('cookies.service') }}</p>
+        </footer>
+      </template>
+
+      <template v-slot:modal-body="{ preference }">
+        <div class="mt-6">
+          <h4 class="text-bold text-sm">{{ preference.title }}</h4>
+          <p class="mt-2 text-xs text-gray-500">{{ preference.description }}</p>
+
+          <div v-for="(item, index) in preference.items" v-bind:key="index"  class="cookie-comply__modal-switches my-3">
+            <h3 class="text-sm">{{item.value}}</h3>
+            <label class="cookie-comply-switch" title="ok">
+              <input id="sentry" type="checkbox" value="ok">
+              <span class="cookie-comply-slider cookie-comply-round"></span>
+            </label>
+          </div>
+        </div>
+      </template>
+
+    </vue-cookie-comply>
+
+
   </footer>
 
 </template>
@@ -336,6 +382,7 @@ import {
 } from '@headlessui/vue'
 import { MenuIcon, SearchIcon, ShoppingCartIcon, UserIcon, XIcon, QuestionMarkCircleIcon, ShoppingBagIcon, UserCircleIcon  } from '@heroicons/vue/outline'
 import { ChevronDownIcon,MailIcon } from '@heroicons/vue/solid'
+import 'vue-cookie-comply/dist/style.css'
 
 const languages = ['FR', 'EN', 'NL']
 
@@ -516,9 +563,43 @@ export default {
     ShoppingBagIcon,
     MailIcon
   },
+
+  data(){
+    return{
+      wa:false,
+      preference: [
+        {
+          title: 'Performance',
+          description:
+              'Bla bla serviços que podemos oferecer erviços que podemos oferecer erviços que podemos oferecer erviços que podemos oferecer serviços que podemos oferecer.',
+          items: [{ label: 'Active', value: 'performance', isRequired: true }],
+        },
+        {
+          title: 'Analytics',
+          description:
+              'Bla bla serviços que podemos oferecer erviços que podemos oferecer erviços que podemos oferecer erviços que podemos oferecer serviços que podemos oferecer.',
+          items: [
+            { label: 'GoogleAnalytics', value: 'ga' },
+            { label: 'Sentry', value: 'sentry', isEnable: true },
+            { label: 'Mapbox', value: 'mapbox' },
+            { label: 'New Relic', value: 'newRelic', isEnable: true },
+            { label: 'Dog Food', value: 'dogfood' },
+          ],
+        },
+      ]
+    }
+
+  },
+
+  methods:{
+    waz(){
+      this.wa = true
+    },
+  },
+
+
   setup() {
     const mobileMenuOpen = ref(false)
-
     return {
       languages,
       navigation,
@@ -528,3 +609,29 @@ export default {
   },
 }
 </script>
+
+<style>
+
+
+.cookie-comply{
+  position: fixed !important;
+  left: 0 !important;
+  bottom: 0 !important;
+}
+
+.cookie-comply__back-arrow{
+  display: none !important;
+}
+
+.cookie-comply__button-accept {
+  background-color: black !important;
+  color: var(--color-white);
+  border: none;
+}
+
+a[type=button] {
+  -webkit-appearance: none !important;
+  -webkit-border-radius: 0 !important;
+}
+
+</style>
