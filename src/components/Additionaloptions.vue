@@ -18,16 +18,25 @@
     </div>
   </div>
 
+  <div class="bg-white">
+    <div class="max-w-7xl mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:px-8">
+      <div class="text-center">
+        <h2 class="text-base font-semibold text-indigo-600 tracking-wide uppercase">Pricing</h2>
+        <p class="mt-1 text-4xl font-extrabold text-gray-900 sm:text-5xl sm:tracking-tight lg:text-6xl">Handle Additionals</p>
+        <p class="max-w-xl mt-5 mx-auto text-xl text-gray-500">Start building for free, then add a site plan to go live. Account plans unlock additional features.</p>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
 
 const tabs = [
-  { name: 'My Account', href: '/dashboard', current: true },
+  { name: 'My Account', href: '/dashboard', current: false },
   { name: 'Timeslot reservations', href: '/timeslotreservations', current: false },
   { name: 'Full day reservations', href: '/fulldayreservations', current: false },
   { name: 'Price & date options', href: '/pricedateoptions', current: false },
-  { name: 'Additional options', href: '/additionaloptions', current: false },
+  { name: 'Additional options', href: '/additionaloptions', current: true },
 ]
 
 export default {
@@ -53,3 +62,4 @@ export default {
   },
 }
 </script>
+

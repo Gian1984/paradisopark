@@ -385,7 +385,7 @@ export default {
         let slot_id = this.reservation.slot
         let fullday = '0'
         let guests = this.reservation.guests
-        let amount = this.totalAmount
+        let amount = parseInt(this.totalAmount)*100
         let payment_method_id = paymentMethod.id;
 
         this.axios.post(process.env.VUE_APP_URL_API + 'api/reservations',
@@ -408,6 +408,8 @@ export default {
               language
             })
             .then((response) => {
+              let extras = this.additionals.map(element => this.axios.post(process.env.VUE_APP_URL_API + 'api/extras',{reservation_id: response.data.id, name: element.name, price:element.price, quantity:element.quantity  }))
+              console.log(extras)
               this.paymentProcessing = false;
               this.loading = false
               console.log(response.data.id)
