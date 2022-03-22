@@ -6,7 +6,7 @@
         <div class="absolute inset-0 bg-gray-900 opacity-50" aria-hidden="true" />
       </div>
       <div class="relative max-w-7xl mx-auto top-20 py-24 px-4 sm:py-32 sm:px-6 lg:px-8">
-        <h1 class="mt-6 text-4xl font-extrabold tracking-tight text-white md:text-5xl lg:text-6xl">Web Development Company</h1>
+        <h1 class="mt-6 text-4xl font-extrabold tracking-tight text-white md:text-5xl lg:text-6xl">{{ $t("home.title") }}</h1>
         <p class="mt-6 max-w-3xl text-xl text-gray-300">Take the software path to your digital future.</p>
       </div>
     </div>

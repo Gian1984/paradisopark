@@ -147,8 +147,9 @@
                         <div class="inline-block">
                           <label for="mobile-languages" class="sr-only">Languages</label>
                           <div class="-ml-2 group relative border-transparent focus-within:ring-0 focus-within:ring-none">
-                            <select id="mobile-languages" name="language" class="bg-transparent text-white border-transparent py-0.5 pl-2 pr-2 flex items-center text-sm font-medium group-hover:text-white focus:outline-none focus:ring-0 focus:border-transparent">
-                              <option v-for="language in languages" :key="language">{{ language }}</option>
+                            <select v-model="$i18n.locale" id="mobile-languages" name="language" class="bg-transparent text-white border-transparent py-0.5 pl-2 pr-2 flex items-center text-sm font-medium group-hover:text-white focus:outline-none focus:ring-0 focus:border-transparent">
+                              <option value="fr">FR</option>
+                              <option value="en">EN</option>
                             </select>
                           </div>
                         </div>
@@ -325,12 +326,12 @@ import {
   TabPanels,
   TransitionChild,
   TransitionRoot,
-  Disclosure, 
-  DisclosureButton, 
-  DisclosurePanel, 
-  Menu, 
-  MenuButton, 
-  MenuItem, 
+  Disclosure,
+  DisclosureButton,
+  DisclosurePanel,
+  Menu,
+  MenuButton,
+  MenuItem,
   MenuItems,
 } from '@headlessui/vue'
 import { MenuIcon, SearchIcon, ShoppingCartIcon, UserIcon, XIcon, QuestionMarkCircleIcon, ShoppingBagIcon, UserCircleIcon  } from '@heroicons/vue/outline'
@@ -497,12 +498,12 @@ export default {
     TabPanels,
     TransitionChild,
     TransitionRoot,
-    Disclosure, 
-    DisclosureButton, 
-    DisclosurePanel, 
-    Menu, 
-    MenuButton, 
-    MenuItem, 
+    Disclosure,
+    DisclosureButton,
+    DisclosurePanel,
+    Menu,
+    MenuButton,
+    MenuItem,
     MenuItems,
     MenuIcon,
     SearchIcon,
