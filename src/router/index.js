@@ -21,6 +21,10 @@ import Checkoutfullday from '../views/Checkoutfullday.vue'
 import Faq from '../views/Faq.vue'
 import Privacy from '../views/Privacy.vue'
 import Terms from '../views/Terms.vue'
+import Additionaloptions from '../components/Additionaloptions.vue'
+import Fulldayreservations from '../components/Fulldayreservations.vue'
+import Pricedateoptions from '../components/Pricedateoptions.vue'
+import Timeslotreservations from '../components/Timeslotreservations.vue'
 
 const routes = [
   {
@@ -132,6 +136,26 @@ const routes = [
     path: '/terms',
     name: 'Terms',
     component: Terms
+  },
+  {
+    path: '/additionaloptions',
+    name: 'Additionaloptions',
+    component: Additionaloptions
+  },
+  {
+    path: '/fulldayreservations',
+    name: 'Fulldayreservations',
+    component: Fulldayreservations
+  },
+  {
+    path: '/pricedateoptions',
+    name: 'Pricedateoptions',
+    component: Pricedateoptions
+  },
+  {
+    path: '/timeslotreservations',
+    name: 'Timeslotreservations',
+    component: Timeslotreservations
   },
 ]
 
