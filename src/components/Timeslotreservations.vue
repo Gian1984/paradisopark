@@ -308,8 +308,8 @@ import moment from 'moment'
 
 const tabs = [
   { name: 'My Account', href: '/dashboard', current: false },
-  { name: 'Timeslot reservations', href: '/timeslotreservations', current: false },
-  { name: 'Full day reservations', href: '/fulldayreservations', current: true },
+  { name: 'Timeslot reservations', href: '/timeslotreservations', current: true },
+  { name: 'Full day reservations', href: '/fulldayreservations', current: false },
   { name: 'Price & date options', href: '/pricedateoptions', current: false },
   { name: 'Additional options', href: '/additionaloptions', current: false },
 ]
