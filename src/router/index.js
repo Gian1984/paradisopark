@@ -25,6 +25,7 @@ import Additionaloptions from '../components/Additionaloptions.vue'
 import Fulldayreservations from '../components/Fulldayreservations.vue'
 import Pricedateoptions from '../components/Pricedateoptions.vue'
 import Timeslotreservations from '../components/Timeslotreservations.vue'
+import Additionalmodal from '../components/Additionalmodal.vue'
 
 const routes = [
   {
@@ -156,6 +157,11 @@ const routes = [
     path: '/timeslotreservations',
     name: 'Timeslotreservations',
     component: Timeslotreservations
+  },
+  {
+    path: '/additionalmodal',
+    name: 'Additionalmodal',
+    component: Additionalmodal
   },
 ]
 
