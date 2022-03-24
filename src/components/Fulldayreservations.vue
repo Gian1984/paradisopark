@@ -920,7 +920,7 @@ export default {
       let guests = this.secondstage.guests
       let amount = parseInt(this.amount) * 100
 
-      this.axios.post(process.env.VUE_APP_URL_API + 'api/reservations/admin',
+      this.axios.post(process.env.VUE_APP_URL_API + 'api/adminreservation',
           {
             user_id,
             product_id,
@@ -986,9 +986,11 @@ export default {
   watch: {
     'additionalAmount': function(val, oldVal){
       if (val != '') {
-        this.amount= (this.amount + this.additionalAmount);
+        const amount = this.amount
+        this.amount= (amount - oldVal + val);
       }else{
-        this.amount= (this.amount + this.additionalAmount);
+        const amount = this.amount
+        this.amount= (amount - oldVal + val);
       }
     }
   },
