@@ -920,7 +920,7 @@ export default {
       let guests = this.secondstage.guests
       let amount = parseInt(this.amount) * 100
 
-      this.axios.post(process.env.VUE_APP_URL_API + 'api/reservations',
+      this.axios.post(process.env.VUE_APP_URL_API + 'api/reservations/admin',
           {
             user_id,
             product_id,
