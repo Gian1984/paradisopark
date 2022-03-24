@@ -8,7 +8,7 @@
         <!--body-->
 
         <main class="mx-auto px-4 sm:px-6 lg:max-w-7xl lg:px-8">
-          <div class="mx-auto mt-12 max-w-5xl">
+          <div class="mx-auto mt-5 max-w-5xl">
             <section aria-labelledby="cart-heading" class="lg:col-span-7">
 
               <div class="text-center mb-10">
@@ -50,28 +50,28 @@
                     <div class="py-2 sm:py-2 sm:gap-4">
                       <div class="relative border border-gray-300 rounded-md px-3 py-2 shadow-sm focus-within:ring-1">
                         <label for="name" class="absolute -top-2 left-2 -mt-px inline-block px-1 text-xs font-medium text-gray-900">Name</label>
-                        <input  type="text" name="name" id="name" class="block bg-gray-200 w-full border-0 p-0 text-gray-900 placeholder-gray-500 focus:ring-0 sm:text-sm" :placeholder="data.name" />
+                        <input v-model="data.name" type="text" name="name" id="name" class="block bg-gray-200 w-full border-0 p-0 text-gray-900 placeholder-gray-500 focus:ring-0 sm:text-sm" :placeholder="data.name" />
                       </div>
                     </div>
 
                     <div class="py-2 sm:py-2 sm:gap-4">
                       <div class="relative border border-gray-300 rounded-md px-3 py-2 shadow-sm focus-within:ring-1">
                         <label for="description" class="absolute -top-2 left-2 -mt-px inline-block px-1 text-xs font-medium text-gray-900">Decription:</label>
-                        <input  type="text" name="description" id="description" class="block bg-gray-200 w-full border-0 p-0 text-gray-900 placeholder-gray-500 focus:ring-0 sm:text-sm" :placeholder="data.description" />
+                        <input v-model="data.description" type="text" name="description" id="description" class="block bg-gray-200 w-full border-0 p-0 text-gray-900 placeholder-gray-500 focus:ring-0 sm:text-sm" :placeholder="data.description" />
                       </div>
                     </div>
 
                     <div class="py-2 sm:py-2 sm:gap-4">
                       <div class="relative border border-gray-300 rounded-md px-3 py-2 shadow-sm focus-within:ring-1">
                         <label for="price" class="absolute -top-2 left-2 -mt-px inline-block px-1 text-xs font-medium text-gray-900">Price:</label>
-                        <input type="text" name="price" id="price" class="block bg-gray-200 w-full border-0 p-0 text-gray-900 placeholder-gray-500 focus:ring-0 sm:text-sm" :placeholder="data.price + ' €'" />
+                        <input v-model="data.price" type="text" name="price" id="price" class="block bg-gray-200 w-full border-0 p-0 text-gray-900 placeholder-gray-500 focus:ring-0 sm:text-sm" :placeholder="data.price + ' €'" />
                       </div>
                     </div>
 
                     <div class="py-2 sm:py-2 sm:gap-4">
                       <div class="relative border border-gray-300 rounded-md px-3 py-2 shadow-sm focus-within:ring-1">
                         <label for="language" class="absolute -top-2 left-2 -mt-px inline-block px-1 text-xs font-medium text-gray-900">Language:</label>
-                        <input  type="text" name="language" id="language" class="block bg-gray-200 w-full border-0 p-0 text-gray-900 placeholder-gray-500 focus:ring-0 sm:text-sm" :placeholder="data.language" />
+                        <input v-model="data.language" type="text" name="language" id="language" class="block bg-gray-200 w-full border-0 p-0 text-gray-900 placeholder-gray-500 focus:ring-0 sm:text-sm" :placeholder="data.language" />
                       </div>
                     </div>
 

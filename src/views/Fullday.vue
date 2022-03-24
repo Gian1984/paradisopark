@@ -47,11 +47,13 @@
         <div class="sm:flex items-center justify-between bg-gray-50 mb-4 p-4">
           <!-- SELECT NUMBER OF PEOPLE -->
           <div>
-            <Listbox as="div" class="mr-1" v-model="selected">
+
+            <Listbox as="div" class="mr-1" v-model="NumPeople" >
               <ListboxLabel class="block text-sm font-medium text-gray-700"> Number of people </ListboxLabel>
               <div class="mt-1 relative">
                 <ListboxButton class="bg-white relative w-full border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                  <span class="block truncate">{{ selected.name }}</span>
+                  <span v-if="NumPeople.name" class="block truncate">{{ NumPeople.name }}</span>
+                  <span v-else class="block truncate">Make your Choise</span>
                   <span class="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
                     <SelectorIcon class="h-5 w-5 text-gray-400" aria-hidden="true" />
                   </span>
@@ -60,11 +62,10 @@
                 <transition leave-active-class="transition ease-in duration-100" leave-from-class="opacity-100" leave-to-class="opacity-0">
                   <ListboxOptions class="absolute z-10 mt-1 w-full bg-white shadow-lg max-h-60 rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none sm:text-sm">
                     <ListboxOption as="template" v-for="person in numberOfPeopleFullDay" :key="person.id" :value="person" v-slot="{ active, selected }">
-                      <li :class="[active ? 'text-white bg-indigo-600' : 'text-gray-900', 'cursor-default select-none relative py-2 pl-3 pr-9']" v-on:click="checknumberOfPeople(person.value)">
+                      <li :class="[active ? 'text-white bg-indigo-600' : 'text-gray-900', 'cursor-default select-none relative py-2 pl-3 pr-9']" v-on:click="checknumberOfPeople(person.value, person.name)">
                         <span :class="[selected ? 'font-semibold' : 'font-normal', 'block truncate']">
                           {{ person.name }}
                         </span>
-
                         <span v-if="selected" :class="[active ? 'text-white' : 'text-indigo-600', 'absolute inset-y-0 right-0 flex items-center pr-4']">
                           <CheckIcon class="h-5 w-5" aria-hidden="true" />
                         </span>
@@ -78,11 +79,13 @@
           </div>
           <!-- SELECT CHECKOUT -->
           <div>
-            <Listbox as="div" class="ml-1" v-model="selectedCheckout">
+
+            <Listbox as="div" class="ml-1" v-model=" PreSelectedCheckOut">
               <ListboxLabel class="block text-sm font-medium text-gray-700"> Checkout </ListboxLabel>
               <div class="mt-1 relative">
                 <ListboxButton class="bg-white relative w-full border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                  <span class="block truncate">{{ selectedCheckout.name }}</span>
+                  <span v-if=" PreSelectedCheckOut.name" class="block truncate">{{  PreSelectedCheckOut.name }}</span>
+                  <span v-else class="block truncate">Make your Choise</span>
                   <span class="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
                     <SelectorIcon class="h-5 w-5 text-gray-400" aria-hidden="true" />
                   </span>
@@ -130,10 +133,7 @@
           </div>
         </div>
 
-
-
         <!-- DATE PICKER -->
-
 
         <v-date-picker class="mycustomcalendar"
                        :attributes="data.attributes"
@@ -147,13 +147,7 @@
 
         />
 
-<!--        <div class="mt-6">-->
-<!--          <button v-on:click="calculate()" type="button" class="w-full bg-indigo-600 border border-transparent rounded-md shadow-sm py-3 px-4 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-indigo-500">Calculate</button>-->
-<!--        </div>-->
-
       </section>
-
-
 
       <!-- Order summary -->
       <section aria-labelledby="summary-heading" class="mt-16 bg-gray-50 px-4 py-6 sm:p-6 lg:p-8 lg:mt-0 lg:col-span-5">
@@ -219,8 +213,6 @@
           </div>
         </div>
 
-
-
       </section>
     </form>
 
@@ -229,7 +221,7 @@
 
 <script>
 import 'v-calendar/dist/style.css';
-import { ref } from 'vue'
+
 import {
   Listbox,
   ListboxButton,
@@ -250,21 +242,7 @@ const steps = [
   { name: 'Step 2', href: '/additionalfullday', status: 'upcoming' },
   { name: 'Step 3', href: '#', status: 'upcoming' },
 ]
-const numberOfPeopleFullDay = [
-  { id: 0, value: 0 ,name: 'Choise how many' },
-  { id: 8, value: 8 , name: 'Group of max 8' },
-  { id: 9, value: 9 , name: 'Group of max 8 +1' },
-  { id: 10, value: 10 , name: 'Group of max 8 +2' },
-  { id: 16, value: 16 , name: 'Group of max 16' },
-  { id: 17, value: 17 , name: 'Group of max 16 +1' },
-  { id: 18, value: 18 , name: 'Group of max 16 +2' },
-  { id: 30, value: 30 , name: 'Group of max 30' },
-]
-const lateCheckout = [
-  { id: 1, slot: 1, name: 'Checkout at 10:00', price: 0 },
-  { id: 2, slot: 2, name: 'Late checkout at 15:00 (+350€)' , price: 350},
-  { id: 3, slot: 3, name: 'Late checkout at 19:00 (+600€)' , price: 600},
-]
+
 let data = {
   disable:{},
   attributes: [
@@ -279,11 +257,35 @@ let data = {
   ],
 }
 export default {
+  beforeMount() {
+
+    // Receiving groups
+    this.axios.get(process.env.VUE_APP_URL_API + "api/groups",)
+        .then(response => {
+          this.numberOfPeopleFullDay = response.data
+        })
+
+    // Receiving checkouts
+    this.axios.get(process.env.VUE_APP_URL_API + "api/checkouts",)
+        .then(response => {
+          this.lateCheckout = response.data
+        })
+
+  },
+
   mounted() {
     this.axios.get(process.env.VUE_APP_URL_API + "api/timeslots",)
         .then(response => {
           this.timeslots = response.data
         })
+
+
+    // Receiving specialdays
+    this.axios.get(process.env.VUE_APP_URL_API + "api/spcialdays",)
+        .then(response => {
+          this.specialday = response.data
+        })
+
     // Receiving all the timeslots already booked
     this.axios.post(process.env.VUE_APP_URL_API + "api/slots")
         .then(response => {
@@ -292,6 +294,7 @@ export default {
             return { start: new Date(element.startdate), end: new Date(element.finishdate), starttime: element.starttime, finishtime: element.finishtime, slot: element.slot_id }
           })
         })
+
     this.axios.post(process.env.VUE_APP_URL_API + "api/fulldays")
         .then(response => {
           let fulldays = response.data
@@ -322,8 +325,9 @@ export default {
           this.products = response.data
         })
   },
-  methods:{
 
+
+  methods:{
 
     latecheckout(price, slot){
       this.onlyRoomPrice=''
@@ -333,13 +337,12 @@ export default {
       this.checkOutSlot = slot
     },
 
-
     cons(){
       console.log(this.range)
     },
 
-
-    checknumberOfPeople(e){
+    checknumberOfPeople(e, name){
+      this.PreSelectedNumberOfPeople = name
       this.onlyRoomPrice=''
       this.amount = ''
       this.emptyDates = ''
@@ -398,7 +401,6 @@ export default {
       this.range = ''
     },
 
-
     calculate() {
 
       if(this.range == '') {
@@ -407,27 +409,8 @@ export default {
         if(this.guests ==''){
           this.emptyGuests = 'Please select number of guests'
         } else {
-          const specialday = [
-            //month - day
-            {
-              id: 1,
-              name: 'christmas',
-              fromDate: '12-31',
-              toDate:'12-20',
-            },
-            {
-              id: 2,
-              name: 'newYear',
-              fromDate: '01-01',
-              toDate:'01-07',
-            },
-            {
-              id: 3,
-              name: 'sValentine',
-              fromDate: '02-10',
-              toDate:'02-20',
-            },
-          ]
+          // setting const = to data from DB
+          const specialday = this.specialday
           // Formatting selected starting date
           let startDate = moment(this.range['start']).format('MM-DD-YYYY')
           // Formatting selected ending date
@@ -453,7 +436,11 @@ export default {
             // Partial total wihtout late checkout
             this.onlyRoomPrice = (((amount / 100) * this.products[0].specialdayinflation) + amount)
             //Total
-            this.amount =  (((amount / 100) * this.products[0].specialdayinflation) + amount) + this.checkoutPrice
+            if(this.checkoutPrice != '') {
+              this.amount = (((amount / 100) * this.products[0].specialdayinflation) + amount) + parseInt(this.checkoutPrice)
+            } else {
+              this.amount = (((amount / 100) * this.products[0].specialdayinflation) + amount)
+            }
           } else {
             // NO SPECIAL DATE IN THE SELECTED RANGE OF DATE
             // Calculate how many Friday & Saturay & Sunday in the range of reservation
@@ -484,7 +471,12 @@ export default {
               // Partial total wihtout late checkout
               this.onlyRoomPrice = amount
               // Total
-              this.amount = amount + this.checkoutPrice
+              if(this.checkoutPrice != '') {
+                this.amount = amount + parseInt(this.checkoutPrice)
+              } else {
+                this.amount = amount
+              }
+
             } else {
               // THERE IS WEEKEND BETWEEN RANGE OF DATE
               // Total number of day from dates range picker
@@ -502,23 +494,32 @@ export default {
               // Amount for week nights
               let weekdayTotal = weekday * this.products[0]['price'] * this.guests
               // Partial total wihtout late checkout
-              this.onlyRoomPrice = weekendTotal + weekdayTotal
+              this.onlyRoomPrice =weekendTotal + weekdayTotal
               // Total
-              this.amount = weekendTotal + weekdayTotal + this.checkoutPrice
+              if(this.checkoutPrice != '') {
+                this.amount = weekendTotal + weekdayTotal + parseInt(this.checkoutPrice)
+              }
+              else{
+                this.amount = weekendTotal + weekdayTotal
+              }
             }
           }
         }
       }
     },
 
-
     next( range, amount, guests ){
-      if(this.amount == ''){
+
+      if(this.amount == '' || this.onlyRoomPrice ==''){
         this.emptySelection = 'Please fill all the field necessary to complete your reservation '
       } else {
 
         let fromDate = this.range.start
         let toDate = this.range.end
+
+        if(this.checkoutPrice == '') {
+           this.checkoutPrice = 0
+        }
 
         const book =
             {
@@ -539,129 +540,13 @@ export default {
     },
   },
 
-  // watch: {
-  //   range(value) {
-  //     console.log(value)
-  //
-  //       this.amount = ''
-  //
-  //       if(this.guests ==''){
-  //         this.emptyGuests = 'Please select number of guests'
-  //       } else {
-  //         const specialday = [
-  //           //month - day
-  //           {
-  //             id: 1,
-  //             name: 'christmas',
-  //             fromDate: '12-31',
-  //             toDate:'12-20',
-  //           },
-  //           {
-  //             id: 2,
-  //             name: 'newYear',
-  //             fromDate: '01-01',
-  //             toDate:'01-07',
-  //           },
-  //           {
-  //             id: 3,
-  //             name: 'sValentine',
-  //             fromDate: '02-10',
-  //             toDate:'02-20',
-  //           },
-  //         ]
-  //         // Formatting selected starting date
-  //         let startDate = moment(this.range['start']).format('MM-DD-YYYY')
-  //         // Formatting selected ending date
-  //         let toDate = moment(this.range['end']).format('MM-DD-YYYY')
-  //
-  //         // // Formatting selected starting date
-  //         // let startDate = moment(value.start).format('MM-DD-YYYY')
-  //         // // Formatting selected ending date
-  //         // let toDate = moment(value.end).format('MM-DD-YYYY')
-  //
-  //         // Filter if selected starting date OR selected ending date are inside range of special day
-  //         let resultProductData = specialday.filter(element => {
-  //           // Formatting special day starting range
-  //           let fromDate = moment(element.fromDate).format('MM-DD')+'-'+moment(this.range['start']).format('YYYY')
-  //           // Formatting special day ending range
-  //           let endDate = moment(element.toDate).format('MM-DD')+'-'+moment(this.range['end']).format('YYYY')
-  //           // check condition
-  //           if  (  startDate >= fromDate && startDate <=  endDate ||  toDate >= fromDate && toDate <=  endDate  ){
-  //             // return an array with the special day period range hit by the day starting range or the day ending range
-  //             return true
-  //           }
-  //         });
-  //         if (resultProductData != ''){
-  //           //THERE ARE SPECIAL DATE IN THE SELECTED RANGE OF DATE
-  //           let difference = this.range['start'] - this.range['end']
-  //           let daysdifference = Math.ceil(difference / (1000 * 3600 * 24));
-  //           let days = Math.abs(daysdifference )
-  //           let amount = days * this.products[0]['price'] * this.guests
-  //           // Partial total wihtout late checkout
-  //           this.onlyRoomPrice = (((amount / 100) * this.products[0].specialdayinflation) + amount)
-  //           //Total
-  //           this.amount =  (((amount / 100) * this.products[0].specialdayinflation) + amount) + this.checkoutPrice
-  //         } else {
-  //           // NO SPECIAL DATE IN THE SELECTED RANGE OF DATE
-  //           // Calculate how many Friday & Saturay & Sunday in the range of reservation
-  //           let dDate1 = new Date(this.range['start'])
-  //           let dDate2 = new Date(this.range['end'])
-  //           //We are working with time stamps
-  //           let from = dDate1.getTime()
-  //           let to = dDate2.getTime()
-  //           let tempDate = new Date()
-  //           let count = 0;
-  //           //loop through each day between the dates 86400000 = 1 day
-  //           for(let _from = from; _from < to; _from += 86400000){
-  //             //set the day
-  //             tempDate.setTime(_from);
-  //             //If it is a weekend add 1 to count
-  //             if ((tempDate.getDay() <= 0) || (tempDate.getDay() >= 4)) {
-  //               count++;
-  //             }
-  //           }
-  //           if(count == 0){
-  //             //  NO WEEKEND BETWEEN RANGE OF DATE
-  //             // Total number of day from dates range picker
-  //             let difference = this.range['start'] - this.range['end']
-  //             let daysdifference = Math.ceil(difference / (1000 * 3600 * 24));
-  //             let days = Math.abs(daysdifference )
-  //             // Total
-  //             let amount = days * this.products[0]['price'] * this.guests
-  //             // Partial total wihtout late checkout
-  //             this.onlyRoomPrice = amount
-  //             // Total
-  //             this.amount = amount + this.checkoutPrice
-  //           } else {
-  //             // THERE IS WEEKEND BETWEEN RANGE OF DATE
-  //             // Total number of day from dates range picker
-  //             let difference = this.range['start'] - this.range['end']
-  //             let daysdifference = Math.ceil(difference / (1000 * 3600 * 24));
-  //             let days = Math.abs(daysdifference )
-  //             //sistem count the weekend days but reservation sistem is based on night so -1
-  //             let night = count -1
-  //             // Amount for weekend nights
-  //             let weekend = night * this.products[0]['price'] * this.guests
-  //             // Adding inflation for weekend nights
-  //             let weekendTotal = (((weekend / 100) * this.products[0].weekendinflation) + weekend)
-  //             // Number of week days
-  //             let weekday = days - night
-  //             // Amount for week nights
-  //             let weekdayTotal = weekday * this.products[0]['price'] * this.guests
-  //             // Partial total wihtout late checkout
-  //             this.onlyRoomPrice = weekendTotal + weekdayTotal
-  //             // Total
-  //             this.amount = weekendTotal + weekdayTotal + this.checkoutPrice
-  //           }
-  //         }
-  //       }
-  //
-  //   }
-  // },
-
-
   data() {
     return {
+      lateCheckout:'',
+      numberOfPeopleFullDay:'',
+      specialday:'',
+      PreSelectedCheckOut:[{name: 'Make your choise', price: 0}],
+      NumPeople:[{name: 'Make your choise'}],
       emptySelection:'',
       onlyRoomPrice:'',
       checkoutPrice:'',
@@ -694,14 +579,9 @@ export default {
     ListboxOptions,
   },
   setup() {
-    const selected = ref(numberOfPeopleFullDay[0])
-    const selectedCheckout = ref(lateCheckout[0])
+
     return {
       steps,
-      numberOfPeopleFullDay,
-      lateCheckout,
-      selected,
-      selectedCheckout,
       data,
       moment
     }
