@@ -405,7 +405,16 @@
                         <dt class="text-lg">
                           <DisclosureButton class="text-left w-full flex justify-between items-start text-gray-400">
                             <p class="text-sm font-medium text-indigo-600 truncate">
-                              Reference order n°{{order.id}}
+                              <span class="text-sm font-medium text-gray-600 truncate">Reference order n° :</span>
+                              {{order.id}}
+                            </p>
+                            <p class="text-sm font-medium text-indigo-600 truncate">
+                              <span class="text-sm font-medium text-gray-600 truncate">From :</span>
+                              {{moment(order.startdate).format('DD-MM-YYYY')}}
+                            </p>
+                            <p class="text-sm font-medium text-indigo-600 truncate">
+                              <span class="text-sm font-medium text-gray-600 truncate">To :</span>
+                              {{moment(order.finishdate).format('DD-MM-YYYY')}}
                             </p>
                             <span class="ml-6 h-7 flex items-center">
                               <ChevronDownIcon :class="[open ? '-rotate-180' : 'rotate-0', 'h-6 w-6 transform']" aria-hidden="true" />
