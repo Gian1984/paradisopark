@@ -415,8 +415,8 @@ export default {
         let product_id = '1'
         let startdate = moment(this.reservation.start).format('YYYY-M-DD')
         let finishdate = moment(this.reservation.end).format('YYYY-M-DD')
-        let starttime = '10'
-        let finishtime = '14'
+        let starttime = this.reservation.checkOutStart
+        let finishtime = this.reservation.checkOutEnd
         let slot_id = this.reservation.slot
         let fullday = '1'
         let guests = this.reservation.guests

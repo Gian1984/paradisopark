@@ -113,7 +113,7 @@
             </dt>
             <dd class="text-sm font-medium text-gray-900">{{ reservation.checkoutPrice  }} €</dd>
           </div>
-          <div class="border-t border-gray-200 pt-4 flex items-center justify-between">
+          <div v-if="additionalAmount" class="border-t border-gray-200 pt-4 flex items-center justify-between">
             <dt class="flex items-center text-sm text-gray-600">
               <span>Total additional</span>
             </dt>

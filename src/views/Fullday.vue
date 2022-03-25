@@ -94,11 +94,12 @@
                 <transition leave-active-class="transition ease-in duration-100" leave-from-class="opacity-100" leave-to-class="opacity-0">
                   <ListboxOptions class="absolute z-10 mt-1 w-full bg-white shadow-lg max-h-60 rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none sm:text-sm">
                     <ListboxOption as="template" v-for="time in lateCheckout" :key="time.id" :value="time" v-slot="{ active, selected }">
-                      <li :class="[active ? 'text-white bg-indigo-600' : 'text-gray-900', 'cursor-default select-none relative py-2 pl-3 pr-9']" v-on:click="latecheckout(time.price, time.slot)">
+                      <li :class="[active ? 'text-white bg-indigo-600' : 'text-gray-900', 'cursor-default select-none relative py-2 pl-3 pr-9']" v-on:click="latecheckout(time.price, time.slot, time.start, time.end)">
                         <span :class="[selected ? 'font-semibold' : 'font-normal', 'block truncate']">
                           {{ time.name }}
                         </span>
-
+                        <span class="hidden">{{ time.start }}</span>
+                        <span class="hidden">{{ time.end }}</span>
                         <span v-if="selected" :class="[active ? 'text-white' : 'text-indigo-600', 'absolute inset-y-0 right-0 flex items-center pr-4']">
                           <CheckIcon class="h-5 w-5" aria-hidden="true" />
                         </span>
@@ -329,12 +330,14 @@ export default {
 
   methods:{
 
-    latecheckout(price, slot){
+    latecheckout(price, slot, start, end){
       this.onlyRoomPrice=''
       this.amount = ''
       this.range = ''
       this.checkoutPrice = price
       this.checkOutSlot = slot
+      this.checkOutStart = start
+      this.checkOutEnd = end
     },
 
     cons(){
@@ -520,6 +523,15 @@ export default {
         if(this.checkoutPrice == '') {
            this.checkoutPrice = 0
         }
+        if(this.checkOutStart ==""){
+          this.checkOutStart = this.lateCheckout[0]['start']
+        }
+        if(this.checkOutEnd ==""){
+          this.checkOutEnd = this.lateCheckout[0]['end']
+        }
+        if(this.checkOutSlot==""){
+          this.checkOutSlot = this.lateCheckout[0]['slot']
+        }
 
         const book =
             {
@@ -531,6 +543,8 @@ export default {
               slot: this.checkOutSlot,
               onlyRoomPrice: this.onlyRoomPrice,
               checkoutPrice: this.checkoutPrice,
+              checkOutStart:this.checkOutStart,
+              checkOutEnd: this.checkOutEnd,
             }
 
         // this.$store.commit('lateCheckout', (this.checkoutPrice))
@@ -551,6 +565,8 @@ export default {
       onlyRoomPrice:'',
       checkoutPrice:'',
       checkOutSlot: 1,
+      checkOutStart:'',
+      checkOutEnd: '',
       emptyGuests:'',
       dates:'',
       slots:'',

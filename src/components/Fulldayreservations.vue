@@ -83,7 +83,7 @@
                 <transition leave-active-class="transition ease-in duration-100" leave-from-class="opacity-100" leave-to-class="opacity-0">
                   <ListboxOptions class="absolute z-10 mt-1 w-full bg-white shadow-lg max-h-60 rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none sm:text-sm">
                     <ListboxOption as="template" v-for="time in lateCheckout" :key="time.id" :value="time" v-slot="{ active, selected }">
-                      <li :class="[active ? 'text-white bg-indigo-600' : 'text-gray-900', 'cursor-default select-none relative py-2 pl-3 pr-9']" v-on:click="latecheckout(time.price, time.slot)">
+                      <li :class="[active ? 'text-white bg-indigo-600' : 'text-gray-900', 'cursor-default select-none relative py-2 pl-3 pr-9']" v-on:click="latecheckout(time.price, time.slot, time.start, time.end)">
                           <span :class="[selected ? 'font-semibold' : 'font-normal', 'block truncate']">
                             {{ time.name }}
                           </span>
@@ -267,6 +267,8 @@
 
   <!--START MANAGING RESERVATIONS FOR ADMIN-->
 
+
+
   <div class="max-w-7xl mx-auto top-20 py-24 px-4 sm:py-32 sm:px-6 lg:px-8">
     <div class="flex flex-col mt-10" style="max-height: 200Vh">
       <h1 class="mt-10 font-bold text-3xl px-4" id="order">Commandes actives</h1>
@@ -304,24 +306,24 @@
                     <div>
                       <dt class="font-medium text-gray-900">From:</dt>
                       <dd class="text-gray-500">
-                        <span class="block">31-12-2022</span>
+                        {{moment(order.startdate).format('DD-MM-YYYY')}}
                       </dd>
                       <dt class="font-medium text-gray-900 mt-3">Number of guests:</dt>
                       <dd class="text-gray-500">
-                        <span class="block">3 </span>
+                        <span class="block">{{order.guests}}</span>
                       </dd>
                     </div>
                     <div>
                       <dt class="font-medium text-gray-900">To:</dt>
                       <dd class="text-gray-500 space-y-3">
                         <p>
-                          30-11-2022
+                          {{moment(order.finishdate).format('DD-MM-YYYY')}}
                         </p>
                       </dd>
                       <dt class="mt-3 font-medium text-gray-900">Checkout time:</dt>
                       <dd class="text-gray-500 space-y-3">
                         <p>
-                         14:00
+                          {{order.starttime}}:00
                         </p>
                       </dd>
                     </div>
@@ -331,12 +333,9 @@
                 <div class="mt-6 lg:mt-0 lg:col-span-5 lg:mt-5">
                   <dl class="grid grid-cols-2 gap-x-6 text-sm">
                     <div>
-                      // v-for on additionals
-                      <dt class="font-medium text-gray-900">additionals:</dt>
-                      <dd class="text-gray-500">
-                        <span class="block">towels</span>
-                        <span class="block">price</span>
-                        <span class="block">quantity</span>
+                      <dt class="font-medium text-gray-900">Additionals:</dt>
+                      <dd v-for="extra in order.extras" v-bind:key="extra.id" class="text-gray-500">
+                        <span class="block">{{extra.name}}: {{extra.quantity}}</span>
                       </dd>
                     </div>
                   </dl>
@@ -349,7 +348,8 @@
                 <div>
                   <dt class="font-medium text-gray-900">User account:</dt>
                   <dd class="mt-3 text-gray-500">
-                    <span class="block">blabla</span>
+                    <span class="block">{{ order.user.name }}</span>
+                    <span class="block">{{ order.user.email }}</span>
                   </dd>
                 </div>
                 <div>
@@ -417,7 +417,7 @@
                             <div class="bg-white py-3 border-t border-b border-gray-200 shadow-sm sm:border">
                               <div class="py-6 px-4 sm:px-6 lg:grid lg:grid-cols-12 lg:gap-x-8 lg:p-8">
                                 <div class="sm:flex lg:col-span-7 border-b ">
-                                  <div class="mt-6 sm:mt-0 sm:ml-6">
+                                  <div class="mt-6 mb-1 sm:mt-0">
                                     <h1 class="text-base font-xlarge text-gray-900">
                                       Référence de l'achat n° {{ order.id }}
                                     </h1>
@@ -429,24 +429,26 @@
                                     <div>
                                       <dt class="font-medium text-gray-900">From:</dt>
                                       <dd class="text-gray-500">
-                                        <span class="block">31-12-2022</span>
+                                        <span class="block">
+                                          {{moment(order.finishdate).format('DD-MM-YYYY')}}
+                                        </span>
                                       </dd>
                                       <dt class="font-medium text-gray-900 mt-3">Number of guests:</dt>
                                       <dd class="text-gray-500">
-                                        <span class="block">3 </span>
+                                        <span class="block">{{order.guests}}</span>
                                       </dd>
                                     </div>
                                     <div>
                                       <dt class="font-medium text-gray-900">To:</dt>
                                       <dd class="text-gray-500 space-y-3">
                                         <p>
-                                          30-11-2022
+                                          {{moment(order.startdate).format('DD-MM-YYYY')}}
                                         </p>
                                       </dd>
                                       <dt class="mt-3 font-medium text-gray-900">Checkout time:</dt>
                                       <dd class="text-gray-500 space-y-3">
                                         <p>
-                                          14:00
+                                          {{order.starttime}}:00
                                         </p>
                                       </dd>
                                     </div>
@@ -456,12 +458,9 @@
                                 <div class="mt-6 lg:mt-0 lg:col-span-5 lg:mt-5">
                                   <dl class="grid grid-cols-2 gap-x-6 text-sm">
                                     <div>
-                                      // v-for on additionals
-                                      <dt class="font-medium text-gray-900">additionals:</dt>
-                                      <dd class="text-gray-500">
-                                        <span class="block">towels</span>
-                                        <span class="block">price</span>
-                                        <span class="block">quantity</span>
+                                      <dt class="font-medium text-gray-900">Additionals:</dt>
+                                      <dd v-for="extra in order.extras" v-bind:key="extra.id" class="text-gray-500">
+                                        <span class="block">{{extra.name}}: {{extra.quantity}}</span>
                                       </dd>
                                     </div>
                                   </dl>
@@ -474,9 +473,8 @@
                                 <div>
                                   <dt class="font-medium text-gray-900">User account:</dt>
                                   <dd class="mt-3 text-gray-500">
-                                    <span class="block">blabla</span>
-                                    <span class="block">blabla</span>
-                                    <span class="block">blabla</span>
+                                    <span class="block">{{order.user.name}}</span>
+                                    <span class="block">{{order.user.email}}</span>
                                   </dd>
                                 </div>
                                 <div>
@@ -489,13 +487,13 @@
                                           <CreditCardIcon class="h-6 w-6"></CreditCardIcon>
                                         </p>
                                         <p class="text-gray-500">
-                                          Brand:  <span class="uppercase">blabla</span>
+                                          Brand:  <span class="uppercase">{{order.cardBrand}}</span>
                                         </p>
                                         <p class="text-gray-500">
-                                          Ending with: blabla
+                                          Ending with: {{order.lastFour}}
                                         </p>
                                         <p class="text-gray-500">
-                                          Expire: blabla
+                                          Expire: {{order.expire}}
                                         </p>
                                       </div>
                                     </dd>
@@ -506,7 +504,7 @@
                               <dl class="mt-8 divide-y divide-gray-200 text-sm lg:mt-0 lg:col-span-5">
                                 <div class="pt-4 flex items-center justify-between">
                                   <dt class="font-medium text-gray-900">ID trans:</dt>
-                                  <dd class="font-medium text-indigo-600">blabla</dd>
+                                  <dd class="font-medium text-indigo-600">{{order.transactionID}}</dd>
                                 </div>
                                 <div class="pt-4 flex items-center justify-between">
                                   <dt class="font-medium text-gray-900">Total de la commande</dt>
@@ -579,10 +577,10 @@ export default {
         })
 
 
-    this.axios.post(process.env.VUE_APP_URL_API + "api/fulldays")
-        .then(response => {
-          this.orders = response.data
-        })
+    // this.axios.post(process.env.VUE_APP_URL_API + "api/fulldays")
+    //     .then(response => {
+    //       this.orders = response.data
+    //     })
 
     this.axios.get(process.env.VUE_APP_URL_API + "api/timeslots",)
         .then(response => {
@@ -646,7 +644,7 @@ export default {
 
   beforeMount(){
 
-    this.axios.post(process.env.VUE_APP_URL_API + 'api/fulldays')
+    this.axios.post(process.env.VUE_APP_URL_API + 'api/fulldaysadmin')
         .then(response =>
             this.orders = response.data
         )
@@ -688,7 +686,7 @@ export default {
 
   methods: {
     fetchOrders(){
-      this.axios.post(process.env.VUE_APP_URL_API + 'api/fulldays')
+      this.axios.post(process.env.VUE_APP_URL_API + 'api/fulldaysadmin')
           .then(response =>
               this.orders = response.data
           )
@@ -707,12 +705,14 @@ export default {
       /* eslint-enable */
     },
 
-    latecheckout(price, slot){
+    latecheckout(price, slot, start, end){
       this.onlyRoomPrice=''
       this.amount = ''
       this.range = ''
       this.checkoutPrice = price
       this.checkOutSlot = slot
+      this.checkOutStart = start
+      this.checkOutEnd = end
     },
 
     cons(){
@@ -913,8 +913,8 @@ export default {
       let product_id = '1'
       let startdate = moment(this.secondstage.start).format('YYYY-M-DD')
       let finishdate = moment(this.secondstage.end).format('YYYY-M-DD')
-      let starttime = '10'
-      let finishtime = '14'
+      let starttime = this.secondstage.checkOutStart
+      let finishtime = this.secondstage.checkOutEnd
       let slot_id = this.secondstage.slot
       let fullday = '1'
       let guests = this.secondstage.guests
@@ -939,10 +939,12 @@ export default {
             language
           })
           .then((response) => {
+            console.log(response.data.id)
             let extras = this.add.map(element => this.axios.post(process.env.VUE_APP_URL_API + 'api/extras',{reservation_id: response.data.id, name: element.name, price:element.price, quantity:element.quantity  }))
             console.log(extras)
 
-            this.$router.push({path:'/'})
+            this.addAdditional = ''
+            this.$router.go()
           })
           .catch((error) => {
             this.error = error.response.data.message;
@@ -960,6 +962,15 @@ export default {
         if(this.checkoutPrice == '') {
           this.checkoutPrice = 0
         }
+        if(this.checkOutStart ==""){
+          this.checkOutStart = this.lateCheckout[0]['start']
+        }
+        if(this.checkOutEnd ==""){
+          this.checkOutEnd = this.lateCheckout[0]['end']
+        }
+        if(this.checkOutSlot==""){
+          this.checkOutSlot = this.lateCheckout[0]['slot']
+        }
 
         const book =
             {
@@ -971,6 +982,8 @@ export default {
               slot: this.checkOutSlot,
               onlyRoomPrice: this.onlyRoomPrice,
               checkoutPrice: this.checkoutPrice,
+              checkOutStart:this.checkOutStart,
+              checkOutEnd: this.checkOutEnd,
             }
 
         // this.$store.commit('lateCheckout', (this.checkoutPrice))
@@ -1009,12 +1022,14 @@ export default {
       lateCheckout:'',
       numberOfPeopleFullDay:'',
       specialday:'',
-      PreSelectedCheckOut:[{name: 'Make your choise', price: 0}],
+      PreSelectedCheckOut:[{name: 'Make your choise', price: 0,}],
       NumPeople:[{name: 'Make your choise'}],
       emptySelection:'',
       onlyRoomPrice:'',
       checkoutPrice:'',
       checkOutSlot: 1,
+      checkOutStart:'',
+      checkOutEnd: '',
       emptyGuests:'',
       dates:'',
       slots:'',
