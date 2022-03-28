@@ -57,7 +57,7 @@
                   <div class="grid grid-cols-2 gap-6">
                     <div>
                       <label for="from_day" class="block text-sm font-medium text-gray-700">From day</label>
-                      <select id="from_day" name="from_day" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+                      <select v-model="specialday.fromDate" id="from_day" name="from_day" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
                         <option>day</option>
                         <option value="01">01</option>
                         <option value="02">02</option>
@@ -95,7 +95,7 @@
 
                     <div>
                       <label for="from_month" class="block text-sm font-medium text-gray-700">From month</label>
-                      <select id="from_month" name="from_month" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+                      <select v-model="specialday.fromMonth" id="from_month" name="from_month" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
                         <option>month</option>
                         <option value="01">January</option>
                         <option value="02">February</option>
@@ -117,7 +117,7 @@
                   <div class="grid grid-cols-2 gap-6">
                     <div>
                       <label for="to-day" class="block text-sm font-medium text-gray-700">To day</label>
-                      <select id="to-day" name="to-day" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+                      <select v-model="specialday.toDate" id="to-day" name="to-day" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
                         <option>day</option>
                         <option value="01">01</option>
                         <option value="02">02</option>
@@ -155,7 +155,7 @@
 
                     <div>
                       <label for="to_month" class="block text-sm font-medium text-gray-700">To month</label>
-                      <select id="to_month" name="to_month" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+                      <select v-model="specialday.toMonth" id="to_month" name="to_month" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
                         <option>month</option>
                         <option value="01">January</option>
                         <option value="02">February</option>
@@ -176,14 +176,23 @@
                 </div>
 
               </div>
-              <div class="px-4 py-3 bg-gray-50 text-right sm:px-6">
-                <button type="submit" class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Save</button>
+              <div class="flex justify-end bg-gray-50">
+                <div class="px-4 py-3 bg-gray-50 text-right sm:px-6">
+                <button type="button" @click="newSpecialDays"  class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                  Add Product
+                  <PlusCircleIcon class="ml-2 -mr-0.5 h-4 w-4 mt-0.5" aria-hidden="true" />
+                </button>
+                </div>
+                <div class="px-4 py-3 bg-gray-50 text-right sm:px-6">
+                  <button type="submit" class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Save</button>
+                </div>
               </div>
             </div>
           </form>
         </div>
       </div>
     </div>
+    <Addspecialdatemodal @close="addSpecialDays"  :special="addingSpecialDays" v-show="addingSpecialDays != null"></Addspecialdatemodal>
 
     <!--    START MANAGE CHECKOUTS-->
     <div class="hidden sm:block" aria-hidden="true">
@@ -499,6 +508,8 @@
 </template>
 
 <script>
+import {PlusCircleIcon} from '@heroicons/vue/solid'
+import Addspecialdatemodal from "@/components/Addspecialdatemodal";
 
 const tabs = [
   { name: 'My Account', href: '/dashboard', current: false },
@@ -543,6 +554,7 @@ export default {
   },
 
 
+
   data(){
     return{
       specialdays:'',
@@ -550,7 +562,40 @@ export default {
       timeslots:'',
       groups:'',
       rooms:'',
+      addingSpecialDays:null,
     }
+  },
+
+  methods: {
+    newSpecialDays() {
+      this.addingSpecialDays = {
+        name: null,
+        fromDate: null,
+        toDate: null,
+        fromMonth: null,
+        toMonth: null,
+      }
+    },
+
+    addSpecialDays(special) {
+      this.addingSpecialDays = null
+
+      let name = special.name
+      let fromDate = special.fromDate
+      let toDate = special.toDate
+      let fromMonth = special.fromMonth
+      let toMonth = special.toMonth
+      /* eslint-disable */
+      this.axios.post(process.env.VUE_APP_URL_API + "api/spcialdays/", {name, fromDate, toDate, fromMonth, toMonth})
+          .then(response => this.specialdays.push(special),
+          )
+
+    }
+  },
+
+  components:{
+    PlusCircleIcon,
+    Addspecialdatemodal
   },
 
 

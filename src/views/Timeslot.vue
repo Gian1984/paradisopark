@@ -334,25 +334,7 @@ const numberOfPeopleTimeSlot = [
   { id: 60, value: 59, name: '59' },
   { id: 61, value: 60, name: '60' },
 ]
-// const timeslots = [
-//   { id: 1,
-//     name: '10-14',
-//     start: '10:00',
-//     end: '14:00',
-//   },
-//   {
-//     id: 2,
-//     name: '15-19',
-//     start: '15:00',
-//     end: '19:00',
-//   },
-//   {
-//     id: 3,
-//     name: '20-00',
-//     start: '20:00',
-//     end: '00:00',
-//   },
-// ]
+
 export default {
   mounted() {
     this.axios.get(process.env.VUE_APP_URL_API + "api/timeslots")

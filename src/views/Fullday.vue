@@ -421,9 +421,9 @@ export default {
           // Filter if selected starting date OR selected ending date are inside range of special day
           let resultProductData = specialday.filter(element => {
             // Formatting special day starting range
-            let fromDate = moment(element.fromDate).format('MM-DD')+'-'+moment(this.range['start']).format('YYYY')
+            let fromDate = element.fromMonth+'-'+element.fromDate+'-'+moment(this.range['start']).format('YYYY')
             // Formatting special day ending range
-            let endDate = moment(element.toDate).format('MM-DD')+'-'+moment(this.range['end']).format('YYYY')
+            let endDate = element.toMonth+'-'+element.toDate+'-'+moment(this.range['end']).format('YYYY')
             // check condition
             if  (  startDate >= fromDate && startDate <=  endDate ||  toDate >= fromDate && toDate <=  endDate  ){
               // return an array with the special day period range hit by the day starting range or the day ending range
