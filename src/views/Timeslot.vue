@@ -39,8 +39,7 @@
       </ol>
     </nav>
 
-    <!-- <h1 class="mt-8 text-3xl text-center font-extrabold tracking-tight text-gray-900 sm:text-4xl">Time slot</h1>
-    <h2 class="text-center">Book your wellness moment here easily and quickly</h2> -->
+<!--    <h2 class="text-center">Book your wellness moment here easily and quickly</h2>-->
     <form class="mt-8 lg:grid lg:grid-cols-12 lg:gap-x-12 lg:items-start xl:gap-x-16">
       <section aria-labelledby="cart-heading" class="lg:col-span-7">
         <h2 id="cart-heading" class="sr-only">Items in your shopping cart</h2>
@@ -147,12 +146,6 @@
                        :minute-increment="60"
                        v-on:click="input()"
         />
-        <!-- <div class="w-full flex">
-          <p>Legendary</p>
-          <p class="bg-blue-500 rounded-2xl py-1 px-3 text-white mx-4">Today</p>
-          <p class="bg-green-500 rounded-2xl py-1 px-3 text-white mx-4">Selection</p>
-          <p class="bg-red-600 rounded-2xl py-1 px-3 text-white mx-4">Not available</p>
-        </div> -->
 
         <!-- TIME SLOT CARDS -->
         <RadioGroup v-model="selectedTimeSlots">
@@ -341,6 +334,7 @@ export default {
         .then(response => {
           this.timeslots = response.data
         })
+
     this.axios.post(process.env.VUE_APP_URL_API + "api/slots")
         .then(response => {
           let slots = response.data
@@ -348,6 +342,7 @@ export default {
             return { start: new Date(element.startdate), end: new Date(element.finishdate), starttime: element.starttime, finishtime: element.finishtime, slot: element.slot_id }
           })
         })
+
     this.axios.post(process.env.VUE_APP_URL_API + "api/fulldays")
         .then(response => {
           let fulldays = response.data

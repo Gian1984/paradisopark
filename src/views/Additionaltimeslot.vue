@@ -131,48 +131,7 @@ const steps = [
   { name: 'Step 2', href: '/additionaltimeslot', status: 'current' },
   { name: 'Step 3', href: '/checkouttimeslot', status: 'upcoming' },
 ]
-// const products = [
-//   {
-//     id: 1,
-//     name: 'Bath linen',
-//     price: '9.50',
-//     description: 'Comb + Towel + Slippers',
-//     image: 'https://tailwindui.com/img/ecommerce-images/shopping-cart-page-01-product-01.jpg',
-//     imageAlt: "Front of men's Basic Tee in sienna.",
-//   },
-//   {
-//     id: 2,
-//     name: 'Comb',
-//     price: '5.50',
-//     description: 'Unique size',
-//     image: 'https://tailwindui.com/img/ecommerce-images/shopping-cart-page-01-product-02.jpg',
-//     imageAlt: "Front of men's Basic Tee in black.",
-//   },
-//   {
-//     id: 3,
-//     name: 'Towel',
-//     price: '2.00',
-//     description: 'Unique size',
-//     image: 'https://tailwindui.com/img/ecommerce-images/shopping-cart-page-01-product-03.jpg',
-//     imageAlt: 'Insulated bottle with white base and black snap lid.',
-//   },
-//   {
-//     id: 4,
-//     name: 'Slippers',
-//     price: '2.00',
-//     description: 'Unique size',
-//     image: 'https://tailwindui.com/img/ecommerce-images/shopping-cart-page-01-product-03.jpg',
-//     imageAlt: 'Insulated bottle with white base and black snap lid.',
-//   },
-//   {
-//     id: 5,
-//     name: 'Cava',
-//     price: '24.50',
-//     description: '75cl',
-//     image: 'https://tailwindui.com/img/ecommerce-images/shopping-cart-page-01-product-03.jpg',
-//     imageAlt: 'Insulated bottle with white base and black snap lid.',
-//   },
-// ]
+
 export default {
   mounted() {
     this.axios.get(process.env.VUE_APP_URL_API + "api/additionals")
