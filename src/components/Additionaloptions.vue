@@ -43,6 +43,9 @@
                 </div>
                 <div class="justify-end flex">
                   <div class="ml-2 inline ... flex">
+                    <button type="button" @click="removeAdditional(product.id, index)" class="mr-2 inline-flex items-center p-2 border border-transparent rounded-full shadow-sm text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 text-right">
+                      <TrashIcon class="h-4 w-4" aria-hidden="true" />
+                    </button>
                     <button type="button" @click="editingItem = product"  class=" inline-flex items-center px-2 py-2 border border-transparent shadow-sm text-sm leading-4 font-medium rounded-full text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                       <PencilAltIcon class="h-4 w-4" aria-hidden="true" />
                     </button>
@@ -136,7 +139,7 @@
 
 <script>
 import Additionalmodal from "@/components/Additionalmodal";
-import { PlusCircleIcon,PencilAltIcon, DocumentTextIcon, ChevronDownIcon, PhotographIcon, TagIcon, CurrencyEuroIcon, FlagIcon } from '@heroicons/vue/outline'
+import { PlusCircleIcon,PencilAltIcon, DocumentTextIcon, ChevronDownIcon, PhotographIcon, TagIcon, CurrencyEuroIcon, FlagIcon, TrashIcon } from '@heroicons/vue/outline'
 import { Disclosure, DisclosureButton, DisclosurePanel } from '@headlessui/vue'
 
 
@@ -171,6 +174,7 @@ export default {
     ChevronDownIcon,
     PhotographIcon,
     CurrencyEuroIcon,
+    TrashIcon,
   },
 
   mounted() {
@@ -217,9 +221,20 @@ export default {
 
       this.axios.post(process.env.VUE_APP_URL_API + "api/additionals/", {name, description, price, language, image})
           .then(response => this.products.push(product))
-    }
-  },
+    },
 
+    removeAdditional(ID, index) {
+      console.log(ID)
+      this.axios.delete(process.env.VUE_APP_URL_API + "api/additionals/" + ID)
+          .then(response => {
+            this.products.splice(index, 1)
+          })
+
+          .catch(error => {
+            console.log(error);
+          })
+    },
+  },
 
   setup() {
     return {

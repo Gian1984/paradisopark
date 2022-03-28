@@ -37,7 +37,6 @@
           <div class="px-4 sm:px-0">
             <h3 class="text-lg font-medium leading-6 text-gray-900">Specialdays</h3>
             <p class="mt-1 text-sm text-gray-600">This information will be displayed publicly so be careful what you share.</p>
-            {{specialdays}}
           </div>
         </div>
         <div class="mt-5 md:mt-0 md:col-span-2">
