@@ -44,7 +44,15 @@
           <form action="#" method="POST">
             <div class="shadow sm:rounded-md sm:overflow-hidden">
               <div class="px-4 py-5 bg-white space-y-6 sm:p-6">
-                <div v-for="specialday in specialdays" v-bind:key="specialday.id" class="grid grid-cols-3 gap-6">
+                <div v-for="(specialday, index) in specialdays" v-bind:key="specialday.id" class="grid grid-cols-4 gap-6">
+
+                  <div class="sm:flex p-2 text-right mt-2">
+                    <div class="ml-2  md:mt-0 lg:mt-0 text-right">
+                      <button type="button" @click="removeSpecial(specialday.id, index)" class="inline-flex items-center p-2 border border-transparent rounded-full shadow-sm text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 text-right">
+                        <TrashIcon class="h-4 w-4" aria-hidden="true" />
+                      </button>
+                    </div>
+                  </div>
 
                   <div>
                     <label for="email" class="block text-sm font-medium text-gray-700">Period</label>
@@ -56,7 +64,7 @@
 
                   <div class="grid grid-cols-2 gap-6">
                     <div>
-                      <label for="from_day" class="block text-sm font-medium text-gray-700">From day</label>
+                      <label for="from_day" class="block text-sm font-medium text-gray-700"><span class="text-indigo-600">From:</span> day</label>
                       <select v-model="specialday.fromDate" id="from_day" name="from_day" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
                         <option>day</option>
                         <option value="01">01</option>
@@ -94,7 +102,7 @@
                     </div>
 
                     <div>
-                      <label for="from_month" class="block text-sm font-medium text-gray-700">From month</label>
+                      <label for="from_month" class="block text-sm font-medium text-gray-700">month</label>
                       <select v-model="specialday.fromMonth" id="from_month" name="from_month" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
                         <option>month</option>
                         <option value="01">January</option>
@@ -116,7 +124,7 @@
 
                   <div class="grid grid-cols-2 gap-6">
                     <div>
-                      <label for="to-day" class="block text-sm font-medium text-gray-700">To day</label>
+                      <label for="to-day" class="block text-sm font-medium text-gray-700"><span class="text-indigo-600">To:</span> day</label>
                       <select v-model="specialday.toDate" id="to-day" name="to-day" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
                         <option>day</option>
                         <option value="01">01</option>
@@ -154,7 +162,7 @@
                     </div>
 
                     <div>
-                      <label for="to_month" class="block text-sm font-medium text-gray-700">To month</label>
+                      <label for="to_month" class="block text-sm font-medium text-gray-700">month</label>
                       <select v-model="specialday.toMonth" id="to_month" name="to_month" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
                         <option>month</option>
                         <option value="01">January</option>
@@ -509,6 +517,7 @@
 
 <script>
 import {PlusCircleIcon} from '@heroicons/vue/solid'
+import {TrashIcon} from '@heroicons/vue/outline'
 import Addspecialdatemodal from "@/components/Addspecialdatemodal";
 
 const tabs = [
@@ -590,10 +599,23 @@ export default {
           .then(response => this.specialdays.push(special),
           )
 
-    }
+    },
+
+    removeSpecial(specialID, index) {
+      console.log(specialID)
+      this.axios.delete(process.env.VUE_APP_URL_API + "api/spcialdays/" + specialID)
+          .then(response => {
+            this.specialdays.splice(index, 1)
+          })
+
+          .catch(error => {
+            console.log(error);
+          })
+    },
   },
 
   components:{
+    TrashIcon,
     PlusCircleIcon,
     Addspecialdatemodal
   },
