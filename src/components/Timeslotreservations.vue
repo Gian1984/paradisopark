@@ -244,6 +244,14 @@
               </dt>
               <dd class="text-sm font-medium text-gray-900">{{ amount }}</dd>
             </div>
+            <div v-if="additionalAmount" class="border-t border-gray-200 pt-4 flex items-center justify-between" >
+              <dt class="flex items-center text-sm text-gray-600">
+                <span>Total additional</span>
+              </dt>
+              <dd class="text-sm font-medium text-gray-900" :id="additionalAmount" >{{ additionalAmount }} €
+                <input v-model="additionalAmount" class="hidden">
+              </dd>
+            </div>
             <div class="border-t border-gray-200 pt-4 flex items-center justify-between">
               <dt class="text-base font-medium text-gray-900">Order total</dt>
               <dd class="text-base font-medium text-gray-900">{{ amount }} €</dd>
@@ -251,11 +259,12 @@
           </dl>
 
           <div class="mt-6">
-            <button v-on:click="next( date, amount, guests)" type="button" class="w-full bg-indigo-600 border border-transparent rounded-md shadow-sm py-3 px-4 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-indigo-500">Next</button>
+            <button v-if="addAdditionals == '' " v-on:click="next( date, amount, guests)" type="button" class="w-full bg-indigo-600 border border-transparent rounded-md shadow-sm py-3 px-4 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-indigo-500">Next</button>
+            <button v-else v-on:click="confirmation()" type="button" class="mt-4 w-full bg-red-600 border border-transparent rounded-md shadow-sm py-3 px-4 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-red-500">Confirm</button>
           </div>
 
 
-          <div v-if="this.emptySelection" class="rounded-md bg-red-50 p-4 mb-4">
+          <div v-if="this.emptySelection" class="mt-4 rounded-md bg-red-50 p-4 mb-4">
             <div class="flex">
               <div class="flex-shrink-0">
                 <XCircleIcon class="h-5 w-5 text-red-400" aria-hidden="true" />
@@ -868,15 +877,67 @@ export default {
       }, 0);
 
       this.additionalAmount = total
-      this.amount = parseInt(this.additionalAmount) + parseInt(this.reservation.amount)
+      this.amount = parseInt(this.additionalAmount) + parseInt(this.secondStage.amount)
     },
 
-    book(){
-      const additionals = this.add
-      const totalAmount = this.amount
-      this.$store.commit('setAdditionals',( additionals ))
-      this.$store.commit('totalAmount',( totalAmount ))
-      this.$router.push({path: '/checkouttimeslot'})
+    watch: {
+      'additionalAmount': function(val, oldVal){
+        if (val != '') {
+          const amount = this.amount
+          this.amount= (amount - oldVal + val);
+        }else{
+          const amount = this.amount
+          this.amount= (amount - oldVal + val);
+        }
+      }
+    },
+
+    confirmation(){
+      let language = 'FR'
+      let transactionID = 'admin reservation'
+      let cardBrand = 'no card required'
+      let lastFour = 'admin account'
+      let expire = 'no expire date'
+      let user_id = '1'
+      let product_id = '1'
+      let startdate = moment(this.secondStage.date).format('YYYY-M-DD')
+      let finishdate = moment(this.secondStage.date).format('YYYY-M-DD')
+      let starttime = this.secondStage.start
+      let finishtime = this.secondStage.end
+      let slot_id = this.secondStage.slot
+      let fullday = '0'
+      let guests = this.secondStage.guests
+      let amount = parseInt(this.amount) * 100
+
+      this.axios.post(process.env.VUE_APP_URL_API + 'api/adminreservation',
+          {
+            user_id,
+            product_id,
+            startdate,
+            finishdate,
+            starttime,
+            finishtime,
+            slot_id,
+            fullday,
+            guests,
+            transactionID,
+            cardBrand,
+            lastFour,
+            expire,
+            amount,
+            language
+          })
+          .then((response) => {
+            console.log(response.data.id)
+            let extras = this.add.map(element => this.axios.post(process.env.VUE_APP_URL_API + 'api/extras',{reservation_id: response.data.id, name: element.name, price:element.price, quantity:element.quantity  }))
+            console.log(extras)
+
+            this.addAdditional = ''
+            this.$router.go()
+          })
+          .catch((error) => {
+            this.error = error.response.data.message;
+          });
     },
 
     fetchOrders(){
@@ -909,7 +970,9 @@ export default {
       additionals:'',
       additionalAmount:'',
 
+
       addAdditionals:'',
+
       setectedSlotId:'',
       setectedSlotStart:'',
       setectedSlotEnd:'',
