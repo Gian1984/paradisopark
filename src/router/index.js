@@ -1,10 +1,17 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Home from '../views/Home.vue'
-import About from '../views/About.vue'
+import Domain from '../views/Domain.vue'
+import Philosophy from '../views/Philosophy.vue'
+import Sauna from '../views/Sauna.vue'
+import Pool from '../views/Pool.vue'
+import Wintergarden from '../views/Wintergarden.vue'
+import Eventroom from '../views/Eventroom.vue'
 import Rooms from '../views/Rooms.vue'
-import Care from '../views/Care.vue'
+import Garden from '../views/Garden.vue'
 import Catering from '../views/Catering.vue'
-import Events from '../views/Events.vue'
+import Celebrations from '../views/Celebrations.vue'
+import Talks from '../views/Talks.vue'
+import Gallery from '../views/Gallery.vue'
 import Contact from '../views/Contact.vue'
 import Login from '../views/Login.vue'
 import Register from '../views/Register.vue'
@@ -35,9 +42,34 @@ const routes = [
     component: Home
   },
   {
-    path: '/about',
-    name: 'About',
-    component: About
+    path: '/domain',
+    name: 'Domain',
+    component: Domain
+  },
+  {
+    path: '/philosophy',
+    name: 'Philosophy',
+    component: Philosophy
+  },
+  {
+    path: '/sauna',
+    name: 'Sauna',
+    component: Sauna
+  },
+  {
+    path: '/pool',
+    name: 'Pool',
+    component: Pool
+  },
+  {
+    path: '/wintergarden',
+    name: 'Wintergarden',
+    component: Wintergarden
+  },
+  {
+    path: '/eventroom',
+    name: 'Eventroom',
+    component: Eventroom
   },
   {
     path: '/rooms',
@@ -45,9 +77,9 @@ const routes = [
     component: Rooms
   },
   {
-    path: '/care',
-    name: 'Care',
-    component: Care
+    path: '/garden',
+    name: 'Garden',
+    component: Garden
   },
   {
     path: '/catering',
@@ -55,9 +87,19 @@ const routes = [
     component: Catering
   },
   {
-    path: '/events',
-    name: 'Events',
-    component: Events
+    path: '/celebrations',
+    name: 'Celebrations',
+    component: Celebrations
+  },
+  {
+    path: '/talks',
+    name: 'Talks',
+    component: Talks
+  },
+  {
+    path: '/gallery',
+    name: 'Gallery',
+    component: Gallery
   },
   {
     path: '/contact',

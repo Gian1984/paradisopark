@@ -7,14 +7,15 @@
 
       <TransitionChild as="template" enter="transition ease-in-out duration-300 transform" enter-from="-translate-x-full" enter-to="translate-x-0" leave="transition ease-in-out duration-300 transform" leave-from="translate-x-0" leave-to="-translate-x-full">
         <div class="relative max-w-xs w-full bg-gray-600 bg-opacity-90 shadow-xl pb-12 pt-24 flex flex-col overflow-y-auto">
-          <div class="px-4 pt-5 pb-2 flex">
-            <button type="button" class="-m-2 p-2 rounded-md inline-flex items-center justify-center text-gray-400 outline-none" @click="mobileMenuOpen = false">
+          <div class="px-4 pt-5 pb-2 flex justify-end">
+            <button type="button" class="-m-2 p-2 inline-flex items-center justify-center text-gray-400 outline-none" @click="mobileMenuOpen = false">
               <span class="sr-only">Close menu</span>
               <XIcon class="h-6 w-6" aria-hidden="true" />
             </button>
           </div>
 
           <!-- MOBILE Links -->
+          <img src="img/logos/paradiso_logo.png" alt="paradisopark_logo" class="h-12 w-auto" />
 
           <!-- ABOUT BTN-->
           <div class="border-t border-gray-200 py-6 px-4 space-y-6">
@@ -41,19 +42,20 @@
   </TransitionRoot>
 
   <!-- Hero section -->
-  <div class="fixed z-50 w-full bg-gray-900">
+  <div class="fixed z-50 w-full bg-transparent">
     <!-- Decorative image and overlay -->
-    <div aria-hidden="true" class="absolute inset-0 overflow-hidden">
+    <!-- <div aria-hidden="true" class="absolute inset-0 overflow-hidden">
       <img src="https://tailwindui.com/img/ecommerce-images/home-page-01-hero-full-width.jpg" alt="" class="w-full h-full object-center object-cover" />
-    </div>
-    <div aria-hidden="true" class="absolute inset-0 bg-gray-900 opacity-50" />
+    </div> -->
+    <!-- <div aria-hidden="true" class="absolute inset-0 bg-gray-900 opacity-50" /> -->
 
     <!-- Navigation -->
     <header class="relative z-10">
       <nav aria-label="Top">
 
         <!-- Secondary navigation -->
-        <div class="backdrop-blur-md backdrop-filter bg-opacity-10 bg-white">
+        <!-- backdrop-blur-md backdrop-filter bg-opacity-10 bg-white -->
+        <div class="">
           <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div>
               <div class="h-16 flex items-center justify-between">
@@ -69,32 +71,33 @@
                   <!-- Flyout menus -->
                   <PopoverGroup class="px-4 bottom-0 inset-x-0">
                     <div class="h-full flex justify-center space-x-8">
-                      <router-link v-for="firstpage in navigation.firstpages" :key="firstpage.name" :to="firstpage.href" class="flex items-center text-sm font-medium text-white">{{ firstpage.name }}</router-link>
+
+                      <!-- BTN DROPDOWN -->
                       <Popover v-for="category in navigation.categories" :key="category.name" class="flex" v-slot="{ open }">
                         <div class="relative flex">
                           <PopoverButton class="relative z-10 outline-none flex items-center justify-center transition-colors ease-out duration-200 text-sm font-medium text-white">
                             {{ category.name }}
-                            <span :class="[open ? 'bg-white' : '', 'absolute -bottom-px inset-x-0 h-0.5 transition ease-out duration-200']" aria-hidden="true" />
+                            <span :class="[open ? 'bg-transparent' : '', 'absolute -bottom-px inset-x-0 h-0.5 transition ease-out duration-200']" aria-hidden="true" />
                           </PopoverButton>
                         </div>
 
                         <transition enter-active-class="transition ease-out duration-200" enter-from-class="opacity-0" enter-to-class="opacity-100" leave-active-class="transition ease-in duration-150" leave-from-class="opacity-100" leave-to-class="opacity-0">
                           <PopoverPanel class="absolute top-full inset-x-0 text-sm text-gray-500">
                             <!-- Presentational element used to render the bottom shadow, if we put the shadow on the actual panel it pokes out the top, so we use this shorter element to hide the top of the shadow -->
-                            <div class="absolute inset-0 top-1/2 bg-white shadow" aria-hidden="true" />
+                            <div class="absolute inset-0 top-1/2 bg-transparent shadow" aria-hidden="true" />
 
-                            <div class="relative bg-white">
+                            <div class="relative bg-transparent">
                               <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                                <div class="flex justify-around py-10">
-                                  <div v-for="item in category.featured" :key="item.name" class="group relative">
-                                    <div class="h-40 w-40 rounded-md bg-gray-100 overflow-hidden group-hover:opacity-75">
+                                <div class="flex justify-center py-4">
+                                  <div v-for="item in category.featured" :key="item.name" class="group relative px-2">
+                                    <div class="h-40 w-40 bg-gray-100 overflow-hidden group-hover:opacity-75">
                                       <img :src="item.imageSrc" :alt="item.imageAlt" class="object-center object-cover" />
                                     </div>
-                                    <router-link :to="item.href" class="mt-4 block font-medium text-gray-900 text-center">
+                                    <router-link :to="item.href" class="mt-2 block font-medium text-white text-center">
                                       <span class="absolute z-10 inset-0" aria-hidden="true" />
                                       {{ item.name }}
                                     </router-link>
-                                    <p aria-hidden="true" class="mt-1">{{ item.role }}</p>
+                                    <p aria-hidden="true" class="mt-0">{{ item.role }}</p>
                                   </div>
                                 </div>
                               </div>
@@ -103,6 +106,7 @@
                         </transition>
                       </Popover>
 
+                      <!-- Other btn -->
                       <router-link v-for="page in navigation.pages" :key="page.name" :to="page.href" class="flex items-center text-sm font-medium text-white">{{ page.name }}</router-link>
                     </div>
                   </PopoverGroup>
@@ -118,10 +122,7 @@
                 </div>
 
                 <!-- Logo (lg-) -->
-                <router-link to="/" class="lg:hidden">
-                  <span class="sr-only">Workflow</span>
-                  <img src="img/logos/paradiso_logo.png" alt="paradisopark_logo" class="h-12 w-auto" />
-                </router-link>
+                <router-link to="/booking" class="lg:hidden">Réserver</router-link>
 
                 <div class="flex-1 flex items-center justify-end">
                   <!--                  <a href="#" class="hidden text-sm font-medium text-white lg:block">-->
@@ -136,10 +137,8 @@
                     </a>
                     <a href="#" class="hidden text-sm font-medium text-white lg:block">Help</a> -->
 
-                    <!-- EMAIL ICON DESKTOP -->
-                    <router-link to="/contact" class="hidden lg:block">
-                      <MailIcon class="h-6 w-6 text-white"/>
-                    </router-link>
+                    <!-- BOOKING DESKTOP -->
+                    <router-link to="/booking" class="hidden text-white lg:block">Réserver</router-link>
 
                     <!-- LANGUAGES DESKTOP -->
                     <div class="border-t border-gray-200 py-6 pl-4 space-y-6">
@@ -193,7 +192,7 @@
   <router-view/>
 
 
-  <footer class="bg-gray-800" aria-labelledby="footer-heading">
+  <footer class="bg-beige" aria-labelledby="footer-heading">
     <h2 id="footer-heading" class="sr-only">Footer</h2>
     <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:py-16 lg:px-8">
       <div class="pb-8 xl:grid xl:grid-cols-5 xl:gap-8">
@@ -386,36 +385,80 @@ import 'vue-cookie-comply/dist/style.css'
 
 const languages = ['FR', 'EN', 'NL']
 
-
 const navigation = {
   mobilepages: [
-    { name: 'About', href: '/about' },
+    { name: 'Le domaine', href: '/domain' },
+    { name: 'La philosophie', href: '/philosophy' },
+    { name: 'Sauna & Hammam', href: '/sauna' },
+    { name: 'Piscine', href: '/pool' },
+    { name: 'Jardin d\'hiver', href: '/wintergarden' },
+    { name: 'Salle d\'événements', href: '/eventroom' },
     { name: 'Chambres', href: '/rooms' },
-    { name: 'Soins', href: '/care' },
+    { name: 'Jardin et étang', href: '/garden' },
     { name: 'Traiteur', href: '/catering' },
-    { name: 'Événements', href: '/events' },
-    { name: 'Réserver', href: '/booking' },
+    { name: 'Célébrations', href: '/celebrations' },
+    { name: 'Conférences', href: '/talks' },
+    { name: 'Gallerie', href: '/gallery' },
     { name: 'Contact', href: '/contact' },
   ],
-  firstpages: [
-    { name: 'About', href: '/about' },
-  ],
   categories: [
-
     {
-      name: 'Services',
+      name: 'Paradiso',
       featured: [
         {
-          name: 'Chambres',
-          href: '/rooms',
+          name: 'Le domaine',
+          href: '/domain',
           imageSrc: 'https://tailwindui.com/img/ecommerce-images/mega-menu-01-men-category-01.jpg',
           imageAlt: 'Hats and sweaters on wood shelves next to various colors of t-shirts on hangers.',
         },
         {
-          name: 'Soins',
-          href: '/care',
+          name: 'La philosophie',
+          href: '/philosophy',
           imageSrc: 'img/candles.jpg',
           imageAlt: 'Model wearing light heather gray t-shirt.',
+        },
+      ],
+    },
+    {
+      name: 'Services',
+      featured: [
+        {
+          name: 'Sauna & Hammam',
+          href: '/sauna',
+          imageSrc: 'https://tailwindui.com/img/ecommerce-images/mega-menu-01-men-category-01.jpg',
+          imageAlt: 'Hats and sweaters on wood shelves next to various colors of t-shirts on hangers.',
+        },
+        {
+          name: 'Piscine',
+          href: '/pool',
+          imageSrc: 'img/candles.jpg',
+          imageAlt: 'Model wearing light heather gray t-shirt.',
+        },
+        {
+          name: 'Jardin d\'hiver',
+          href: '/wintergarden',
+          imageSrc: 'img/dish.jpg',
+          imageAlt:
+              'Grey 6-panel baseball hat with black brim, black mountain graphic on front, and light heather gray body.',
+        },
+        {
+          name: 'Salle d\'événements',
+          href: '/eventroom',
+          imageSrc: 'https://tailwindui.com/img/ecommerce-images/mega-menu-01-men-category-01.jpg',
+          imageAlt: 'Hats and sweaters on wood shelves next to various colors of t-shirts on hangers.',
+        },
+        {
+          name: 'Chambres',
+          href: '/rooms',
+          imageSrc: 'img/candles.jpg',
+          imageAlt: 'Model wearing light heather gray t-shirt.',
+        },
+        {
+          name: 'Jardin et étang',
+          href: '/garden',
+          imageSrc: 'img/dish.jpg',
+          imageAlt:
+              'Grey 6-panel baseball hat with black brim, black mountain graphic on front, and light heather gray body.',
         },
         {
           name: 'Traiteur',
@@ -426,10 +469,29 @@ const navigation = {
         },
       ],
     },
+    {
+      name: 'Évenements',
+      featured: [
+        {
+          name: 'Célébrations',
+          href: '/celebrations',
+          imageSrc: 'https://tailwindui.com/img/ecommerce-images/mega-menu-01-men-category-01.jpg',
+          imageAlt: 'Hats and sweaters on wood shelves next to various colors of t-shirts on hangers.',
+        },
+        {
+          name: 'Conférences',
+          href: '/talks',
+          imageSrc: 'img/candles.jpg',
+          imageAlt: 'Model wearing light heather gray t-shirt.',
+        },
+      ],
+    },
+
   ],
   pages: [
-    { name: 'Événements', href: '/events' },
-    { name: 'Réserver', href: '/booking' },
+    { name: 'Gallerie', href: '/gallery' },
+    { name: 'Contact', href: '/contact' },
+    
   ],
 }
 
