@@ -23,6 +23,18 @@ export default createStore({
     lateCheckout(state, lateCheckout){
       state.lateCheckout = lateCheckout
     },
+    clearReservation(state){
+      state.reservation = ''
+    },
+    clearAdditionals(state){
+      state.additionals = ''
+    },
+    cleartotalAmount(state){
+      state.totalAmount = ''
+    },
+    clearlateCheckout(state){
+      state.lateCheckout = ''
+    },
   },
   actions: {
   },

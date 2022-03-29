@@ -282,6 +282,47 @@
               </div>
             </div>
           </div>
+
+          <!--ERROR sending data to DB-->
+          <div v-if="this.error" class="mt-4 rounded-md bg-red-50 p-4 mb-4">
+            <div class="flex">
+              <div class="flex-shrink-0">
+                <CheckIcon class="h-5 w-5 text-red-400" aria-hidden="true" />
+              </div>
+              <div class="ml-3">
+                <p class="text-sm font-medium text-red-800">{{ error }}</p>
+              </div>
+              <div class="ml-auto pl-3">
+                <div class="-mx-1.5 -my-1.5">
+                  <button type="button" v-on:click="this.error = ''" class="inline-flex bg-red-50 rounded-md p-1.5 text-red-500 hover:bg-red-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-red-50 focus:ring-red-600">
+                    <span class="sr-only">Dismiss</span>
+                    <XIcon class="h-5 w-5" aria-hidden="true" />
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!--Success sending data to DB-->
+          <div v-if="this.success" class="mt-4 rounded-md bg-green-50 p-4 mb-4">
+            <div class="flex">
+              <div class="flex-shrink-0">
+                <XCircleIcon class="h-5 w-5 text-green-400" aria-hidden="true" />
+              </div>
+              <div class="ml-3">
+                <p class="text-sm font-medium text-green-800">{{ success }}</p>
+              </div>
+              <div class="ml-auto pl-3">
+                <div class="-mx-1.5 -my-1.5">
+                  <button type="button" v-on:click="this.success = ''" class="inline-flex bg-green-50 rounded-md p-1.5 text-green-500 hover:bg-green-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-green-50 focus:ring-green-600">
+                    <span class="sr-only">Dismiss</span>
+                    <XIcon class="h-5 w-5" aria-hidden="true" />
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
         </section>
       </form>
     </div>
@@ -292,6 +333,10 @@
   <div class="max-w-7xl mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:px-8">
     <div class="flex flex-col mt-10" style="max-height: 200Vh">
       <h1 class="mt-10 font-bold text-3xl px-4" id="order">Commandes actives</h1>
+      <button type="button" @click="refresh()"  class="my-2 mx-4 inline-flex items-center px-2 py-2 border border-transparent shadow-sm text-sm leading-4 font-medium rounded-full text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+        <RefreshIcon class="h-4 w-4 mr-2" aria-hidden="true" />
+        <span>Refresh orders</span>
+      </button>
 
       <!--  start search box-->
 
@@ -563,7 +608,7 @@
 </template>
 
 <script>
-import { CreditCardIcon, ChevronDownIcon, TrashIcon, PlusCircleIcon } from '@heroicons/vue/outline'
+import { CreditCardIcon, ChevronDownIcon, TrashIcon, PlusCircleIcon, RefreshIcon } from '@heroicons/vue/outline'
 import {
   XIcon,
   XCircleIcon,
@@ -928,16 +973,45 @@ export default {
             language
           })
           .then((response) => {
-            console.log(response.data.id)
             let extras = this.add.map(element => this.axios.post(process.env.VUE_APP_URL_API + 'api/extras',{reservation_id: response.data.id, name: element.name, price:element.price, quantity:element.quantity  }))
             console.log(extras)
 
-            this.addAdditional = ''
-            this.$router.go()
           })
           .catch((error) => {
             this.error = error.response.data.message;
           });
+
+          if(this.error != ''){
+
+            this.additionalAmount = ''
+            this.range = ''
+            this.guests = ''
+            this.addAdditional = ''
+            this.amount = ''
+            this.success = 'Successfully book'
+            this.$store.commit('clearReservation')
+            this.$store.commit('clearAdditionals')
+            this.$store.commit('cleartotalAmount')
+            this.$store.commit('clearlateCheckout')
+
+            this.error = 'Something goes wrong please try again'
+
+          } else {
+            this.additionalAmount = ''
+            this.date = ''
+            this.guests = ''
+            this.addAdditionals = ''
+            this.amount = ''
+            this.success = 'Successfully book'
+            this.$store.commit('clearReservation')
+            this.$store.commit('clearAdditionals')
+            this.$store.commit('cleartotalAmount')
+            this.$store.commit('clearlateCheckout')
+          }
+    },
+
+    refresh(){
+      this.$router.go()
     },
 
     fetchOrders(){
@@ -972,6 +1046,9 @@ export default {
 
 
       addAdditionals:'',
+
+      error:'',
+      success:'',
 
       setectedSlotId:'',
       setectedSlotStart:'',
@@ -1017,6 +1094,7 @@ export default {
   },
 
   components: {
+    RefreshIcon,
     CreditCardIcon,
     ChevronDownIcon,
     Disclosure,
