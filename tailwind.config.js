@@ -9,6 +9,8 @@ module.exports = {
         teal: colors.teal,
         sky: colors.sky,
         cyan: colors.cyan,
+        white: '#fffbf4',
+        beige: '#ebe6d8',
       },
     },
   },
