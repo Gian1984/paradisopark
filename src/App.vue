@@ -122,7 +122,7 @@
                 </div>
 
                 <!-- Logo (lg-) -->
-                <router-link to="/booking" class="lg:hidden">Réserver</router-link>
+                <router-link to="/booking" class="lg:hidden">Réserver en ligne</router-link>
 
                 <div class="flex-1 flex items-center justify-end">
                   <!--                  <a href="#" class="hidden text-sm font-medium text-white lg:block">-->

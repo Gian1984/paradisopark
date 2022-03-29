@@ -1,15 +1,25 @@
 <template>
+
   <main>
-    <div class="relative h-screen pb-32 bg-gray-800 pt-40">
+    <header class="relative flex items-center justify-start h-screen overflow-hidden">
+      
+      <div class=" z-30 py-16 sm:py-24 lg:max-w-7xl lg:mx-auto lg:py-32 lg:px-8 w-screen mx-auto">
+        <h1 class="mt-6 text-4xl font-extrabold tracking-tight text-white md:text-5xl lg:text-6xl">{{ $t("home.title") }}</h1>
+        <p class="mt-6 max-w-3xl text-xl text-white">lorem ipsum</p>
+      </div>
+      <video autoplay loop muted class="absolute z-10 w-auto min-w-full min-h-full max-w-none">
+        <source src="https://assets.mixkit.co/videos/preview/mixkit-set-of-plateaus-seen-from-the-heights-in-a-sunset-26070-large.mp4" type="video/mp4"/>
+        Your browser does not support the video tag.
+      </video>
+    </header>
+
+    <!-- <div class="relative h-screen pb-32 bg-gray-800 pt-40">
       <div class="absolute inset-0">
         <img class="w-full h-full object-cover" src="img/domaine_complet.webp" />
         <div class="absolute inset-0 bg-gray-900 opacity-50" aria-hidden="true" />
       </div>
-      <div class="relative max-w-7xl mx-auto top-20 py-24 px-4 sm:py-32 sm:px-6 lg:px-8">
-        <h1 class="mt-6 text-4xl font-extrabold tracking-tight text-white md:text-5xl lg:text-6xl">{{ $t("home.title") }}</h1>
-        <p class="mt-6 max-w-3xl text-xl text-gray-300">Take the software path to your digital future.</p>
-      </div>
-    </div>
+      
+    </div> -->
 
     <!-- Trending products -->
     <section aria-labelledby="trending-heading" class="bg-white">
