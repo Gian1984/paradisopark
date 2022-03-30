@@ -75,7 +75,7 @@
                       <!-- BTN DROPDOWN -->
                       <Popover v-for="category in navigation.categories" :key="category.name" class="flex" v-slot="{ open }">
                         <div class="relative flex">
-                          <PopoverButton class="relative z-10 outline-none flex items-center justify-center transition-colors ease-out duration-200 text-sm font-medium text-white">
+                          <PopoverButton class="relative z-10 outline-none flex items-center justify-center transition-colors ease-out duration-200 text-sm font-medium text-black">
                             {{ category.name }}
                             <span :class="[open ? 'bg-transparent' : '', 'absolute -bottom-px inset-x-0 h-0.5 transition ease-out duration-200']" aria-hidden="true" />
                           </PopoverButton>
@@ -107,7 +107,7 @@
                       </Popover>
 
                       <!-- Other btn -->
-                      <router-link v-for="page in navigation.pages" :key="page.name" :to="page.href" class="flex items-center text-sm font-medium text-white">{{ page.name }}</router-link>
+                      <router-link v-for="page in navigation.pages" :key="page.name" :to="page.href" class="flex items-center text-sm font-medium text-black">{{ page.name }}</router-link>
                     </div>
                   </PopoverGroup>
                 </div>
@@ -491,7 +491,7 @@ const navigation = {
   pages: [
     { name: 'Gallerie', href: '/gallery' },
     { name: 'Contact', href: '/contact' },
-    
+
   ],
 }
 

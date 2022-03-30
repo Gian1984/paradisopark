@@ -34,6 +34,7 @@ import Pricedateoptions from '../components/Pricedateoptions.vue'
 import Timeslotreservations from '../components/Timeslotreservations.vue'
 import Additionalmodal from '../components/Additionalmodal.vue'
 import Addspecialdatemodal from '../components/Addspecialdatemodal.vue'
+import Checkoutmodal from '../components/Checkoutmodal.vue'
 
 const routes = [
   {
@@ -210,6 +211,11 @@ const routes = [
     path: '/addspecialdatemodal',
     name: 'Addspecialdatemodal',
     component: Addspecialdatemodal
+  },
+  {
+    path: '/checkoutmodal',
+    name: 'Checkoutmodal',
+    component: Checkoutmodal
   },
 ]
 
