@@ -6,9 +6,7 @@ function loadLocaleMessages () {
     const messages = {
 
         en: {
-
             // Home
-
             home: {
                 title: "WELCOME",
             },
@@ -20,25 +18,14 @@ function loadLocaleMessages () {
                 and:'as well as the',
                 privacy:'processing of personal data',
                 service:'in order to be able to provide the service.',
-            }
+            },
 
         },
 
         fr: {
-
-
-            //  ||||||||||  ||||||||||  ||||||||||  |||     ||  ||||||||||  ||      ||
-            //  ||          ||      ||  ||          || ||   ||  ||          ||      ||
-            //  ||||||      ||||||||||  ||||||      ||  ||  ||  ||          ||||||||||
-            //  ||          ||  |||     ||          ||   || ||  ||          ||      ||
-            //  ||          ||   |||||  ||||||||||  ||     |||  ||||||||||  ||      ||
-
-
             // Home
-
             home: {
-                title: "ACCUEIL",
-
+                title: "Bienvenu",
             },
 
             cookies:{
@@ -48,13 +35,29 @@ function loadLocaleMessages () {
                 and:'ainsi que le',
                 privacy:'traitement des données personnelles',
                 service:'afin de pouvoir fournir le service.',
-            }
+            },
 
+        },
 
+        nl: {
+            // Home
+            home: {
+                title: "Welkom",
+            },
 
-        }
+            cookies:{
+                title:'Beste bezoeker',
+                click:'Door op "Alles accepteren" te klikken accepteert u de',
+                terms:'Gebruiksvoorwaarden',
+                and:'en ook de',
+                privacy:'verwerking van persoonsgegevens',
+                service:'om de dienst te kunnen verlenen.',
+            },
+
+        },
 
     }
+    
     locales.keys().forEach(key => {
         const matched = key.match(/([A-Za-z0-9-_]+)\./i)
         if (matched && matched.length > 1) {
