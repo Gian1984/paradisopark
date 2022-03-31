@@ -493,7 +493,7 @@ const navigation = {
   pages: [
     { name: 'Gallerie', href: '/gallery' },
     { name: 'Contact', href: '/contact' },
-    
+
   ],
 }
 
