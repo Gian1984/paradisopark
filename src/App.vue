@@ -145,8 +145,8 @@
                       <form>
                         <div class="inline-block">
                           <label for="mobile-languages" class="sr-only">Languages</label>
-                          <div class="-ml-2 group relative border-transparent focus-within:ring-0 focus-within:ring-none">
-                            <select v-model="$i18n.locale" id="mobile-languages" name="language" class="transition_navbar bg-transparent text-white border-transparent py-0.5 pl-2 pr-2 flex items-center text-sm font-light group-hover:text-white focus:outline-none focus:ring-0 focus:border-transparent" :class="{change_color_text: scrollPosition > 20}">
+                          <div class="-ml-2 group relative border-transparent focus-within:ring-0 focus-within:ring-none select_custom">
+                            <select v-model="$i18n.locale" id="mobile-languages" name="language" class="select_custom transition_navbar bg-transparent text-white border-transparent py-0.5 pl-2 pr-2 flex items-center text-sm font-light group-hover:text-white focus:outline-none focus:ring-0 focus:border-transparent" :class="{change_color_text: scrollPosition > 20}">
                               <option value="fr">FR</option>
                               <option value="en">EN</option>
                               <option value="nl">NL</option>
@@ -693,16 +693,9 @@ export default {
 </style>
 
 <style>
-select {
-  /* for Firefox */
-  -moz-appearance: none;
-  /* for Chrome */
-  -webkit-appearance: none;
-}
 
-/* For IE10 */
-select::-ms-expand {
-  display: none;
+.select_custom {
+  background-image: none !important;
 }
 
 .transition_navbar{
