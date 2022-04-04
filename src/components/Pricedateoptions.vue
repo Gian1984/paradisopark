@@ -558,79 +558,89 @@
     </div>
 
     <div class="mt-10 sm:mt-0">
-      <div class="md:grid md:grid-cols-3 md:gap-6">
+      <div class="md:grid md:grid-cols-2 md:gap-6">
         <div class="md:col-span-1">
           <div class="px-4 sm:px-0">
             <h3 class="text-lg font-medium leading-6 text-gray-900">Timeslots</h3>
             <p class="mt-1 text-sm text-gray-600">Decide which communications you'd like to receive and how.</p>
-            {{timeslots}}
           </div>
         </div>
         <div class="mt-5 md:mt-0 md:col-span-2">
           <form action="#" method="POST">
-            <div class="shadow overflow-hidden sm:rounded-md">
+            <div class="shadow sm:rounded-md sm:overflow-hidden">
               <div class="px-4 py-5 bg-white space-y-6 sm:p-6">
-                <fieldset>
-                  <legend class="text-base font-medium text-gray-900">By Email</legend>
-                  <div class="mt-4 space-y-4">
-                    <div class="flex items-start">
-                      <div class="flex items-center h-5">
-                        <input id="comments" name="comments" type="checkbox" class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded" />
-                      </div>
-                      <div class="ml-3 text-sm">
-                        <label for="comments" class="font-medium text-gray-700">Comments</label>
-                        <p class="text-gray-500">Get notified when someones posts a comment on a posting.</p>
-                      </div>
-                    </div>
-                    <div class="flex items-start">
-                      <div class="flex items-center h-5">
-                        <input id="candidates" name="candidates" type="checkbox" class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded" />
-                      </div>
-                      <div class="ml-3 text-sm">
-                        <label for="candidates" class="font-medium text-gray-700">Candidates</label>
-                        <p class="text-gray-500">Get notified when a candidate applies for a job.</p>
-                      </div>
-                    </div>
-                    <div class="flex items-start">
-                      <div class="flex items-center h-5">
-                        <input id="offers" name="offers" type="checkbox" class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded" />
-                      </div>
-                      <div class="ml-3 text-sm">
-                        <label for="offers" class="font-medium text-gray-700">Offers</label>
-                        <p class="text-gray-500">Get notified when a candidate accepts or rejects an offer.</p>
-                      </div>
-                    </div>
-                  </div>
-                </fieldset>
-                <fieldset>
+                <div v-for="(timeslot, index) in timeslots" v-bind:key="timeslot.id" class="grid grid-cols-4 gap-6">
+
                   <div>
-                    <legend class="text-base font-medium text-gray-900">Push Notifications</legend>
-                    <p class="text-sm text-gray-500">These are delivered via SMS to your mobile phone.</p>
+                    <label for="timeslot_name" class="block text-sm font-medium text-indigo-600">Name :</label>
+                    <p class="hidden">spacing</p><br>
+                    <input v-model="timeslot.name" type="text" name="timeslot_name" id="timeslot_name" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md" disabled/>
                   </div>
-                  <div class="mt-4 space-y-4">
-                    <div class="flex items-center">
-                      <input id="push-everything" name="push-notifications" type="radio" class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300" />
-                      <label for="push-everything" class="ml-3 block text-sm font-medium text-gray-700"> Everything </label>
+
+
+                  <div class="grid grid-cols-2 gap-6">
+                    <div>
+                      <label for="timeslot_price" class="block text-sm font-medium text-gray-700">
+                        <span class="text-indigo-600">Price:</span><br>
+                        <span class="hidden">spacing</span><br>
+                      </label>
+                      <input v-model="timeslot.price" type="text" name="timeslot_price" id="timeslot_price" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md" disabled/>
                     </div>
-                    <div class="flex items-center">
-                      <input id="push-email" name="push-notifications" type="radio" class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300" />
-                      <label for="push-email" class="ml-3 block text-sm font-medium text-gray-700"> Same as email </label>
+
+                    <div>
+                      <label for="timeslot_start" class="block text-sm font-medium text-gray-700">
+                        <span class="text-indigo-600">Start:</span><br>
+                        <span class="hidden">spacing</span><br>
+                      </label>
+                      <input v-model="timeslot.start" type="text" name="timeslot_start" id="timeslot_start" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md" placeholder="you@example.com" disabled/>
                     </div>
-                    <div class="flex items-center">
-                      <input id="push-nothing" name="push-notifications" type="radio" class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300" />
-                      <label for="push-nothing" class="ml-3 block text-sm font-medium text-gray-700"> No push notifications </label>
+
+                  </div>
+
+                  <div class="grid grid-cols-2 gap-6">
+                    <div>
+                      <label for="timeslot_end" class="block text-sm font-medium text-gray-700">
+                        <span class="text-indigo-600">End:</span><br>
+                        <span class="hidden">spacing</span><br>
+                      </label>
+                      <input v-model="timeslot.end" type="text" name="timeslot_end" id="timeslot_end" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md" placeholder="you@example.com" disabled/>
+                    </div>
+
+                    <div>
+                      <label for="timeslot_value" class="block text-sm font-medium text-gray-700">
+                        <span class="text-indigo-600">Value:</span><br>
+                        <span class="hidden">spacing</span><br>
+                      </label>
+                      <input v-model="timeslot.value" type="text" name="timeslot_value" id="timeslot_value" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md" placeholder="you@example.com" disabled/>
                     </div>
                   </div>
-                </fieldset>
+                  <div class="sm:flex p-2 text-right mt-9 justify-center">
+                    <div class="ml-2  md:mt-0 lg:mt-0 text-right">
+                      <button type="button" @click="editingTimeslot = timeslot"  class="mr-2 inline-flex items-center px-2 py-2 border border-transparent shadow-sm text-sm leading-4 font-medium rounded-full text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                        <PencilAltIcon class="h-4 w-4" aria-hidden="true" />
+                      </button>
+                      <button type="button" @click="removeTimeslot(timeslot.id, index)" class="inline-flex items-center p-2 border border-transparent rounded-full shadow-sm text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 text-right">
+                        <TrashIcon class="h-4 w-4" aria-hidden="true" />
+                      </button>
+                    </div>
+                  </div>
+                </div>
               </div>
-              <div class="px-4 py-3 bg-gray-50 text-right sm:px-6">
-                <button type="submit" class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Save</button>
+              <div class="flex justify-end bg-gray-50">
+                <div class="px-4 py-3 bg-gray-50 text-right sm:px-6">
+                  <button type="button" @click="newTimeslot"  class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                    Add Timeslot
+                    <PlusCircleIcon class="ml-2 -mr-0.5 h-4 w-4 mt-0.5" aria-hidden="true" />
+                  </button>
+                </div>
               </div>
             </div>
           </form>
         </div>
       </div>
     </div>
+    <Timeslotmodal @close="endEditingTimeslot"  :timeslot="editingTimeslot" v-show="editingTimeslot != null"></Timeslotmodal>
+    <Timeslotmodal @close="addTimeslot"  :timeslot="addingTimeslot" v-show="addingTimeslot != null"></Timeslotmodal>
   </div>
 
 </template>
@@ -642,6 +652,7 @@ import Addspecialdatemodal from "@/components/Addspecialdatemodal";
 import Checkoutmodal from "@/components/Checkoutmodal";
 import Roommodal from "@/components/Roommodal";
 import Groupmodal from "@/components/Groupmodal";
+import Timeslotmodal from "@/components/Timeslotmodal";
 
 const tabs = [
   { name: 'My Account', href: '/dashboard', current: false },
@@ -706,6 +717,9 @@ export default {
 
       editingGroup:null,
       addingGroup:null,
+
+      editingTimeslot:null,
+      addingTimeslot:null,
     }
   },
 
@@ -895,7 +909,7 @@ export default {
     endEditingGroup(group) {
       this.editingGroup = null
 
-      let index = this.rooms.indexOf(group)
+      let index = this.groups.indexOf(group)
       let name = group.name
       let value = group.value
       let discount = group.discount
@@ -915,6 +929,61 @@ export default {
           })
     },
 
+    // methods for timeslot
+
+    newTimeslot() {
+      this.addingTimeslot = {
+        name: null,
+        start: null,
+        end:null,
+        price:null,
+        value:null,
+      }
+    },
+
+    addTimeslot(timeslot) {
+      this.addingTimeslot = null
+
+      let name = timeslot.name
+      let start = timeslot.start
+      let end = timeslot.end
+      let price = timeslot.price
+      let value = timeslot.value
+      let available = 1
+
+      /* eslint-disable */
+      this.axios.post(process.env.VUE_APP_URL_API + "api/timeslots/", {name, start, end, price, value, available })
+          .then(response => this.timeslots.push(timeslot),
+          )
+
+    },
+
+    endEditingTimeslot(timeslot) {
+      this.editingTimeslot = null
+
+      let index = this.timeslots.indexOf(timeslot)
+      let name = timeslot.name
+      let start = timeslot.start
+      let end = timeslot.end
+      let value = timeslot.value
+      let price = timeslot.price
+      let available = 1
+      /*eslint-disable */
+      this.axios.put(process.env.VUE_APP_URL_API + `api/timeslots/${timeslot.id}`, {name, start, end, price, value, available})
+          .then(response => this.timeslots[index] = timeslot,)
+    },
+
+    removeTimeslot(ID, index) {
+      this.axios.delete(process.env.VUE_APP_URL_API + "api/timeslots/" + ID)
+          .then(response => {
+            this.timeslots.splice(index, 1)
+          })
+
+          .catch(error => {
+            console.log(error);
+          })
+    },
+
   },
 
   components:{
@@ -924,7 +993,8 @@ export default {
     Addspecialdatemodal,
     Checkoutmodal,
     Roommodal,
-    Groupmodal
+    Groupmodal,
+    Timeslotmodal
   },
 
 
