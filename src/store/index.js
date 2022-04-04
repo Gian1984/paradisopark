@@ -7,7 +7,8 @@ export default createStore({
     additionals:'',
     totalAmount:'',
     lateCheckout:'',
-    setTest:''
+    setUser:'',
+    setRoute:'',
   },
   plugins: [createPersistedState()],
   mutations: {
@@ -34,6 +35,12 @@ export default createStore({
     },
     clearlateCheckout(state){
       state.lateCheckout = ''
+    },
+    setUser(state, user) {
+      state.setUser = user
+    },
+    setRoute(state, route){
+      state.setRoute = route
     },
   },
   actions: {

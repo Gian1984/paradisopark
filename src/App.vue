@@ -34,6 +34,11 @@
             <div class="flow-root">
               <router-link to="/login" class="-m-2 p-2 block font-light text-black">Sign in</router-link>
             </div>
+            <div v-if="this.setUser" class="flow-root">
+              <router-link v-on:click="logout" to="/" :class="[active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-bord flex']">
+                logout
+              </router-link>
+            </div>
           </div>
 
         </div>
@@ -175,11 +180,14 @@
                           <MenuItem v-slot="{ active }">
                             <a href="/login" :class="[active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700']">Sign in</a>
                           </MenuItem>
+                          <MenuItem v-if="this.setUser"  v-slot="{ active }">
+                            <router-link v-on:click="logout" to="/" :class="[active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700']">
+                              Logout
+                            </router-link>
+                          </MenuItem>
                         </MenuItems>
                       </transition>
                     </Menu>
-
-
                   </div>
                 </div>
               </div>
@@ -661,6 +669,18 @@ export default {
   },
 
   methods:{
+    logout(){
+      localStorage.removeItem('bigStore.jwt')
+      localStorage.removeItem('bigStore.user')
+      this.user = null
+      this.setUser = ''
+      this.$store.commit('setUser', null)
+      this.$store.commit('setRoute', this.$route.fullPath = null)
+      location.reload()
+      this.$router.push('/')
+    },
+
+
     updateScroll() {
        this.scrollPosition = window.scrollY
     },
@@ -679,6 +699,16 @@ export default {
       mobileMenuOpen,
     }
   },
+
+  computed: {
+
+    setUser:{
+      get(){
+        return this.$store.state.setUser
+      }
+    },
+  },
+
 }
 </script>
 

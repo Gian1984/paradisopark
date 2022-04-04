@@ -16,6 +16,7 @@ import Contact from '../views/Contact.vue'
 import Login from '../views/Login.vue'
 import Register from '../views/Register.vue'
 import Resetpassword from '../views/Resetpassword.vue'
+import Forgetpassword from '../views/Forgetpassword.vue'
 import Dashboard from '../views/Dashboard.vue'
 import Useraccount from '../views/Useraccount.vue'
 import Booking from '../views/Booking.vue'
@@ -35,6 +36,7 @@ import Timeslotreservations from '../components/Timeslotreservations.vue'
 import Additionalmodal from '../components/Additionalmodal.vue'
 import Addspecialdatemodal from '../components/Addspecialdatemodal.vue'
 import Checkoutmodal from '../components/Checkoutmodal.vue'
+
 
 const routes = [
   {
@@ -121,6 +123,11 @@ const routes = [
     path: '/resetpassword',
     name: 'Resetpassword',
     component: Resetpassword
+  },
+  {
+    path: '/forgetpassword',
+    name: 'Forgetpassword',
+    component: Forgetpassword
   },
   {
     path: '/dashboard',
