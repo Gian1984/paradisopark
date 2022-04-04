@@ -465,8 +465,8 @@
         </div>
       </div>
     </div>
-    <Checkoutmodal @close="endEditingRoom"  :room="editingRoom" v-show="editingRoom != null"></Checkoutmodal>
-    <Checkoutmodal @close="addRoom"  :room="addingRoom" v-show="addingRoom != null"></Checkoutmodal>
+    <Roommodal @close="endEditingRoom"  :room="editingRoom" v-show="editingRoom != null"></Roommodal>
+    <Roommodal @close="addRoom"  :room="addingRoom" v-show="addingRoom != null"></Roommodal>
 
 
     <!--    START MANAGE GROUPS-->
@@ -477,72 +477,77 @@
     </div>
 
     <div class="mt-10 sm:mt-0">
-      <div class="md:grid md:grid-cols-3 md:gap-6">
+      <div class="md:grid md:grid-cols-2 md:gap-6">
         <div class="md:col-span-1">
           <div class="px-4 sm:px-0">
             <h3 class="text-lg font-medium leading-6 text-gray-900">Groups</h3>
             <p class="mt-1 text-sm text-gray-600">Use a permanent address where you can receive mail.</p>
-            {{groups}}
           </div>
         </div>
         <div class="mt-5 md:mt-0 md:col-span-2">
           <form action="#" method="POST">
-            <div class="shadow overflow-hidden sm:rounded-md">
-              <div class="px-4 py-5 bg-white sm:p-6">
-                <div class="grid grid-cols-6 gap-6">
-                  <div class="col-span-6 sm:col-span-3">
-                    <label for="first-name" class="block text-sm font-medium text-gray-700">First name</label>
-                    <input type="text" name="first-name" id="first-name" autocomplete="given-name" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" />
+            <div class="shadow sm:rounded-md sm:overflow-hidden">
+              <div class="px-4 py-5 bg-white space-y-6 sm:p-6">
+                <div v-for="(group, index) in groups" v-bind:key="group.id" class="grid grid-cols-4 gap-6">
+
+                  <div>
+                    <label for="group_name" class="block text-sm font-medium text-indigo-600">Name :</label>
+                    <p class="hidden">spacing</p><br>
+                    <input v-model="group.name" type="text" name="group_name" id="group_name" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md" disabled/>
                   </div>
 
-                  <div class="col-span-6 sm:col-span-3">
-                    <label for="last-name" class="block text-sm font-medium text-gray-700">Last name</label>
-                    <input type="text" name="last-name" id="last-name" autocomplete="family-name" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" />
+
+                  <div class="grid grid-cols-2 gap-6">
+                    <div>
+                      <label for="group_value" class="block text-sm font-medium text-gray-700">
+                        <span class="text-indigo-600">People</span><br>
+                        <span class="text-indigo-600">in group:</span><br>
+                      </label>
+                      <input v-model="group.value" type="text" name="group_value" id="group_value" class="mt-1 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md" disabled/>
+                    </div>
+
+                    <div>
+                      <label for="groups_discount" class="block text-sm font-medium text-gray-700">
+                        <span class="text-indigo-600">Discount :</span><br>
+                        <span class="hidden">spacing</span><br>
+                      </label>
+                      <input v-model="group.discount" type="text" name="groups_discount" id="groups_discount" class="mt-1 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md" disabled/>
+                    </div>
+
                   </div>
 
-                  <div class="col-span-6 sm:col-span-4">
-                    <label for="email-address" class="block text-sm font-medium text-gray-700">Email address</label>
-                    <input type="text" name="email-address" id="email-address" autocomplete="email" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" />
+                  <div class="grid grid-cols-2 gap-6">
+                    <div></div>
+                    <div></div>
                   </div>
 
-                  <div class="col-span-6 sm:col-span-3">
-                    <label for="country" class="block text-sm font-medium text-gray-700">Country</label>
-                    <select id="country" name="country" autocomplete="country-name" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                      <option>United States</option>
-                      <option>Canada</option>
-                      <option>Mexico</option>
-                    </select>
-                  </div>
-
-                  <div class="col-span-6">
-                    <label for="street-address" class="block text-sm font-medium text-gray-700">Street address</label>
-                    <input type="text" name="street-address" id="street-address" autocomplete="street-address" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" />
-                  </div>
-
-                  <div class="col-span-6 sm:col-span-6 lg:col-span-2">
-                    <label for="city" class="block text-sm font-medium text-gray-700">City</label>
-                    <input type="text" name="city" id="city" autocomplete="address-level2" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" />
-                  </div>
-
-                  <div class="col-span-6 sm:col-span-3 lg:col-span-2">
-                    <label for="region" class="block text-sm font-medium text-gray-700">State / Province</label>
-                    <input type="text" name="region" id="region" autocomplete="address-level1" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" />
-                  </div>
-
-                  <div class="col-span-6 sm:col-span-3 lg:col-span-2">
-                    <label for="postal-code" class="block text-sm font-medium text-gray-700">ZIP / Postal code</label>
-                    <input type="text" name="postal-code" id="postal-code" autocomplete="postal-code" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" />
+                  <div class="sm:flex p-2 text-right mt-9 justify-center">
+                    <div class="ml-2  md:mt-0 lg:mt-0 text-right">
+                      <button type="button" @click="editingGroup = group"  class="mr-2 inline-flex items-center px-2 py-2 border border-transparent shadow-sm text-sm leading-4 font-medium rounded-full text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                        <PencilAltIcon class="h-4 w-4" aria-hidden="true" />
+                      </button>
+                      <button type="button" @click="removeGroup(group.id, index)" class="inline-flex items-center p-2 border border-transparent rounded-full shadow-sm text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 text-right">
+                        <TrashIcon class="h-4 w-4" aria-hidden="true" />
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
-              <div class="px-4 py-3 bg-gray-50 text-right sm:px-6">
-                <button type="submit" class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Save</button>
+              <div class="flex justify-end bg-gray-50">
+                <div class="px-4 py-3 bg-gray-50 text-right sm:px-6">
+                  <button type="button" @click="newGroup"  class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                    Add Group
+                    <PlusCircleIcon class="ml-2 -mr-0.5 h-4 w-4 mt-0.5" aria-hidden="true" />
+                  </button>
+                </div>
               </div>
             </div>
           </form>
         </div>
       </div>
     </div>
+    <Groupmodal @close="endEditingGroup"  :group="editingGroup" v-show="editingGroup != null"></Groupmodal>
+    <Groupmodal @close="addGroup"  :group="addingGroup" v-show="addingGroup != null"></Groupmodal>
 
 
     <!--    START MANAGE TIMESLOTS-->
@@ -635,6 +640,8 @@ import {PlusCircleIcon} from '@heroicons/vue/solid'
 import {TrashIcon, PencilAltIcon} from '@heroicons/vue/outline'
 import Addspecialdatemodal from "@/components/Addspecialdatemodal";
 import Checkoutmodal from "@/components/Checkoutmodal";
+import Roommodal from "@/components/Roommodal";
+import Groupmodal from "@/components/Groupmodal";
 
 const tabs = [
   { name: 'My Account', href: '/dashboard', current: false },
@@ -687,12 +694,18 @@ export default {
       timeslots:'',
       groups:'',
       rooms:'',
+
       editingSpecial: null,
       addingSpecialDays:null,
+
       editingCheckout:null,
       addingCheckout:null,
+
       editingRoom:null,
       addingRoom:null,
+
+      editingGroup:null,
+      addingGroup:null,
     }
   },
 
@@ -807,10 +820,10 @@ export default {
     newRoom() {
       this.addingRoom = {
         name: null,
-        slot: null,
-        start: null,
-        end: null,
         price: null,
+        weekendinflation:null,
+        specialdayinflation:null,
+        groupdiscount:null,
       }
     },
 
@@ -818,35 +831,83 @@ export default {
       this.addingRoom = null
 
       let name = room.name
-      let slot = room.slot
-      let start = room.start
-      let end = room.end
       let price = room.price
+      let weekendinflation = room.weekendinflation
+      let specialdayinflation = room.specialdayinflation
+      let groupdiscount = room.groupdiscount
+
       /* eslint-disable */
-      this.axios.post(process.env.VUE_APP_URL_API + "api/checkouts/", {name, slot, start, end, price})
-          .then(response => this.checkouts.push(checkout),
+      this.axios.post(process.env.VUE_APP_URL_API + "api/rooms/", {name, price, weekendinflation, specialdayinflation, groupdiscount })
+          .then(response => this.rooms.push(room),
           )
 
     },
 
-    endEditingRoom(checkout) {
+    endEditingRoom(room) {
       this.editingRoom = null
 
-      let index = this.checkouts.indexOf(checkout)
-      let name = checkout.name
-      let slot = checkout.slot
-      let start = checkout.start
-      let end = checkout.end
-      let price = checkout.price
+      let index = this.rooms.indexOf(room)
+      let name = room.name
+      let price = room.price
+      let weekendinflation = room.weekendinflation
+      let specialdayinflation = room.specialdayinflation
+      let groupdiscount = room.groupdiscount
       /*eslint-disable */
-      this.axios.put(process.env.VUE_APP_URL_API + `api/checkouts/${checkout.id}`, {name, slot, start, end, price})
-          .then(response => this.checkouts[index] = checkout)
+      this.axios.put(process.env.VUE_APP_URL_API + `api/rooms/${room.id}`, {name, price, weekendinflation, specialdayinflation, groupdiscount})
+          .then(response => this.rooms[index] = room,)
     },
 
     removeRoom(ID, index) {
-      this.axios.delete(process.env.VUE_APP_URL_API + "api/checkouts/" + ID)
+      this.axios.delete(process.env.VUE_APP_URL_API + "api/rooms/" + ID)
           .then(response => {
-            this.checkouts.splice(index, 1)
+            this.rooms.splice(index, 1)
+          })
+
+          .catch(error => {
+            console.log(error);
+          })
+    },
+
+    // methods for groups
+
+    newGroup() {
+      this.addingGroup = {
+        name: null,
+        value: null,
+        discount:null,
+      }
+    },
+
+    addGroup(group) {
+      this.addingGroup = null
+
+      let name = group.name
+      let value = group.value
+      let discount = group.discount
+
+      /* eslint-disable */
+      this.axios.post(process.env.VUE_APP_URL_API + "api/groups/", {name, value, discount })
+          .then(response => this.groups.push(group),
+          )
+
+    },
+
+    endEditingGroup(group) {
+      this.editingGroup = null
+
+      let index = this.rooms.indexOf(group)
+      let name = group.name
+      let value = group.value
+      let discount = group.discount
+      /*eslint-disable */
+      this.axios.put(process.env.VUE_APP_URL_API + `api/groups/${group.id}`, {name, value, discount})
+          .then(response => this.groups[index] = group,)
+    },
+
+    removeGroup(ID, index) {
+      this.axios.delete(process.env.VUE_APP_URL_API + "api/groups/" + ID)
+          .then(response => {
+            this.groups.splice(index, 1)
           })
 
           .catch(error => {
@@ -861,7 +922,9 @@ export default {
     TrashIcon,
     PlusCircleIcon,
     Addspecialdatemodal,
-    Checkoutmodal
+    Checkoutmodal,
+    Roommodal,
+    Groupmodal
   },
 
 
