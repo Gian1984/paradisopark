@@ -691,6 +691,8 @@ export default {
       addingSpecialDays:null,
       editingCheckout:null,
       addingCheckout:null,
+      editingRoom:null,
+      addingRoom:null,
     }
   },
 
@@ -749,6 +751,7 @@ export default {
     },
 
     // methods for checkouts
+
     newCheckout() {
       this.addingCheckout = {
         name: null,
@@ -798,6 +801,59 @@ export default {
             console.log(error);
           })
     },
+
+    // methods for rooms
+
+    newRoom() {
+      this.addingRoom = {
+        name: null,
+        slot: null,
+        start: null,
+        end: null,
+        price: null,
+      }
+    },
+
+    addRoom(room) {
+      this.addingRoom = null
+
+      let name = room.name
+      let slot = room.slot
+      let start = room.start
+      let end = room.end
+      let price = room.price
+      /* eslint-disable */
+      this.axios.post(process.env.VUE_APP_URL_API + "api/checkouts/", {name, slot, start, end, price})
+          .then(response => this.checkouts.push(checkout),
+          )
+
+    },
+
+    endEditingRoom(checkout) {
+      this.editingRoom = null
+
+      let index = this.checkouts.indexOf(checkout)
+      let name = checkout.name
+      let slot = checkout.slot
+      let start = checkout.start
+      let end = checkout.end
+      let price = checkout.price
+      /*eslint-disable */
+      this.axios.put(process.env.VUE_APP_URL_API + `api/checkouts/${checkout.id}`, {name, slot, start, end, price})
+          .then(response => this.checkouts[index] = checkout)
+    },
+
+    removeRoom(ID, index) {
+      this.axios.delete(process.env.VUE_APP_URL_API + "api/checkouts/" + ID)
+          .then(response => {
+            this.checkouts.splice(index, 1)
+          })
+
+          .catch(error => {
+            console.log(error);
+          })
+    },
+
   },
 
   components:{
