@@ -155,7 +155,7 @@ export default {
     additional(){
       // console.log(this.additionals)
       let additionalAmount  = this.additionals.map(element => {
-        return{id:element.id, name:element.name, description:element.description, price:element.price, quantity: element.quantity, total:(element.price* element.quantity)}
+        return{id:element.id, name:element.name, description:element.description, price:element.price, quantity: element.quantity, total:(parseInt(element.price) * element.quantity)}
       });
 
       this.add = additionalAmount

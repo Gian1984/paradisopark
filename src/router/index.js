@@ -145,10 +145,10 @@ const routes = [
     path: '/useraccount',
     name: 'Useraccount',
     component: Useraccount,
-      // meta: {
-      //     requiresAuth: true,
-      //     is_user: true
-      // }
+      meta: {
+          requiresAuth: true,
+          is_user: true
+      }
   },
   {
     path: '/booking',
