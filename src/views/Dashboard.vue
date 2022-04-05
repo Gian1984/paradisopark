@@ -18,6 +18,10 @@
     </div>
   </div>
 
+  {{users}}
+
+
+
 </template>
 
 <script>
@@ -32,16 +36,25 @@ const tabs = [
 
 export default {
 
+
+
   mounted() {
+
     this.axios.get(process.env.VUE_APP_URL_API + "api/reservations")
         .then(response => {
           this.reservations = response.data
+        })
+
+    this.axios.get(process.env.VUE_APP_URL_API + "api/users")
+        .then(response => {
+          this.users = response.data
         })
   },
 
   data(){
     return{
-      reservations:''
+      reservations:'',
+      users:''
     }
   },
 

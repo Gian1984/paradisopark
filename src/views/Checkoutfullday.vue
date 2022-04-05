@@ -411,7 +411,7 @@ export default {
         let cardBrand = paymentMethod.card.brand
         let lastFour = paymentMethod.card.last4
         let expire = paymentMethod.card.exp_year
-        let user_id = '1'
+        let user_id = this.setUser.id
         let product_id = '1'
         let startdate = moment(this.reservation.start).format('YYYY-M-DD')
         let finishdate = moment(this.reservation.end).format('YYYY-M-DD')
@@ -499,6 +499,11 @@ export default {
       get(){
         return this.$store.state.totalAmount
       },
+    },
+    setUser:{
+      get(){
+        return this.$store.state.setUser
+      }
     },
   },
 

@@ -717,6 +717,11 @@ export default {
   },
 
   computed: {
+    setUser:{
+      get(){
+        return this.$store.state.setUser
+      }
+    },
 
     secondstage:{
       get(){
@@ -967,7 +972,7 @@ export default {
       let cardBrand = 'no card required'
       let lastFour = 'admin account'
       let expire = 'no expire date'
-      let user_id = '1'
+      let user_id = this.setUser.id
       let product_id = '1'
       let startdate = moment(this.secondstage.start).format('YYYY-M-DD')
       let finishdate = moment(this.secondstage.end).format('YYYY-M-DD')
@@ -1141,6 +1146,7 @@ export default {
       moment
     }
   },
+
 
   components: {
     RefreshIcon,

@@ -795,6 +795,12 @@ export default {
       get(){
         return this.$store.state.reservation
       },
+
+      setUser:{
+        get(){
+          return this.$store.state.setUser
+        }
+      },
     },
 
     filterOrders(){
@@ -943,7 +949,7 @@ export default {
       let cardBrand = 'no card required'
       let lastFour = 'admin account'
       let expire = 'no expire date'
-      let user_id = '1'
+      let user_id = this.setUser.id
       let product_id = '1'
       let startdate = moment(this.secondStage.date).format('YYYY-M-DD')
       let finishdate = moment(this.secondStage.date).format('YYYY-M-DD')

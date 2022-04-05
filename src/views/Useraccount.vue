@@ -9,6 +9,7 @@
           </div>
         </div>
       </div>
+      {{user}}
     </header>
 
     <main>
@@ -125,23 +126,19 @@ import moment from 'moment'
 export default {
   data() {
     return {
-      // user : null,
-      user : '',
-      faqOrder: null,
+      user:null,
       showModal: false,
       orders : [],
     }
   },
-  beforeMount() {
 
-    // this.user = JSON.parse(localStorage.getItem('bigStore.user'))
-    //
-    // this.axios.defaults.headers.common['Content-Type'] = 'application/json'
-    // this.axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('bigStore.jwt')
+mounted() {
 
-    // this.axios.get(process.env.VUE_APP_URL_API + `api/users/${this.user.id}/orders`,)
-    this.user = 1
-    this.axios.get(process.env.VUE_APP_URL_API + `api/users/${this.user}/orders`,)
+    this.user = JSON.parse(localStorage.getItem('bigStore.user'))
+
+    this.axios.defaults.headers.common['Content-Type'] = 'application/json'
+    this.axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('bigStore.jwt')
+    this.axios.get(process.env.VUE_APP_URL_API + `api/users/${this.user.id}/orders`,)
         .then(response => this.orders = response.data
         )
   },
@@ -154,7 +151,13 @@ export default {
         return new Date(b.id) - new Date(a.id);
       });
       return this.orders;
-    }
+    },
+
+    setUser:{
+      get(){
+        return this.$store.state.setUser
+      }
+    },
   },
 
   setup() {

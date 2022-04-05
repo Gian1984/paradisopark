@@ -29,6 +29,9 @@ import Checkoutfullday from '../views/Checkoutfullday.vue'
 import Faq from '../views/Faq.vue'
 import Privacy from '../views/Privacy.vue'
 import Terms from '../views/Terms.vue'
+import Unauthorized from '../views/Unauthorized.vue'
+import Forbidden from '../views/Forbidden.vue'
+import PageNotFound from '../views/PageNotFound.vue'
 import Additionaloptions from '../components/Additionaloptions.vue'
 import Fulldayreservations from '../components/Fulldayreservations.vue'
 import Pricedateoptions from '../components/Pricedateoptions.vue'
@@ -132,12 +135,20 @@ const routes = [
   {
     path: '/dashboard',
     name: 'Dashboard',
-    component: Dashboard
+    component: Dashboard,
+      meta: {
+          requiresAuth: true,
+          is_admin: true
+      }
   },
   {
     path: '/useraccount',
     name: 'Useraccount',
-    component: Useraccount
+    component: Useraccount,
+      // meta: {
+      //     requiresAuth: true,
+      //     is_user: true
+      // }
   },
   {
     path: '/booking',
@@ -224,6 +235,21 @@ const routes = [
     name: 'Checkoutmodal',
     component: Checkoutmodal
   },
+  {
+    path: "/:catchAll(.*)",
+    name: 'PageNotFound',
+    component: PageNotFound,
+  },
+  {
+    path: "/unauthorized",
+    name: "Unauthorized",
+    component: Unauthorized,
+  },
+  {
+    path: "/forbidden",
+    name: "Forbidden",
+    component: Forbidden,
+  },
 ]
 
 const router = createRouter({
@@ -232,6 +258,39 @@ const router = createRouter({
   /*eslint-disable */
   scrollBehavior (to, from, savedPosition) {
     window.scrollTo(0, 0);
+  }
+})
+
+router.beforeEach((to, from, next) => {
+  window.scrollTo(0, 0)
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    if (localStorage.getItem('bigStore.jwt') == null) {
+      next({
+        path: '/login',
+        params: { nextUrl: to.fullPath }
+      })
+    } else {
+      let user = JSON.parse(localStorage.getItem('bigStore.user'))
+      if (to.matched.some(record => record.meta.is_admin)) {
+        if (user.is_admin == 1) {
+          next()
+        }
+        else {
+          next({ path: '/dashboard' })
+        }
+      }
+      else if (to.matched.some(record => record.meta.is_user)) {
+        if (user.is_admin == 0) {
+          next()
+        }
+        else {
+          next({ path: '/useraccount' })
+        }
+      }
+      next()
+    }
+  } else {
+    next()
   }
 })
 

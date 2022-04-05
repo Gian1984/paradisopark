@@ -643,6 +643,18 @@ export default {
     MailIcon,
   },
 
+  beforeMount() {
+
+    if (localStorage.getItem('bigStore.jwt') != null) {
+      this.user = JSON.parse(localStorage.getItem('bigStore.user'))
+      let user = this.user
+      this.axios.defaults.headers.common['Content-Type'] = 'application/json'
+      this.axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('bigStore.jwt')
+      this.$store.commit('setUser', user)
+    }
+
+  },
+
   data(){
 
     return{
@@ -683,8 +695,7 @@ export default {
       this.setUser = ''
       this.$store.commit('setUser', null)
       this.$store.commit('setRoute', this.$route.fullPath = null)
-      location.reload()
-      this.$router.push('/')
+      this.$router.push({path:'/'})
     },
 
 
