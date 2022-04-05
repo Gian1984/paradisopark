@@ -120,7 +120,7 @@ const routes = [
     component: Register
   },
   {
-    path: '/resetpassword',
+    path: '/resetpassword/:token',
     name: 'Resetpassword',
     component: Resetpassword
   },

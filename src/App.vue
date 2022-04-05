@@ -171,14 +171,21 @@
                       </div>
                       <transition enter-active-class="transition ease-out duration-200" enter-from-class="transform opacity-0 scale-95" enter-to-class="transform opacity-100 scale-100" leave-active-class="transition ease-in duration-75" leave-from-class="transform opacity-100 scale-100" leave-to-class="transform opacity-0 scale-95">
                         <MenuItems class="origin-top-right absolute right-0 mt-2 w-48 shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
-                          <MenuItem v-slot="{ active }">
-                            <a href="/useraccount" :class="[active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700']">My reservation</a>
+                          <MenuItem v-if="! this.setUser" v-slot="{ active }">
+                            <router-link to="/Register" :class="[active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700']">
+                              Register
+                            </router-link>
                           </MenuItem>
-                          <MenuItem v-slot="{ active }">
-                            <a href="#" :class="[active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700']">Settings</a>
+                          <MenuItem v-if="! this.setUser" v-slot="{ active }">
+                            <router-link to="/Login" :class="[active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700']">
+                              Login
+                            </router-link>
                           </MenuItem>
-                          <MenuItem v-slot="{ active }">
-                            <a href="/login" :class="[active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700']">Sign in</a>
+                          <MenuItem v-if="this.setUser"  v-slot="{ active }">
+                            <router-link to="/useraccount" :class="[active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700']">
+                              <span class="text-sm font-medium mt-1 uppercase">{{ this.setUser.name }}</span><br>
+                              reservation
+                            </router-link>
                           </MenuItem>
                           <MenuItem v-if="this.setUser"  v-slot="{ active }">
                             <router-link v-on:click="logout" to="/" :class="[active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700']">
