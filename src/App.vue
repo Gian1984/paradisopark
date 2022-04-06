@@ -681,7 +681,7 @@ export default {
   background: white;
   color: #101010;
 }
-
+/*euqyfrvkqejyrciuqeyrouiy */
 .select_custom {
   background-image: none !important;
 }
