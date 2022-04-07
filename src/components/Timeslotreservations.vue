@@ -344,7 +344,7 @@
         <label for="first-name" class="mt-5 block text-sm font-medium text-gray-700">
           Recherche par identifiant de commande
         </label>
-        <input type="search" v-model="searchQuery" name=""  class="mt-1 appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" placeholder="Enter a search here!" />
+        <input type="search" v-model="searchQuery" name="first-name" id="first-name" class="mt-1 appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" placeholder="Enter a search here!" />
       </div>
 
       <div>
@@ -397,12 +397,9 @@
                 <div class="mt-6 lg:mt-0 lg:col-span-5 lg:mt-5">
                   <dl class="grid grid-cols-2 gap-x-6 text-sm">
                     <div>
-                      // v-for on additionals
-                      <dt class="font-medium text-gray-900">additionals:</dt>
-                      <dd class="text-gray-500">
-                        <span class="block">towels</span>
-                        <span class="block">price</span>
-                        <span class="block">quantity</span>
+                      <dt class="font-medium text-gray-900">Additionals:</dt>
+                      <dd v-for="extra in order.extras" v-bind:key="extra.id" class="text-gray-500">
+                        <span class="block">{{extra.name}}: {{extra.quantity}}</span>
                       </dd>
                     </div>
                   </dl>
@@ -412,10 +409,17 @@
 
             <div class="bg-gray-100 py-6 px-4 sm:px-6 lg:px-8 lg:py-8 lg:grid lg:grid-cols-12 lg:gap-x-8">
               <dl class="grid grid-cols-2 gap-6 text-sm sm:grid-cols-2 md:gap-x-8 lg:col-span-7">
-                <div>
+                <div v-if="order.user">
                   <dt class="font-medium text-gray-900">User account:</dt>
                   <dd class="mt-3 text-gray-500">
-                    <span class="block">blabla</span>
+                    <span class="block">{{order.user.name}}</span>
+                    <span class="block">{{order.user.email}}</span>
+                  </dd>
+                </div>
+                <div v-else>
+                  <dt class="font-medium text-gray-900">User account:</dt>
+                  <dd class="mt-3 text-gray-500">
+                    <span class="block">this user has been deleted</span>
                   </dd>
                 </div>
                 <div>
@@ -451,6 +455,13 @@
                   <dt class="font-medium text-gray-900">Total de la commande</dt>
                   <dd class="font-medium text-indigo-600">€ {{order.amount/100}}</dd>
                 </div>
+                <div class="sm:flex p-2 text-right mt-2">
+                  <div class="ml-2  md:mt-0 lg:mt-0 text-right">
+                    <button type="button" @click="removeOrder(order.id, index)" class="inline-flex items-center p-2 border border-transparent rounded-full shadow-sm text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 text-right">
+                      <TrashIcon class="h-4 w-4" aria-hidden="true" />
+                    </button>
+                  </div>
+                </div>
               </dl>
             </div>
           </div>
@@ -472,7 +483,10 @@
                         <dt class="text-lg">
                           <DisclosureButton class="text-left w-full flex justify-between items-start text-gray-400">
                             <p class="text-sm font-medium text-indigo-600 truncate">
-                              Reference order n°{{order.id}}
+                              <span class="text-black">Reference order:</span> n° {{order.id}}
+                            </p>
+                            <p class="text-sm font-medium text-indigo-600 truncate">
+                              <span class="text-black">Date: </span>{{moment(order.startdate).format('DD-MM-YYYY')}}
                             </p>
                             <span class="ml-6 h-7 flex items-center">
                               <ChevronDownIcon :class="[open ? '-rotate-180' : 'rotate-0', 'h-6 w-6 transform']" aria-hidden="true" />
@@ -488,32 +502,31 @@
                                     <h1 class="text-base font-xlarge text-gray-900">
                                       Référence de l'achat n° {{ order.id }}
                                     </h1>
-                                    <p class="text-gray-500 font-medium">blabla</p>
                                   </div>
                                 </div>
                                 <div class="sm:flex lg:col-span-7 mt-5">
                                   <dl class="grid grid-cols-2 gap-x-6 text-sm">
                                     <div>
-                                      <dt class="font-medium text-gray-900">From:</dt>
+                                      <dt class="font-medium text-gray-900">Date:</dt>
                                       <dd class="text-gray-500">
-                                        <span class="block">31-12-2022</span>
+                                        <span class="block">{{order.startdate}}</span>
                                       </dd>
-                                      <dt class="font-medium text-gray-900 mt-3">Number of guests:</dt>
+                                      <dt class="font-medium text-gray-900 mt-3">Start time:</dt>
                                       <dd class="text-gray-500">
-                                        <span class="block">3 </span>
+                                        <span class="block">{{order.starttime}}.00 </span>
                                       </dd>
                                     </div>
                                     <div>
-                                      <dt class="font-medium text-gray-900">To:</dt>
+                                      <dt class="font-medium text-gray-900">N° of Guests:</dt>
                                       <dd class="text-gray-500 space-y-3">
                                         <p>
-                                          30-11-2022
+                                          {{ order.guests }}
                                         </p>
                                       </dd>
-                                      <dt class="mt-3 font-medium text-gray-900">Checkout time:</dt>
+                                      <dt class="mt-3 font-medium text-gray-900">Finish time:</dt>
                                       <dd class="text-gray-500 space-y-3">
                                         <p>
-                                          14:00
+                                          {{order.finishtime}}.00
                                         </p>
                                       </dd>
                                     </div>
@@ -523,12 +536,9 @@
                                 <div class="mt-6 lg:mt-0 lg:col-span-5 lg:mt-5">
                                   <dl class="grid grid-cols-2 gap-x-6 text-sm">
                                     <div>
-                                      // v-for on additionals
-                                      <dt class="font-medium text-gray-900">additionals:</dt>
-                                      <dd class="text-gray-500">
-                                        <span class="block">towels</span>
-                                        <span class="block">price</span>
-                                        <span class="block">quantity</span>
+                                      <dt class="font-medium text-gray-900">Additionals:</dt>
+                                      <dd v-for="extra in order.extras" v-bind:key="extra.id" class="text-gray-500">
+                                        <span class="block">{{extra.name}}: {{extra.quantity}}</span>
                                       </dd>
                                     </div>
                                   </dl>
@@ -538,12 +548,17 @@
 
                             <div class="bg-gray-100 py-6 px-4 sm:px-6 lg:px-8 lg:py-8 lg:grid lg:grid-cols-12 lg:gap-x-8">
                               <dl class="grid grid-cols-2 gap-6 text-sm sm:grid-cols-2 md:gap-x-8 lg:col-span-7">
-                                <div>
+                                <div v-if="order.user">
                                   <dt class="font-medium text-gray-900">User account:</dt>
                                   <dd class="mt-3 text-gray-500">
-                                    <span class="block">blabla</span>
-                                    <span class="block">blabla</span>
-                                    <span class="block">blabla</span>
+                                    <span class="block">{{order.user.name}}</span>
+                                    <span class="block">{{order.user.email}}</span>
+                                  </dd>
+                                </div>
+                                <div v-else>
+                                  <dt class="font-medium text-gray-900">User account:</dt>
+                                  <dd class="mt-3 text-gray-500">
+                                    <span class="block">This user has been deleted</span>
                                   </dd>
                                 </div>
                                 <div>
@@ -556,13 +571,13 @@
                                           <CreditCardIcon class="h-6 w-6"></CreditCardIcon>
                                         </p>
                                         <p class="text-gray-500">
-                                          Brand:  <span class="uppercase">blabla</span>
+                                          Brand:  <span class="uppercase">{{ order.cardBrand }}</span>
                                         </p>
                                         <p class="text-gray-500">
-                                          Ending with: blabla
+                                          Termine par: {{ order.lastFour }}
                                         </p>
                                         <p class="text-gray-500">
-                                          Expire: blabla
+                                          Expire: {{order.expire}}
                                         </p>
                                       </div>
                                     </dd>
@@ -573,10 +588,10 @@
                               <dl class="mt-8 divide-y divide-gray-200 text-sm lg:mt-0 lg:col-span-5">
                                 <div class="pt-4 flex items-center justify-between">
                                   <dt class="font-medium text-gray-900">ID trans:</dt>
-                                  <dd class="font-medium text-indigo-600">blabla</dd>
+                                  <dd class="font-medium text-indigo-600">{{ order.transactionID }}</dd>
                                 </div>
                                 <div class="pt-4 flex items-center justify-between">
-                                  <dt class="font-medium text-gray-900">Total de la commande</dt>
+                                  <dt class="font-medium text-gray-900">Total de la commande :</dt>
                                   <dd class="font-medium text-indigo-600">€ {{order.amount/100}}</dd>
                                 </div>
                                 <div class="sm:flex p-2 text-right mt-2">
@@ -712,10 +727,10 @@ const tabs = [
 export default {
 
   mounted() {
-    this.axios.post(process.env.VUE_APP_URL_API + "api/slots")
-        .then(response => {
-          this.orders = response.data
-        })
+    // this.axios.post(process.env.VUE_APP_URL_API + "api/slots")
+    //     .then(response => {
+    //       this.orders = response.data
+    //     })
 
     this.axios.get(process.env.VUE_APP_URL_API + "api/timeslots")
         .then(response => {

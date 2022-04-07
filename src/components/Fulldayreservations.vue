@@ -390,11 +390,17 @@
 
             <div class="bg-gray-100 py-6 px-4 sm:px-6 lg:px-8 lg:py-8 lg:grid lg:grid-cols-12 lg:gap-x-8">
               <dl class="grid grid-cols-2 gap-6 text-sm sm:grid-cols-2 md:gap-x-8 lg:col-span-7">
-                <div>
+                <div v-if="order.user">
                   <dt class="font-medium text-gray-900">User account:</dt>
                   <dd class="mt-3 text-gray-500">
-                    <span class="block">{{ order.user.name }}</span>
-                    <span class="block">{{ order.user.email }}</span>
+                    <span class="block">{{order.user.name}}</span>
+                    <span class="block">{{order.user.email}}</span>
+                  </dd>
+                </div>
+                <div v-else>
+                  <dt class="font-medium text-gray-900">User account:</dt>
+                  <dd class="mt-3 text-gray-500">
+                    <span class="block">This user has been deleted</span>
                   </dd>
                 </div>
                 <div>
@@ -429,6 +435,13 @@
                 <div class="pt-4 flex items-center justify-between">
                   <dt class="font-medium text-gray-900">Total de la commande</dt>
                   <dd class="font-medium text-indigo-600">€ {{order.amount/100}}</dd>
+                </div>
+                <div class="sm:flex p-2 text-right mt-2">
+                  <div class="ml-2  md:mt-0 lg:mt-0 text-right">
+                    <button type="button" @click="removeOrder(order.id, index)" class="inline-flex items-center p-2 border border-transparent rounded-full shadow-sm text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 text-right">
+                      <TrashIcon class="h-4 w-4" aria-hidden="true" />
+                    </button>
+                  </div>
                 </div>
               </dl>
             </div>
@@ -524,11 +537,17 @@
 
                             <div class="bg-gray-100 py-6 px-4 sm:px-6 lg:px-8 lg:py-8 lg:grid lg:grid-cols-12 lg:gap-x-8">
                               <dl class="grid grid-cols-2 gap-6 text-sm sm:grid-cols-2 md:gap-x-8 lg:col-span-7">
-                                <div>
+                                <div v-if="order.user">
                                   <dt class="font-medium text-gray-900">User account:</dt>
                                   <dd class="mt-3 text-gray-500">
                                     <span class="block">{{order.user.name}}</span>
                                     <span class="block">{{order.user.email}}</span>
+                                  </dd>
+                                </div>
+                                <div v-else>
+                                  <dt class="font-medium text-gray-900">User account:</dt>
+                                  <dd class="mt-3 text-gray-500">
+                                    <span class="block">This user has been deleted</span>
                                   </dd>
                                 </div>
                                 <div>
