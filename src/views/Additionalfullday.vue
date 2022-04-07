@@ -63,7 +63,7 @@
                       {{ product.description }}
                     </p>
                   </div>
-                  <p class="mt-1 text-sm font-medium text-gray-900">{{ product.price }} €</p>
+                  <p class="mt-1 text-sm font-medium text-gray-900">{{ product.price / 100  }} €</p>
                 </div>
 
                 <div class="mt-4 sm:mt-0 sm:pr-9 flex flex-col">
@@ -105,23 +105,23 @@
             <dt class="flex text-sm text-gray-600">
               <span>Total room</span>
             </dt>
-            <dd class="text-sm font-medium text-gray-900">{{ reservation.onlyRoomPrice  }} €</dd>
+            <dd class="text-sm font-medium text-gray-900">{{ reservation.onlyRoomPrice / 100   }} €</dd>
           </div>
           <div v-if="reservation.checkoutPrice" class="border-t border-gray-200 pt-4 flex items-center justify-between">
             <dt class="flex text-sm text-gray-600">
               <span>Late checkout</span>
             </dt>
-            <dd class="text-sm font-medium text-gray-900">{{ reservation.checkoutPrice  }} €</dd>
+            <dd class="text-sm font-medium text-gray-900">{{ reservation.checkoutPrice / 100   }} €</dd>
           </div>
           <div v-if="additionalAmount" class="border-t border-gray-200 pt-4 flex items-center justify-between">
             <dt class="flex items-center text-sm text-gray-600">
               <span>Total additional</span>
             </dt>
-            <dd class="text-sm font-medium text-gray-900">{{ additionalAmount }} €</dd>
+            <dd class="text-sm font-medium text-gray-900">{{ additionalAmount / 100  }} €</dd>
           </div>
           <div class="border-t border-gray-200 pt-4 flex items-center justify-between">
             <dt class="text-base font-medium text-gray-900">Order total</dt>
-            <dd class="text-base font-medium text-gray-900">{{ amount }} €</dd>
+            <dd class="text-base font-medium text-gray-900">{{ amount / 100  }} €</dd>
           </div>
         </dl>
 

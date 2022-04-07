@@ -124,25 +124,25 @@
 
             <div class="flex justify-between">
               <dt>Room</dt>
-              <dd class="text-gray-900">{{ reservation.onlyRoomPrice }} €</dd>
+              <dd class="text-gray-900">{{ reservation.onlyRoomPrice / 100  }} €</dd>
             </div>
 
             <div v-if="reservation.checkoutPrice" class="flex justify-between">
               <dt>Late Checkout</dt>
-              <dd class="text-gray-900">{{ reservation.checkoutPrice }} €</dd>
+              <dd class="text-gray-900">{{ reservation.checkoutPrice / 100  }} €</dd>
             </div>
 
             <div  v-for="additional in additionals" :key="additional.id" >
               <div v-if="additional.total != 0" class="flex justify-between">
                 <dt>{{additional.name}}</dt>
-                <dd class="text-gray-900">{{ additional.total }} €</dd>
+                <dd class="text-gray-900">{{ additional.total / 100  }} €</dd>
               </div>
             </div>
 
 
             <div class="flex items-center justify-between border-t border-gray-200 text-gray-900 pt-6">
               <dt class="text-base">Total</dt>
-              <dd class="text-base">{{ totalAmount }} €</dd>
+              <dd class="text-base">{{ totalAmount / 100  }} €</dd>
             </div>
 
           </dl>
@@ -156,14 +156,6 @@
         <div class="max-w-lg mx-auto">
 
           <h1 class="text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl">Checkout</h1>
-
-          {{ additionals }}
-          -----------------
-          {{ reservation }}
-
-          ----------------
-          {{ totalAmount }}
-
 
           <!--          APPLE PAY BUTTON MOBILE-->
 
@@ -252,7 +244,7 @@
               <label for="same-as-shipping" class="text-sm font-medium text-gray-900">Billing address is the same as shipping address</label>
             </div>
 
-            <button type="submit" class="w-full mt-6 bg-indigo-600 border border-transparent rounded-md shadow-sm py-2 px-4 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Pay € {{ totalAmount }}</button>
+            <button type="submit" class="w-full mt-6 bg-indigo-600 border border-transparent rounded-md shadow-sm py-2 px-4 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Pay € {{ totalAmount / 100 }}</button>
 
             <p class="flex justify-center text-sm font-medium text-gray-500 mt-6">
               <LockClosedIcon class="w-5 h-5 text-gray-400 mr-1.5" aria-hidden="true" />
@@ -420,7 +412,7 @@ export default {
         let slot_id = this.reservation.slot
         let fullday = '1'
         let guests = this.reservation.guests
-        let amount = parseInt(this.totalAmount) * 100
+        let amount = parseInt(this.totalAmount)
         let payment_method_id = paymentMethod.id;
 
         this.axios.post(process.env.VUE_APP_URL_API + 'api/reservations',

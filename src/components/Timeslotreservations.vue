@@ -20,7 +20,6 @@
     </div>
   </div>
 
-
 <!--TITLE-->
   <div class="bg-white">
     <div class="max-w-7xl mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:px-8">
@@ -198,7 +197,7 @@
                               {{ product.description }}
                             </p>
                           </div>
-                          <p class="mt-1 text-sm font-medium text-gray-900">{{ product.price }} €</p>
+                          <p class="mt-1 text-sm font-medium text-gray-900">{{ product.price / 100 }} €</p>
                         </div>
 
                         <div class="mt-4 sm:mt-0 sm:pr-9 flex flex-col">
@@ -238,23 +237,23 @@
               </dt>
               <dd class="text-sm font-medium text-gray-900">{{ moment(date).format('DD-MM-YYYY') }}</dd>
             </div>
-            <div class="border-t border-gray-200 pt-4 flex items-center justify-between">
+            <div v-if="secondStage" class="border-t border-gray-200 pt-4 flex items-center justify-between">
               <dt class="flex text-sm text-gray-600">
                 <span>Total room</span>
               </dt>
-              <dd class="text-sm font-medium text-gray-900">{{ amount }}</dd>
+              <dd class="text-sm font-medium text-gray-900">{{ secondStage.amount / 100 }} €</dd>
             </div>
             <div v-if="additionalAmount" class="border-t border-gray-200 pt-4 flex items-center justify-between" >
               <dt class="flex items-center text-sm text-gray-600">
                 <span>Total additional</span>
               </dt>
-              <dd class="text-sm font-medium text-gray-900" :id="additionalAmount" >{{ additionalAmount }} €
+              <dd class="text-sm font-medium text-gray-900" :id="additionalAmount" >{{ additionalAmount / 100 }} €
                 <input v-model="additionalAmount" class="hidden">
               </dd>
             </div>
             <div class="border-t border-gray-200 pt-4 flex items-center justify-between">
               <dt class="text-base font-medium text-gray-900">Order total</dt>
-              <dd class="text-base font-medium text-gray-900">{{ amount }} €</dd>
+              <dd class="text-base font-medium text-gray-900">{{ amount / 100 }} €</dd>
             </div>
           </dl>
 
@@ -727,6 +726,8 @@ const tabs = [
 export default {
 
   mounted() {
+
+    this.user = JSON.parse(localStorage.getItem('bigStore.user'))
     // this.axios.post(process.env.VUE_APP_URL_API + "api/slots")
     //     .then(response => {
     //       this.orders = response.data
@@ -963,7 +964,7 @@ export default {
       let cardBrand = 'no card required'
       let lastFour = 'admin account'
       let expire = 'no expire date'
-      let user_id = this.setUser.id
+      let user_id = this.user.id
       let product_id = '1'
       let startdate = moment(this.secondStage.date).format('YYYY-M-DD')
       let finishdate = moment(this.secondStage.date).format('YYYY-M-DD')
@@ -972,7 +973,7 @@ export default {
       let slot_id = this.secondStage.slot
       let fullday = '0'
       let guests = this.secondStage.guests
-      let amount = parseInt(this.amount) * 100
+      let amount = parseInt(this.amount)
 
       this.axios.post(process.env.VUE_APP_URL_API + 'api/adminreservation',
           {
@@ -1063,6 +1064,8 @@ export default {
       add:'',
       additionals:'',
       additionalAmount:'',
+
+      user:'',
 
 
       addAdditionals:'',

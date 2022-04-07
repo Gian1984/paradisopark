@@ -175,17 +175,17 @@
             <dt class="flex items-center text-sm text-gray-600">
               <span>Room total</span>
             </dt>
-            <dd class="text-sm font-medium text-gray-900">{{ onlyRoomPrice }} €</dd>
+            <dd class="text-sm font-medium text-gray-900">{{ onlyRoomPrice / 100 }} €</dd>
           </div>
           <div v-if="checkoutPrice" class="border-t border-gray-200 pt-4 flex items-center justify-between">
             <dt class="flex text-sm text-gray-600">
               <span>Late checkout</span>
             </dt>
-            <dd class="text-sm font-medium text-gray-900">{{ checkoutPrice }} €</dd>
+            <dd class="text-sm font-medium text-gray-900">{{ checkoutPrice / 100  }} €</dd>
           </div>
           <div class="border-t border-gray-200 pt-4 flex items-center justify-between">
             <dt class="text-base font-medium text-gray-900">Order total</dt>
-            <dd class="text-base font-medium text-gray-900">{{ amount }} €</dd>
+            <dd class="text-base font-medium text-gray-900">{{ amount / 100  }} €</dd>
           </div>
         </dl>
 

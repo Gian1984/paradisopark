@@ -192,11 +192,11 @@
             <dt class="flex text-sm text-gray-600">
               <span>Total room</span>
             </dt>
-            <dd class="text-sm font-medium text-gray-900">{{ amount }}</dd>
+            <dd class="text-sm font-medium text-gray-900">{{ amount / 100 }}</dd>
           </div>
           <div class="border-t border-gray-200 pt-4 flex items-center justify-between">
             <dt class="text-base font-medium text-gray-900">Order total</dt>
-            <dd class="text-base font-medium text-gray-900">{{ amount }} €</dd>
+            <dd class="text-base font-medium text-gray-900">{{ amount / 100 }} €</dd>
           </div>
         </dl>
 
