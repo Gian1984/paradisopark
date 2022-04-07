@@ -361,7 +361,6 @@
                     <h1 class="text-base font-xlarge text-gray-900">
                       Commande n° {{ order.id }}
                     </h1>
-                    <p class="text-gray-500 font-medium">blabla</p>
                   </div>
                 </div>
 
@@ -369,26 +368,26 @@
                 <div class="sm:flex lg:col-span-7 mt-5">
                   <dl class="grid grid-cols-2 gap-x-6 text-sm">
                     <div>
-                      <dt class="font-medium text-gray-900">From:</dt>
+                      <dt class="font-medium text-gray-900">Date:</dt>
                       <dd class="text-gray-500">
-                        <span class="block">31-12-2022</span>
+                        <span class="block">{{order.startdate}}</span>
                       </dd>
-                      <dt class="font-medium text-gray-900 mt-3">Number of guests:</dt>
+                      <dt class="font-medium text-gray-900 mt-3">Start time:</dt>
                       <dd class="text-gray-500">
-                        <span class="block">3 </span>
+                        <span class="block">{{order.starttime}}.00 </span>
                       </dd>
                     </div>
                     <div>
-                      <dt class="font-medium text-gray-900">To:</dt>
+                      <dt class="font-medium text-gray-900">N° of Guests:</dt>
                       <dd class="text-gray-500 space-y-3">
                         <p>
-                          30-11-2022
+                          {{ order.guests }}
                         </p>
                       </dd>
-                      <dt class="mt-3 font-medium text-gray-900">Checkout time:</dt>
+                      <dt class="mt-3 font-medium text-gray-900">Finish time:</dt>
                       <dd class="text-gray-500 space-y-3">
                         <p>
-                          14:00
+                          {{order.finishtime}}.00
                         </p>
                       </dd>
                     </div>
