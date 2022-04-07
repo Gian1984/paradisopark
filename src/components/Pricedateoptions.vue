@@ -344,7 +344,7 @@
                       <label for="price" class="block text-sm font-medium text-gray-700">
                         <span class="text-indigo-600">Price:</span>
                       </label>
-                      <input v-model="checkout.price" type="text" name="price" id="price" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md" placeholder="you@example.com" disabled/>
+                      <input :value="divideCheckout(checkout)"  type="text" name="price" id="price" class="mt-1 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md" :placeholder="checkout.price/100" disabled/>
                     </div>
                   </div>
                   <div class="sm:flex p-2 text-right mt-4 justify-center">
@@ -410,7 +410,7 @@
                         <span class="text-indigo-600">Price:</span><br>
                         <span class="hidden">spacing</span><br>
                       </label>
-                      <input v-model="room.price" type="text" name="room_price" id="room_price" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md" disabled/>
+                      <input :value="divideRoom(room)" type="text" name="room_price" id="room_price" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md" disabled/>
                     </div>
 
                     <div>
@@ -584,7 +584,7 @@
                         <span class="text-indigo-600">Price:</span><br>
                         <span class="hidden">spacing</span><br>
                       </label>
-                      <input v-model="timeslot.price" type="text" name="timeslot_price" id="timeslot_price" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md" disabled/>
+                      <input :value="divideTimeslot(timeslot)" type="text" name="timeslot_price" id="timeslot_price" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md" disabled/>
                     </div>
 
                     <div>
@@ -779,6 +779,10 @@ export default {
 
     // methods for checkouts
 
+    divideCheckout(checkout){
+      return checkout.price / 100
+    },
+
     newCheckout() {
       this.addingCheckout = {
         name: null,
@@ -830,6 +834,9 @@ export default {
     },
 
     // methods for rooms
+    divideRoom(room){
+      return room.price / 100
+    },
 
     newRoom() {
       this.addingRoom = {
@@ -930,6 +937,9 @@ export default {
     },
 
     // methods for timeslot
+    divideTimeslot(timeslot){
+      return timeslot.price / 100
+    },
 
     newTimeslot() {
       this.addingTimeslot = {
@@ -985,6 +995,7 @@ export default {
     },
 
   },
+
 
   components:{
     PencilAltIcon,

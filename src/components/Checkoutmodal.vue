@@ -148,6 +148,7 @@ import { XIcon } from '@heroicons/vue/outline'
 export default {
   props: ['checkout'],
   computed: {
+
     data: function() {
       if (this.checkout != null) {
         return this.checkout
