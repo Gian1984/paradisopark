@@ -9,6 +9,8 @@ function loadLocaleMessages () {
             // Home
             home: {
                 title: "WELCOME",
+                description: "Lorem ipsum",
+                button: "Book",
             },
 
             cookies:{
@@ -25,7 +27,9 @@ function loadLocaleMessages () {
         fr: {
             // Home
             home: {
-                title: "Bienvenu",
+                title: "Bienvenue",
+                description: "Lorem ipsum",
+                button: "Réserver",
             },
 
             cookies:{
@@ -43,6 +47,8 @@ function loadLocaleMessages () {
             // Home
             home: {
                 title: "Welkom",
+                description: "Lorem ipsum",
+                button: "Boeken",
             },
 
             cookies:{
@@ -57,7 +63,7 @@ function loadLocaleMessages () {
         },
 
     }
-    
+
     locales.keys().forEach(key => {
         const matched = key.match(/([A-Za-z0-9-_]+)\./i)
         if (matched && matched.length > 1) {

@@ -11,6 +11,7 @@ import VueCookieComply from 'vue-cookie-comply';
 import createPersistedState from 'vuex-persistedstate';
 import 'vue-cookie-comply/dist/style.css'
 import i18n from './i18n'
+import 'tw-elements'
 
 
 

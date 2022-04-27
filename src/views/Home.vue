@@ -1,13 +1,16 @@
 <template>
 
-  <main>
+  <main class="bg-white">
     <header class="relative flex items-center justify-start h-screen overflow-hidden">
       
       <div class=" z-30 py-16 sm:py-24 lg:max-w-7xl lg:mx-auto lg:py-32 lg:px-8 w-screen mx-auto">
         <h1 class="mt-6 text-4xl font-extrabold tracking-tight text-white md:text-5xl lg:text-6xl">{{ $t("home.title") }}</h1>
-        <p class="mt-6 max-w-3xl text-xl text-white">lorem ipsum</p>
+        <p class="mt-6 max-w-3xl text-xl text-white">{{ $t("home.description") }}</p>
+        <div class="w-32">
+          <router-link to="/booking" class="custom-border-btn mt-2 p-2 block font-light text-white text-center">{{ $t("home.button") }}</router-link>
+        </div>
       </div>
-      <video autoplay loop muted class="absolute z-10 w-auto min-w-full min-h-full max-w-none">
+      <video autoplay loop muted class="absolute z-10 w-auto min-w-full min-h-full max-h-full max-w-none">
         <source src="https://assets.mixkit.co/videos/preview/mixkit-set-of-plateaus-seen-from-the-heights-in-a-sunset-26070-large.mp4" type="video/mp4"/>
         Your browser does not support the video tag.
       </video>
@@ -21,12 +24,150 @@
       
     </div> -->
 
-    <!-- Trending products -->
-    <section aria-labelledby="trending-heading" class="bg-white">
-      <div class="py-16 sm:py-24 lg:max-w-7xl lg:mx-auto lg:py-32 lg:px-8">
+    <section class="h-screen">
+    <div class="pt-8 sm:pt-8 lg:max-w-7xl lg:mx-auto lg:pt-16 lg:px-8">
+      <div class="mb-8 px-4 w-2/3 mx-auto text-center sm:px-6 lg:px-0">
+          <p>Bienvenue à Paradiso Park, un domaine exceptionnel entre Anvers et Bruxelles. Majestueux et discret. Avec un espace vert de 20 hectares. Le domaine est lumineux. Réalisez vos rêves et voyagez dans le temps...</p>
+      </div>
+      <div class="flex">
+        
+        <!-- CAROUSEL SERVICES -->
+        <div class="w-1/2 h-1/2  pr-4">
+        <h2 id="trending-heading" class="text-2xl font-semibold tracking-tight text-gray-900">Services</h2>
+          <div id="carouselServicesCaptions" class="carousel slide relative" data-bs-ride="carousel">
+            <div class="carousel-indicators absolute right-0 bottom-0 left-0 flex justify-center p-0 mb-4">
+              <button type="button" data-bs-target="#carouselServicesCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+              <button type="button" data-bs-target="#carouselServicesCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
+              <button type="button" data-bs-target="#carouselServicesCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
+              <button type="button" data-bs-target="#carouselServicesCaptions" data-bs-slide-to="3" aria-label="Slide 4"></button>
+              <button type="button" data-bs-target="#carouselServicesCaptions" data-bs-slide-to="4" aria-label="Slide 5"></button>
+              <button type="button" data-bs-target="#carouselServicesCaptions" data-bs-slide-to="5" aria-label="Slide 6"></button>
+              <button type="button" data-bs-target="#carouselServicesCaptions" data-bs-slide-to="6" aria-label="Slide 7"></button>
+            </div>
+            <div class="carousel-inner relative w-full overflow-hidden">
+              <div class="carousel-item active relative float-left w-full">
+                <img src="https://picsum.photos/190" class="block w-full" alt="..." />
+                <div class="carousel-caption hidden md:block absolute text-center">
+                  <h5 class="text-xl">Sauna & Hammam</h5>
+                  <p>Détendez-vous dans notre centre de balnéothérapie, dans notre sauna ou encore notre hamman.</p>
+                </div>
+              </div>
+              <div class="carousel-item relative float-left w-full">
+                <img src="https://picsum.photos/980" class="block w-full" alt="..."/>
+                <div class="carousel-caption hidden md:block absolute text-center">
+                  <h5 class="text-xl">Salle de réception</h5>
+                  <p>Une capacité de places assises pour conférences de 200 personnes et pour dîner de 100 personnes, un écran TV, support projecteur et fait 300m².</p>
+                </div>
+              </div>
+              <div class="carousel-item relative float-left w-full">
+                <img src="https://picsum.photos/670" class="block w-full" alt="..."/>
+                <div class="carousel-caption hidden md:block absolute text-center">
+                  <h5 class="text-xl">Jardin</h5>
+                  <p>Le domaine contient un grand espace vert. Idéal pour vos fêtes en extérieur ou rassembler vos convives.</p>
+                </div>
+              </div>
+              <div class="carousel-item relative float-left w-full">
+                <img src="https://picsum.photos/320" class="block w-full" alt="..."/>
+                <div class="carousel-caption hidden md:block absolute text-center">
+                  <h5 class="text-xl">Interieur</h5>
+                  <p>L\'endroit rêvé pour votre évènement. Que ce soit pour un anniversaire, pour un séminaire ou un gala.</p>
+                </div>
+              </div>
+              <div class="carousel-item relative float-left w-full">
+                <img src="https://picsum.photos/230" class="block w-full" alt="..."/>
+                <div class="carousel-caption hidden md:block absolute text-center">
+                  <h5 class="text-xl">Fifth slide label</h5>
+                  <p>Some representative placeholder content for the third slide.</p>
+                </div>
+              </div>
+              <div class="carousel-item relative float-left w-full">
+                <img src="https://picsum.photos/120" class="block w-full" alt="..."/>
+                <div class="carousel-caption hidden md:block absolute text-center">
+                  <h5 class="text-xl">Sixth slide label</h5>
+                  <p>Some representative placeholder content for the third slide.</p>
+                </div>
+              </div>
+              <div class="carousel-item relative float-left w-full">
+                <img src="https://picsum.photos/20" class="block w-full" alt="..."/>
+                <div class="carousel-caption hidden md:block absolute text-center">
+                  <h5 class="text-xl">Seventh slide label</h5>
+                  <p>Some representative placeholder content for the third slide.</p>
+                </div>
+              </div>
+            </div>
+            <button class="carousel-control-prev absolute top-0 bottom-0 flex items-center justify-center p-0 text-center border-0 hover:outline-none hover:no-underline focus:outline-none focus:no-underline left-0" type="button" data-bs-target="#carouselServicesCaptions" data-bs-slide="prev">
+              <span class="carousel-control-prev-icon inline-block bg-no-repeat" aria-hidden="true"></span>
+              <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next absolute top-0 bottom-0 flex items-center justify-center p-0 text-center border-0 hover:outline-none hover:no-underline focus:outline-none focus:no-underline right-0" type="button" data-bs-target="#carouselServicesCaptions" data-bs-slide="next">
+              <span class="carousel-control-next-icon inline-block bg-no-repeat" aria-hidden="true"></span>
+              <span class="visually-hidden">Next</span>
+            </button>
+          </div>
+          </div>
+
+          <!-- CHAMRES CAROUSEL -->
+          <div class="w-1/2 pl-4">
+          <h2 id="trending-heading" class="text-2xl font-semibold tracking-tight text-gray-900">Chambres</h2>
+          <div id="carouselRoomCaptions" class="carousel slide relative" data-bs-ride="carousel">
+            <div class="carousel-indicators absolute right-0 bottom-0 left-0 flex justify-center p-0 mb-4">
+              <button type="button" data-bs-target="#carouselRoomCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+              <button type="button" data-bs-target="#carouselRoomCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
+              <button type="button" data-bs-target="#carouselRoomCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
+              <button type="button" data-bs-target="#carouselRoomCaptions" data-bs-slide-to="3" aria-label="Slide 4"></button>
+            </div>
+            <div class="carousel-inner relative w-full overflow-hidden">
+              <div class="carousel-item active relative float-left w-full">
+                <img src="img/room1.jpg" class="block w-full" alt="..." />
+                <div class="carousel-caption hidden md:block absolute text-center">
+                  <h5 class="text-xl">Sauna & Hammam</h5>
+                  <p>Détendez-vous dans notre centre de balnéothérapie, dans notre sauna ou encore notre hamman.</p>
+                </div>
+              </div>
+              <div class="carousel-item relative float-left w-full">
+                <img src="img/room2.jpg" class="block w-full" alt="..."/>
+                <div class="carousel-caption hidden md:block absolute text-center">
+                  <h5 class="text-xl">Salle de réception</h5>
+                  <p>Une capacité de places assises pour conférences de 200 personnes et pour dîner de 100 personnes, un écran TV, support projecteur et fait 300m².</p>
+                </div>
+              </div>
+              <div class="carousel-item relative float-left w-full">
+                <img src="img/room3.jpg" class="block w-full" alt="..."/>
+                <div class="carousel-caption hidden md:block absolute text-center">
+                  <h5 class="text-xl">Jardin</h5>
+                  <p>Le domaine contient un grand espace vert. Idéal pour vos fêtes en extérieur ou rassembler vos convives.</p>
+                </div>
+              </div>
+              <div class="carousel-item relative float-left w-full">
+                <img src="img/room4.jpg" class="block w-full" alt="..."/>
+                <div class="carousel-caption hidden md:block absolute text-center">
+                  <h5 class="text-xl">Interieur</h5>
+                  <p>L\'endroit rêvé pour votre évènement. Que ce soit pour un anniversaire, pour un séminaire ou un gala.</p>
+                </div>
+              </div>
+            </div>
+            <button class="carousel-control-prev absolute top-0 bottom-0 flex items-center justify-center p-0 text-center border-0 hover:outline-none hover:no-underline focus:outline-none focus:no-underline left-0" type="button" data-bs-target="#carouselRoomCaptions" data-bs-slide="prev">
+              <span class="carousel-control-prev-icon inline-block bg-no-repeat" aria-hidden="true"></span>
+              <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next absolute top-0 bottom-0 flex items-center justify-center p-0 text-center border-0 hover:outline-none hover:no-underline focus:outline-none focus:no-underline right-0" type="button" data-bs-target="#carouselRoomCaptions" data-bs-slide="next">
+              <span class="carousel-control-next-icon inline-block bg-no-repeat" aria-hidden="true"></span>
+              <span class="visually-hidden">Next</span>
+            </button>
+          </div>
+          </div>
+          </div>
+    </div>
+    </section>
+
+
+
+    <!-- CHAMRES -->
+    <!-- <section aria-labelledby="trending-heading" class="bg-white">
+      <div class="pt-8 sm:py-16 lg:max-w-7xl lg:mx-auto lg:py-24 lg:px-8">
         <div class="px-4 flex items-center justify-between sm:px-6 lg:px-0">
-          <h2 id="trending-heading" class="text-2xl font-extrabold tracking-tight text-gray-900">Trending products</h2>
-          <a href="#" class="hidden sm:block text-sm font-semibold text-indigo-600 hover:text-indigo-500">See everything<span aria-hidden="true"> &rarr;</span></a>
+          <h2 id="trending-heading" class="text-2xl font-semibold tracking-tight text-gray-900">Chambres</h2>
+          <a href="/rooms" class="hidden sm:block text-sm font-light text-black hover:text-beige">Voir plus<span aria-hidden="true"> &rarr;</span></a>
         </div>
 
         <div class="mt-8 relative">
@@ -34,13 +175,10 @@
             <ul role="list" class="mx-4 inline-flex space-x-8 sm:mx-6 lg:mx-0 lg:space-x-0 lg:grid lg:grid-cols-4 lg:gap-x-8">
               <li v-for="product in trendingProducts" :key="product.id" class="w-64 inline-flex flex-col text-center lg:w-auto">
                 <div class="group relative">
-                  <div class="w-full bg-gray-200 rounded-md overflow-hidden aspect-w-1 aspect-h-1">
+                  <div class="w-full bg-gray-200 overflow-hidden aspect-w-1 aspect-h-1">
                     <img :src="product.imageSrc" :alt="product.imageAlt" class="w-full h-full object-center object-cover group-hover:opacity-75" />
                   </div>
                   <div class="mt-6">
-                    <p class="text-sm text-gray-500">
-                      {{ product.color }}
-                    </p>
                     <h3 class="mt-1 font-semibold text-gray-900">
                       <a :href="product.href">
                         <span class="absolute inset-0" />
@@ -61,7 +199,7 @@
           <a href="#" class="text-sm font-semibold text-indigo-600 hover:text-indigo-500">See everything<span aria-hidden="true"> &rarr;</span></a>
         </div>
       </div>
-    </section>
+    </section> -->
 
     <section>
       <div class="relative bg-white pt-16 pb-32 overflow-hidden">
@@ -69,16 +207,11 @@
           <div class="lg:mx-auto lg:max-w-7xl lg:px-8 lg:grid lg:grid-cols-2 lg:grid-flow-col-dense lg:gap-24">
             <div class="px-4 max-w-xl mx-auto sm:px-6 lg:py-16 lg:max-w-none lg:mx-0 lg:px-0">
               <div>
-                <div>
-              <span class="h-12 w-12 rounded-md flex items-center justify-center bg-indigo-600">
-                <InboxIcon class="h-6 w-6 text-white" aria-hidden="true" />
-              </span>
-                </div>
                 <div class="mt-6">
-                  <h2 class="text-3xl font-extrabold tracking-tight text-gray-900">Détendez-vous, relaxez-vous, profitez</h2>
+                  <h2 class="text-3xl font-extrabold tracking-tight text-gray-900">Notre philosophie</h2>
                   <p class="mt-4 text-lg text-gray-500">Bienvenue à Paradiso Park, un domaine exceptionnel entre Anvers et Bruxelles. Majestueux et discret. Avec un espace vert de 20 hectares. Le domaine est lumineux. Réalisez vos rêves et voyagez dans le temps...</p>
                   <div class="mt-6">
-                    <a href="#" class="inline-flex px-4 py-2 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700"> Plus d'info </a>
+                    <a href="#" class="inline-flex px-4 py-2 border border-transparent text-base font-medium shadow-sm text-black bg-beige hover:bg-indigo-700"> Plus d'info </a>
                   </div>
                 </div>
               </div>
@@ -99,13 +232,14 @@
               </div>
             </div>
             <div class="mt-12 sm:mt-16 lg:mt-0">
-              <div class="pl-4 -mr-48 sm:pl-6 md:-mr-16 lg:px-0 lg:m-0 lg:relative lg:h-full">
-                <img class="w-full rounded-xl shadow-xl ring-1 ring-black ring-opacity-5 lg:absolute lg:left-0 lg:h-full lg:w-auto lg:max-w-none" src="img/domaine_complet.webp" alt="Inbox user interface" />
+              <div class="pl-4 sm:pl-6 lg:px-0 lg:m-0 lg:relative lg:h-full">
+                <img class="w-1/2 object-cover shadow-xl lg:absolute lg:left-0 lg:h-full lg:w-auto" src="img/domaine_complet.webp" alt="Inbox user interface" />
               </div>
             </div>
           </div>
         </div>
-        <div class="mt-24">
+
+        <!-- <div class="mt-24">
           <div class="lg:mx-auto lg:max-w-7xl lg:px-8 lg:grid lg:grid-cols-2 lg:grid-flow-col-dense lg:gap-24">
             <div class="px-4 max-w-xl mx-auto sm:px-6 lg:py-32 lg:max-w-none lg:mx-0 lg:px-0 lg:col-start-2">
               <div>
@@ -131,12 +265,12 @@
               </div>
             </div>
           </div>
-        </div>
+        </div> -->
       </div>
     </section>
 
     <!-- Collections -->
-    <section aria-labelledby="collections-heading" class="bg-gray-100">
+    <!-- <section aria-labelledby="collections-heading" class="bg-gray-100">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="max-w-2xl mx-auto py-16 sm:py-24 lg:py-32 lg:max-w-none">
           <h2 id="collections-heading" class="text-2xl font-extrabold text-gray-900">Collections</h2>
@@ -157,7 +291,7 @@
           </div>
         </div>
       </div>
-    </section>
+    </section> -->
 
     <!-- Sale and testimonials -->
     <div class="relative overflow-hidden">
@@ -171,16 +305,16 @@
       </div>
 
       <!-- Sale -->
-      <section aria-labelledby="sale-heading" class="relative max-w-7xl mx-auto pt-32 px-4 flex flex-col items-center text-center sm:px-6 lg:px-8">
+      <!-- <section aria-labelledby="sale-heading" class="relative max-w-7xl mx-auto pt-32 px-4 flex flex-col items-center text-center sm:px-6 lg:px-8">
         <div class="max-w-2xl mx-auto lg:max-w-none">
           <h2 id="sale-heading" class="text-4xl font-extrabold tracking-tight text-gray-900 sm:text-5xl lg:text-6xl">Get 25% off during our one-time sale</h2>
           <p class="mt-4 max-w-xl mx-auto text-xl text-gray-600">Most of our products are limited releases that won't come back. Get your favorite items while they're in stock.</p>
           <a href="#" class="mt-6 inline-block w-full bg-gray-900 border border-transparent rounded-md py-3 px-8 font-medium text-white hover:bg-gray-800 sm:w-auto">Get access to our one-time sale</a>
         </div>
-      </section>
+      </section> -->
 
       <!-- Testimonials -->
-      <section aria-labelledby="testimonial-heading" class="relative py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:py-32 lg:px-8">
+      <!-- <section aria-labelledby="testimonial-heading" class="relative py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:py-32 lg:px-8">
         <div class="max-w-2xl mx-auto lg:max-w-none">
           <h2 id="testimonial-heading" class="text-2xl font-extrabold tracking-tight text-gray-900">What are people saying?</h2>
 
@@ -200,54 +334,53 @@
             </blockquote>
           </div>
         </div>
-      </section>
+      </section> -->
+
+      <!-- INSTAGRAM INTEGRATION -->
+
     </div>
   </main>
 </template>
 
 <script>
 import { ref } from 'vue'
-import { InboxIcon, SparklesIcon } from '@heroicons/vue/outline'
+import 'tw-elements'
 
-const trendingProducts = [
-  {
-    id: 1,
-    name: 'Espace détente',
-    color: 'Black',
-    description: 'Détendez-vous dans notre centre de balnéothérapie, dans notre sauna ou encore notre hamman.',
-    href: '#',
-    imageSrc: 'img/IMG_4244.webp',
-    imageAlt: 'Détendez-vous dans notre centre de balnéothérapie, dans notre sauna ou encore notre hamman.',
-  },
-  {
-    id: 1,
-    name: 'Salle de réception',
-    color: 'Black',
-    description: 'Une capacité de places assises pour conférences de 200 personnes et pour dîner de 100 personnes, un écran TV, support projecteur et fait 300m².',
-    href: '#',
-    imageSrc: 'img/IMG_9937.webp',
-    imageAlt: 'L\'endroit rêvé pour votre évènement. Que ce soit pour un anniversaire, pour un séminaire ou un gala',
-  },
-  {
-    id: 1,
-    name: 'Jardin',
-    color: 'Black',
-    description: 'Le domaine contient un grand espace vert. Idéal pour vos fêtes en extérieur ou rassembler vos convives.',
-    href: '#',
-    imageSrc: 'img/IMG_9971.webp',
-    imageAlt: 'Le domaine contient un grand espace vert. Idéal pour vos fêtes en extérieur ou rassembler vos convives.',
+// const trendingProducts = [
+//   {
+//     id: 1,
+//     name: 'Espace détente',
+//     description: 'Détendez-vous dans notre centre de balnéothérapie, dans notre sauna ou encore notre hamman.',
+//     href: '/rooms',
+//     imageSrc: 'img/IMG_4244.webp',
+//     imageAlt: 'Détendez-vous dans notre centre de balnéothérapie, dans notre sauna ou encore notre hamman.',
+//   },
+//   {
+//     id: 2,
+//     name: 'Salle de réception',
+//     description: 'Une capacité de places assises pour conférences de 200 personnes et pour dîner de 100 personnes, un écran TV, support projecteur et fait 300m².',
+//     href: '/rooms',
+//     imageSrc: 'img/IMG_9937.webp',
+//     imageAlt: 'L\'endroit rêvé pour votre évènement. Que ce soit pour un anniversaire, pour un séminaire ou un gala',
+//   },
+//   {
+//     id: 3,
+//     name: 'Jardin',
+//     description: 'Le domaine contient un grand espace vert. Idéal pour vos fêtes en extérieur ou rassembler vos convives.',
+//     href: '/rooms',
+//     imageSrc: 'img/IMG_9971.webp',
+//     imageAlt: 'Le domaine contient un grand espace vert. Idéal pour vos fêtes en extérieur ou rassembler vos convives.',
 
-  },
-  {
-    id: 1,
-    name: 'Interieur',
-    color: 'Black',
-    description: 'L\'endroit rêvé pour votre évènement. Que ce soit pour un anniversaire, pour un séminaire ou un gala.',
-    href: '#',
-    imageSrc: 'img/IMG_9990.webp',
-    imageAlt: 'Black machined steel pen with hexagonal grip and small white logo at top.',
-  }
-]
+//   },
+//   {
+//     id: 4,
+//     name: 'Interieur',
+//     description: 'L\'endroit rêvé pour votre évènement. Que ce soit pour un anniversaire, pour un séminaire ou un gala.',
+//     href: '/rooms',
+//     imageSrc: 'img/IMG_9990.webp',
+//     imageAlt: 'Black machined steel pen with hexagonal grip and small white logo at top.',
+//   }
+// ]
 
 const collections = [
   {
@@ -293,12 +426,9 @@ const testimonials = [
   },
 ]
 
-
 export default {
-
   components: {
-    InboxIcon,
-    SparklesIcon,
+    
   },
 
 
@@ -306,7 +436,7 @@ export default {
     const mobileMenuOpen = ref(false)
 
     return {
-      trendingProducts,
+      // trendingProducts,
       collections,
       testimonials,
       mobileMenuOpen,
@@ -314,4 +444,13 @@ export default {
   },
 }
 </script>
+<style>
+.custom-border-btn{
+  border: 1px white solid;
+}
+.custom-border-btn:hover{
+  background: white;
+  color: #101010;
+}
 
+</style>

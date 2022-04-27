@@ -1,16 +1,8 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Home from '../views/Home.vue'
-import Domain from '../views/Domain.vue'
-import Philosophy from '../views/Philosophy.vue'
-import Sauna from '../views/Sauna.vue'
-import Pool from '../views/Pool.vue'
-import Wintergarden from '../views/Wintergarden.vue'
-import Eventroom from '../views/Eventroom.vue'
+import Services from '../views/Services.vue'
 import Rooms from '../views/Rooms.vue'
-import Garden from '../views/Garden.vue'
-import Catering from '../views/Catering.vue'
-import Celebrations from '../views/Celebrations.vue'
-import Talks from '../views/Talks.vue'
+import Events from '../views/Events.vue'
 import Gallery from '../views/Gallery.vue'
 import Contact from '../views/Contact.vue'
 import Login from '../views/Login.vue'
@@ -48,34 +40,9 @@ const routes = [
     component: Home
   },
   {
-    path: '/domain',
-    name: 'Domain',
-    component: Domain
-  },
-  {
-    path: '/philosophy',
-    name: 'Philosophy',
-    component: Philosophy
-  },
-  {
-    path: '/sauna',
-    name: 'Sauna',
-    component: Sauna
-  },
-  {
-    path: '/pool',
-    name: 'Pool',
-    component: Pool
-  },
-  {
-    path: '/wintergarden',
-    name: 'Wintergarden',
-    component: Wintergarden
-  },
-  {
-    path: '/eventroom',
-    name: 'Eventroom',
-    component: Eventroom
+    path: '/services',
+    name: 'Services',
+    component: Services
   },
   {
     path: '/rooms',
@@ -83,24 +50,9 @@ const routes = [
     component: Rooms
   },
   {
-    path: '/garden',
-    name: 'Garden',
-    component: Garden
-  },
-  {
-    path: '/catering',
-    name: 'Catering',
-    component: Catering
-  },
-  {
-    path: '/celebrations',
-    name: 'Celebrations',
-    component: Celebrations
-  },
-  {
-    path: '/talks',
-    name: 'Talks',
-    component: Talks
+    path: '/events',
+    name: 'Events',
+    component: Events
   },
   {
     path: '/gallery',

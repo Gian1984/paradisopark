@@ -77,28 +77,34 @@
                   <PopoverGroup class="px-4 bottom-0 inset-x-0">
                     <div class="h-full flex justify-center space-x-8">
 
+                    <!-- Other btn -->
+                      <router-link v-for="firstpage in navigation.firstpages" :key="firstpage.name" :to="firstpage.href" class="transition_navbar flex items-center font-light text-white hover:text-grey-400" :class="{change_color_text: scrollPosition > 20}">{{ firstpage.name }}</router-link>
+
                       <!-- BTN DROPDOWN -->
+
+
+
                       <Popover v-for="category in navigation.categories" :key="category.name" class="flex" v-slot="{ open }">
                         <div class="relative flex">
-                          <PopoverButton class="transition_navbar relative z-10 outline-none flex items-center justify-center transition-colors ease-out duration-200 text-sm font-light text-white" :class="{change_color_text: scrollPosition > 20}">
+                          <PopoverButton class="transition_navbar hover:text-black relative z-10 outline-none flex items-center justify-center transition-colors ease-out duration-200 font-light text-white" :class="{change_color_text: scrollPosition > 20}">
                             {{ category.name }}
                             <span :class="[open ? 'bg-transparent' : '', 'absolute -bottom-px inset-x-0 h-0.5 transition ease-out duration-200']" aria-hidden="true" />
                           </PopoverButton>
                         </div>
 
                         <transition enter-active-class="transition ease-out duration-200" enter-from-class="opacity-0" enter-to-class="opacity-100" leave-active-class="transition ease-in duration-150" leave-from-class="opacity-100" leave-to-class="opacity-0">
-                          <PopoverPanel class="absolute top-full inset-x-0 text-sm text-gray-500">
+                          <PopoverPanel class="absolute top-full font-light text-gray-500">
                             <!-- Presentational element used to render the bottom shadow, if we put the shadow on the actual panel it pokes out the top, so we use this shorter element to hide the top of the shadow -->
                             <div class="absolute inset-0 top-1/2 bg-transparent" aria-hidden="true" />
 
-                            <div class="relative bg-transparent">
-                              <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                                <div class="flex justify-center py-4">
+                            <div class="relative bg-transparent" :class="{change_background: scrollPosition > 20}">
+                              <div class="max-w-7xl px-4 sm:px-6 lg:px-8">
+                                <div class="flex flex-col justify-center py-2">
                                   <div v-for="item in category.featured" :key="item.name" class="group relative px-2">
-                                    <div class="h-32 w-32 bg-gray-100 overflow-hidden group-hover:opacity-75">
+                                    <!-- <div class="h-32 w-32 bg-gray-100 overflow-hidden group-hover:opacity-75">
                                       <img :src="item.imageSrc" :alt="item.imageAlt" class="object-center object-cover" />
-                                    </div>
-                                    <router-link :to="item.href" class="transition_navbar mt-2 block font-light text-white text-center" :class="{change_color_text: scrollPosition > 20}">
+                                    </div> -->
+                                    <router-link :to="item.href" class="transition_navbar mt-2 block font-light text-white" :class="{change_color_text: scrollPosition > 20}">
                                       <span class="absolute z-10 inset-0" aria-hidden="true" />
                                       {{ item.name }}
                                     </router-link>
@@ -112,7 +118,7 @@
                       </Popover>
 
                       <!-- Other btn -->
-                      <router-link v-for="page in navigation.pages" :key="page.name" :to="page.href" class="transition_navbar flex items-center text-sm font-light text-white" :class="{change_color_text: scrollPosition > 20}">{{ page.name }}</router-link>
+                      <router-link v-for="page in navigation.pages" :key="page.name" :to="page.href" class="transition_navbar flex items-center font-light text-white hover:text-black" :class="{change_color_text: scrollPosition > 20}">{{ page.name }}</router-link>
                     </div>
                   </PopoverGroup>
                 </div>
@@ -143,15 +149,15 @@
                     <a href="#" class="hidden text-sm font-medium text-white lg:block">Help</a> -->
 
                     <!-- BOOKING DESKTOP -->
-                    <router-link to="/booking" class="transition_navbar hidden font-light text-white lg:block" :class="{change_color_text: scrollPosition > 20}">Réserver</router-link>
+                    <router-link to="/booking" class="transition_navbar hidden font-light text-white lg:block custom-border-btn p-2 text-center uppercase" :class="[{change_color_text: scrollPosition > 20},{change_border: scrollPosition > 20}]">Réserver</router-link>
 
                     <!-- LANGUAGES DESKTOP -->
                     <div class="border-t border-gray-200 py-6 pl-4 space-y-6">
                       <form>
                         <div class="inline-block">
                           <label for="mobile-languages" class="sr-only">Languages</label>
-                          <div class="-ml-2 group relative border-transparent focus-within:ring-0 focus-within:ring-none select_custom">
-                            <select v-model="$i18n.locale" id="mobile-languages" name="language" class="select_custom transition_navbar bg-transparent text-white border-transparent py-0.5 pl-2 pr-2 flex items-center text-sm font-light group-hover:text-white focus:outline-none focus:ring-0 focus:border-transparent" :class="{change_color_text: scrollPosition > 20}">
+                          <div class="-ml-2 group relative border-transparent focus-within:ring-0 focus-within:ring-none">
+                            <select v-model="$i18n.locale" id="mobile-languages" name="language" class="select_custom transition_navbar bg-transparent text-white border-transparent py-0.5 pl-2 pr-2 flex items-center font-light focus:outline-none focus:ring-0 focus:border-transparent" :class="{change_color_text: scrollPosition > 20}">
                               <option value="fr">FR</option>
                               <option value="en">EN</option>
                               <option value="nl">NL</option>
@@ -195,6 +201,8 @@
                         </MenuItems>
                       </transition>
                     </Menu>
+
+
                   </div>
                 </div>
               </div>
@@ -403,64 +411,45 @@ const languages = ['FR', 'EN', 'NL']
 
 const navigation = {
   mobilepages: [
-    { name: 'Home', href: '/' },
-    { name: 'Le domaine', href: '/domain' },
-    { name: 'La philosophie', href: '/philosophy' },
-    { name: 'Sauna & Hammam', href: '/sauna' },
-    { name: 'Piscine', href: '/pool' },
-    { name: 'Jardin d\'hiver', href: '/wintergarden' },
-    { name: 'Salle d\'événements', href: '/eventroom' },
+    { name: 'Paradiso', href: '/' },
+    { name: 'Services', href: '/services' },
     { name: 'Chambres', href: '/rooms' },
-    { name: 'Jardin et étang', href: '/garden' },
-    { name: 'Traiteur', href: '/catering' },
-    { name: 'Célébrations', href: '/celebrations' },
-    { name: 'Conférences', href: '/talks' },
+    { name: 'Événements', href: '/events' },
     { name: 'Gallerie', href: '/gallery' },
     { name: 'Contact', href: '/contact' },
   ],
+
+  firstpages: [
+    { name: 'Paradiso', href: '/' },
+    
+  ],
+
   categories: [
-    {
-      name: 'Paradiso',
-      featured: [
-        {
-          name: 'Le domaine',
-          href: '/domain',
-          imageSrc: 'https://tailwindui.com/img/ecommerce-images/mega-menu-01-men-category-01.jpg',
-          imageAlt: 'Hats and sweaters on wood shelves next to various colors of t-shirts on hangers.',
-        },
-        {
-          name: 'La philosophie',
-          href: '/philosophy',
-          imageSrc: 'img/candles.jpg',
-          imageAlt: 'Model wearing light heather gray t-shirt.',
-        },
-      ],
-    },
     {
       name: 'Services',
       featured: [
         {
           name: 'Sauna & Hammam',
-          href: '/sauna',
+          href: '/services',
           imageSrc: 'https://tailwindui.com/img/ecommerce-images/mega-menu-01-men-category-01.jpg',
           imageAlt: 'Hats and sweaters on wood shelves next to various colors of t-shirts on hangers.',
         },
         {
           name: 'Piscine',
-          href: '/pool',
+          href: '/services',
           imageSrc: 'img/candles.jpg',
           imageAlt: 'Model wearing light heather gray t-shirt.',
         },
         {
           name: 'Jardin d\'hiver',
-          href: '/wintergarden',
+          href: '/services',
           imageSrc: 'img/dish.jpg',
           imageAlt:
               'Grey 6-panel baseball hat with black brim, black mountain graphic on front, and light heather gray body.',
         },
         {
           name: 'Salle d\'événements',
-          href: '/eventroom',
+          href: '/services',
           imageSrc: 'https://tailwindui.com/img/ecommerce-images/mega-menu-01-men-category-01.jpg',
           imageAlt: 'Hats and sweaters on wood shelves next to various colors of t-shirts on hangers.',
         },
@@ -472,43 +461,26 @@ const navigation = {
         },
         {
           name: 'Jardin et étang',
-          href: '/garden',
+          href: '/services',
           imageSrc: 'img/dish.jpg',
           imageAlt:
               'Grey 6-panel baseball hat with black brim, black mountain graphic on front, and light heather gray body.',
         },
         {
           name: 'Traiteur',
-          href: '/catering',
+          href: '/services',
           imageSrc: 'img/dish.jpg',
           imageAlt:
               'Grey 6-panel baseball hat with black brim, black mountain graphic on front, and light heather gray body.',
         },
       ],
-    },
-    {
-      name: 'Évenements',
-      featured: [
-        {
-          name: 'Célébrations',
-          href: '/celebrations',
-          imageSrc: 'https://tailwindui.com/img/ecommerce-images/mega-menu-01-men-category-01.jpg',
-          imageAlt: 'Hats and sweaters on wood shelves next to various colors of t-shirts on hangers.',
-        },
-        {
-          name: 'Conférences',
-          href: '/talks',
-          imageSrc: 'img/candles.jpg',
-          imageAlt: 'Model wearing light heather gray t-shirt.',
-        },
-      ],
-    },
-
+    }
   ],
   pages: [
+    { name: 'Événements', href: '/events' },
     { name: 'Gallerie', href: '/gallery' },
     { name: 'Contact', href: '/contact' },
-
+    
   ],
 }
 
@@ -608,7 +580,6 @@ const footernavigation = {
     },
   ],
 }
-
 export default {
   components: {
     Dialog,
@@ -733,17 +704,40 @@ export default {
 <style scoped>
    .change_color {
        background-color: #fffbf4;
-       color: black;
+       color: #101010;
    }
    .change_color_text {
        color: #101010;
    }
+   .change_border{
+     border: 1px black solid;
+   }
+   .change_border:hover{
+     background: #101010;
+     color: white;
+   }
+   .change_background{
+     background: #fffbf4;
+   }
 </style>
 
 <style>
+/* BOOKING BTN */
+.custom-border-btn{
+  border: 1px white solid;
+}
+.custom-border-btn:hover{
+  background: white;
+  color: #101010;
+}
 
 .select_custom {
   background-image: none !important;
+}
+
+/* For IE10 */
+select::-ms-expand {
+  display: none;
 }
 
 .transition_navbar{
