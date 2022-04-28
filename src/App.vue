@@ -591,10 +591,9 @@ const navigation = {
 
 const navigationfooter = {
   main: [
-    { name: 'Terms', href: '#' },
-    { name: 'RGPD', href: '#' },
-    { name: 'Policy', href: '#' },
-    { name: 'FAQ', href: '#' },
+    { name: 'Terms', href: '/terms' },
+    { name: 'Policy', href: '/privacy' },
+    { name: 'FAQ', href: '/faq' },
   ],
   social: [
     {
