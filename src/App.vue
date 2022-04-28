@@ -15,7 +15,7 @@
           </div> -->
 
           <!-- MOBILE Links -->
-          <!-- <img src="img/logos/paradisowhite.png" alt="Paradiso park logo" class="h-auto w-auto" /> -->
+          <img src="img/logos/paradiso_logo1.png" alt="Paradiso park logo" class="h-auto w-auto" />
 
           <!-- ABOUT BTN-->
           <div class="py-3 px-4 space-y-2">
@@ -69,7 +69,7 @@
                 <div class="hidden lg:flex-1 lg:flex lg:items-center">
                   <router-link to="/">
                     <span class="sr-only">Workflow</span>
-                    <img class="h-12 w-auto" src="img/logos/paradisowhite.png" alt="paradisopark_logo" />
+                    <img class="h-12 w-auto" src="img/logos/paradiso_logo1.png" alt="paradisopark_logo" />
                   </router-link>
                 </div>
 
@@ -132,7 +132,7 @@
                 <!-- Mobile menu and search (lg-) -->
                 <div class="flex-1 flex items-center lg:hidden">
                   <!-- :class="{change_color_text: scrollPosition > 20}" -->
-                  <button type="button" class="-ml-2 p-2 text-white" @click="mobileMenuOpen = true">
+                  <button type="button" class="-ml-2 p-2 text-black" @click="mobileMenuOpen = true">
                     <span class="sr-only">Open menu</span>
                     <MenuIcon class="h-6 w-6" aria-hidden="true" />
                   </button>

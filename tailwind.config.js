@@ -10,6 +10,7 @@ module.exports = {
         sky: colors.sky,
         cyan: colors.cyan,
         white: '#fffbf4',
+        black: '#090909',
         beige: '#ebe6d8',
       },
     },
