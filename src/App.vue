@@ -47,7 +47,8 @@
   </TransitionRoot>
 
   <!-- Hero section -->
-  <div class="transition_navbar fixed z-50 w-full bg-transparent" :class="{change_color: scrollPosition > 20}">
+  <!-- :class="{change_color_text: scrollPosition > 20}" -->
+  <div class="transition_navbar fixed z-50 w-full bg-white">
     <!-- Decorative image and overlay -->
     <!-- <div aria-hidden="true" class="absolute inset-0 overflow-hidden">
       <img src="https://tailwindui.com/img/ecommerce-images/home-page-01-hero-full-width.jpg" alt="" class="w-full h-full object-center object-cover" />
@@ -78,7 +79,8 @@
                     <div class="h-full flex justify-center space-x-8">
 
                     <!-- Other btn -->
-                      <router-link v-for="firstpage in navigation.firstpages" :key="firstpage.name" :to="firstpage.href" class="transition_navbar flex items-center font-light text-white hover:text-grey-400" :class="{change_color_text: scrollPosition > 20}">{{ firstpage.name }}</router-link>
+                    <!-- :class="{change_color_text: scrollPosition > 20}" -->
+                      <router-link v-for="firstpage in navigation.firstpages" :key="firstpage.name" :to="firstpage.href" class="transition_navbar flex items-center font-light text-black hover:text-grey-400">{{ firstpage.name }}</router-link>
 
                       <!-- BTN DROPDOWN -->
 
@@ -86,7 +88,8 @@
 
                       <Popover v-for="category in navigation.categories" :key="category.name" class="flex" v-slot="{ open }">
                         <div class="relative flex">
-                          <PopoverButton class="transition_navbar hover:text-black relative z-10 outline-none flex items-center justify-center transition-colors ease-out duration-200 font-light text-white" :class="{change_color_text: scrollPosition > 20}">
+                          <!-- :class="{change_color_text: scrollPosition > 20}" -->
+                          <PopoverButton class="transition_navbar hover:text-black relative z-10 outline-none flex items-center justify-center transition-colors ease-out duration-200 font-light text-black">
                             {{ category.name }}
                             <span :class="[open ? 'bg-transparent' : '', 'absolute -bottom-px inset-x-0 h-0.5 transition ease-out duration-200']" aria-hidden="true" />
                           </PopoverButton>
@@ -97,14 +100,16 @@
                             <!-- Presentational element used to render the bottom shadow, if we put the shadow on the actual panel it pokes out the top, so we use this shorter element to hide the top of the shadow -->
                             <div class="absolute inset-0 top-1/2 bg-transparent" aria-hidden="true" />
 
-                            <div class="relative bg-transparent" :class="{change_background: scrollPosition > 20}">
+                            <!-- :class="{change_background: scrollPosition > 20}" -->
+                            <div class="relative bg-white">
                               <div class="max-w-7xl px-4 sm:px-6 lg:px-8">
                                 <div class="flex flex-col justify-center py-2">
                                   <div v-for="item in category.featured" :key="item.name" class="group relative px-2">
                                     <!-- <div class="h-32 w-32 bg-gray-100 overflow-hidden group-hover:opacity-75">
                                       <img :src="item.imageSrc" :alt="item.imageAlt" class="object-center object-cover" />
                                     </div> -->
-                                    <router-link :to="item.href" class="transition_navbar mt-2 block font-light text-white" :class="{change_color_text: scrollPosition > 20}">
+                                    <!-- :class="{change_color_text: scrollPosition > 20}" -->
+                                    <router-link :to="item.href" class="transition_navbar mt-2 block font-light text-black">
                                       <span class="absolute z-10 inset-0" aria-hidden="true" />
                                       {{ item.name }}
                                     </router-link>
@@ -118,14 +123,16 @@
                       </Popover>
 
                       <!-- Other btn -->
-                      <router-link v-for="page in navigation.pages" :key="page.name" :to="page.href" class="transition_navbar flex items-center font-light text-white hover:text-black" :class="{change_color_text: scrollPosition > 20}">{{ page.name }}</router-link>
+                      <!-- :class="{change_color_text: scrollPosition > 20}" -->
+                      <router-link v-for="page in navigation.pages" :key="page.name" :to="page.href" class="transition_navbar flex items-center font-light text-black hover:text-black">{{ page.name }}</router-link>
                     </div>
                   </PopoverGroup>
                 </div>
 
                 <!-- Mobile menu and search (lg-) -->
                 <div class="flex-1 flex items-center lg:hidden">
-                  <button type="button" class="-ml-2 p-2 text-white" :class="{change_color_text: scrollPosition > 20}" @click="mobileMenuOpen = true">
+                  <!-- :class="{change_color_text: scrollPosition > 20}" -->
+                  <button type="button" class="-ml-2 p-2 text-white" @click="mobileMenuOpen = true">
                     <span class="sr-only">Open menu</span>
                     <MenuIcon class="h-6 w-6" aria-hidden="true" />
                   </button>
@@ -133,7 +140,8 @@
                 </div>
 
                 <!-- Logo (lg-) -->
-                <router-link to="/booking" class="text-white lg:hidden" :class="{change_color_text: scrollPosition > 20}">Réserver en ligne</router-link>
+                <!-- :class="{change_color_text: scrollPosition > 20}" -->
+                <router-link to="/booking" class="text-white lg:hidden">Réserver en ligne</router-link>
 
                 <div class="flex-1 flex items-center justify-end">
                   <!--                  <a href="#" class="hidden text-sm font-medium text-white lg:block">-->
@@ -149,7 +157,8 @@
                     <a href="#" class="hidden text-sm font-medium text-white lg:block">Help</a> -->
 
                     <!-- BOOKING DESKTOP -->
-                    <router-link to="/booking" class="transition_navbar hidden font-light text-white lg:block custom-border-btn p-2 text-center uppercase" :class="[{change_color_text: scrollPosition > 20},{change_border: scrollPosition > 20}]">Réserver</router-link>
+                    <!-- :class="[{change_color_text: scrollPosition > 20},{change_border: scrollPosition > 20}]" -->
+                    <router-link to="/booking" class="transition_navbar hidden font-light text-black border-black hover:text-white hover:bg-black lg:block custom-border-btn p-2 text-center uppercase">Réserver</router-link>
 
                     <!-- LANGUAGES DESKTOP -->
                     <div class="border-t border-gray-200 py-6 pl-4 space-y-6">
@@ -157,7 +166,8 @@
                         <div class="inline-block">
                           <label for="mobile-languages" class="sr-only">Languages</label>
                           <div class="-ml-2 group relative border-transparent focus-within:ring-0 focus-within:ring-none">
-                            <select v-model="$i18n.locale" id="mobile-languages" name="language" class="select_custom transition_navbar bg-transparent text-white border-transparent py-0.5 pl-2 pr-2 flex items-center font-light focus:outline-none focus:ring-0 focus:border-transparent" :class="{change_color_text: scrollPosition > 20}">
+                            <!-- :class="{change_color_text: scrollPosition > 20}" -->
+                            <select v-model="$i18n.locale" id="mobile-languages" name="language" class="select_custom transition_navbar bg-transparent text-black border-transparent py-0.5 pl-2 pr-2 flex items-center font-light focus:outline-none focus:ring-0 focus:border-transparent">
                               <option value="fr">FR</option>
                               <option value="en">EN</option>
                               <option value="nl">NL</option>
@@ -172,7 +182,8 @@
                       <div>
                         <MenuButton class="bg-transparent rounded-full flex text-sm focus:outline-none focus:ring-0 focus:ring-offset-0 focus:ring-indigo-500" @click="mobileMenuOpen = false">
                           <span class="sr-only">Open user menu</span>
-                          <UserCircleIcon class="transition_navbar h-8 w-8 font-light text-white" :class="{change_color_text: scrollPosition > 20}"/>
+                          <!-- :class="{change_color_text: scrollPosition > 20}" -->
+                          <UserCircleIcon class="transition_navbar h-8 w-8 font-light text-black"/>
                         </MenuButton>
                       </div>
                       <transition enter-active-class="transition ease-out duration-200" enter-from-class="transform opacity-0 scale-95" enter-to-class="transform opacity-100 scale-100" leave-active-class="transition ease-in duration-75" leave-from-class="transform opacity-100 scale-100" leave-to-class="transform opacity-0 scale-95">
@@ -201,7 +212,6 @@
                         </MenuItems>
                       </transition>
                     </Menu>
-
 
                   </div>
                 </div>
@@ -860,7 +870,7 @@ export default {
 </script>
 
 <style scoped>
-   .change_color {
+   /* .change_color {
        background-color: #fffbf4;
        color: #101010;
    }
@@ -876,7 +886,7 @@ export default {
    }
    .change_background{
      background: #fffbf4;
-   }
+   } */
 </style>
 
 <style>

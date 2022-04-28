@@ -5,9 +5,9 @@
       
       <div class=" z-30 py-16 sm:py-24 lg:max-w-7xl lg:mx-auto lg:py-32 lg:px-8 w-screen mx-auto">
         <h1 class="mt-6 text-4xl font-extrabold tracking-tight text-white md:text-5xl lg:text-6xl">{{ $t("home.title") }}</h1>
-        <p class="mt-6 max-w-3xl text-xl text-white">{{ $t("home.description") }}</p>
+        <p class="mt-0 max-w-3xl text-xl text-white">{{ $t("home.description") }}</p>
         <div class="w-32">
-          <router-link to="/booking" class="custom-border-btn mt-2 p-2 block font-light text-white text-center">{{ $t("home.button") }}</router-link>
+          <router-link to="/booking" class="custom-border-btn mt-6 p-2 block font-light text-white text-center">{{ $t("home.button") }}</router-link>
         </div>
       </div>
       <video autoplay loop muted class="absolute z-10 w-auto min-w-full min-h-full max-h-full max-w-none">
@@ -42,7 +42,6 @@
               <button type="button" data-bs-target="#carouselServicesCaptions" data-bs-slide-to="3" aria-label="Slide 4"></button>
               <button type="button" data-bs-target="#carouselServicesCaptions" data-bs-slide-to="4" aria-label="Slide 5"></button>
               <button type="button" data-bs-target="#carouselServicesCaptions" data-bs-slide-to="5" aria-label="Slide 6"></button>
-              <button type="button" data-bs-target="#carouselServicesCaptions" data-bs-slide-to="6" aria-label="Slide 7"></button>
             </div>
             <div class="carousel-inner relative w-full overflow-hidden">
               <div class="carousel-item active relative float-left w-full">
@@ -55,42 +54,35 @@
               <div class="carousel-item relative float-left w-full">
                 <img src="https://picsum.photos/980" class="block w-full" alt="..."/>
                 <div class="carousel-caption hidden md:block absolute text-center">
-                  <h5 class="text-xl">Salle de réception</h5>
+                  <h5 class="text-xl">Piscine</h5>
                   <p>Une capacité de places assises pour conférences de 200 personnes et pour dîner de 100 personnes, un écran TV, support projecteur et fait 300m².</p>
                 </div>
               </div>
               <div class="carousel-item relative float-left w-full">
                 <img src="https://picsum.photos/670" class="block w-full" alt="..."/>
                 <div class="carousel-caption hidden md:block absolute text-center">
-                  <h5 class="text-xl">Jardin</h5>
+                  <h5 class="text-xl">Jardin d’hiver</h5>
                   <p>Le domaine contient un grand espace vert. Idéal pour vos fêtes en extérieur ou rassembler vos convives.</p>
                 </div>
               </div>
               <div class="carousel-item relative float-left w-full">
                 <img src="https://picsum.photos/320" class="block w-full" alt="..."/>
                 <div class="carousel-caption hidden md:block absolute text-center">
-                  <h5 class="text-xl">Interieur</h5>
+                  <h5 class="text-xl">Salles d'événements</h5>
                   <p>L\'endroit rêvé pour votre évènement. Que ce soit pour un anniversaire, pour un séminaire ou un gala.</p>
                 </div>
               </div>
               <div class="carousel-item relative float-left w-full">
                 <img src="https://picsum.photos/230" class="block w-full" alt="..."/>
                 <div class="carousel-caption hidden md:block absolute text-center">
-                  <h5 class="text-xl">Fifth slide label</h5>
+                  <h5 class="text-xl">Jardin & étangs</h5>
                   <p>Some representative placeholder content for the third slide.</p>
                 </div>
               </div>
               <div class="carousel-item relative float-left w-full">
                 <img src="https://picsum.photos/120" class="block w-full" alt="..."/>
                 <div class="carousel-caption hidden md:block absolute text-center">
-                  <h5 class="text-xl">Sixth slide label</h5>
-                  <p>Some representative placeholder content for the third slide.</p>
-                </div>
-              </div>
-              <div class="carousel-item relative float-left w-full">
-                <img src="https://picsum.photos/20" class="block w-full" alt="..."/>
-                <div class="carousel-caption hidden md:block absolute text-center">
-                  <h5 class="text-xl">Seventh slide label</h5>
+                  <h5 class="text-xl">Traiteur</h5>
                   <p>Some representative placeholder content for the third slide.</p>
                 </div>
               </div>
@@ -210,9 +202,9 @@
                 <div class="mt-6">
                   <h2 class="text-3xl font-extrabold tracking-tight text-gray-900">Notre philosophie</h2>
                   <p class="mt-4 text-lg text-gray-500">Bienvenue à Paradiso Park, un domaine exceptionnel entre Anvers et Bruxelles. Majestueux et discret. Avec un espace vert de 20 hectares. Le domaine est lumineux. Réalisez vos rêves et voyagez dans le temps...</p>
-                  <div class="mt-6">
+                  <!-- <div class="mt-6">
                     <a href="#" class="inline-flex px-4 py-2 border border-transparent text-base font-medium shadow-sm text-black bg-beige hover:bg-indigo-700"> Plus d'info </a>
-                  </div>
+                  </div> -->
                 </div>
               </div>
               <div class="mt-8 border-t border-gray-200 pt-6">
@@ -225,7 +217,7 @@
                       <div class="flex-shrink-0">
                         <img class="h-6 w-6 rounded-full" src="img/IMG_0332.webp" alt="jardin relax" />
                       </div>
-                      <div class="text-base font-medium text-gray-700">Marcia Hill, Digital Marketing Manager</div>
+                      <div class="text-base font-medium text-gray-700">Nancy , Content Creator</div>
                     </div>
                   </footer>
                 </blockquote>
