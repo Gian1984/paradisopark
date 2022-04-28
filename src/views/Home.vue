@@ -4,10 +4,10 @@
     <header class="relative flex items-center justify-start h-screen overflow-hidden">
       
       <div class=" z-30 py-16 sm:py-24 lg:max-w-7xl lg:mx-auto lg:py-32 lg:px-8 w-screen mx-auto">
-        <h1 class="mt-6 text-4xl font-extrabold tracking-tight text-white md:text-5xl lg:text-6xl">{{ $t("home.title") }}</h1>
-        <p class="mt-0 max-w-3xl text-xl text-white">{{ $t("home.description") }}</p>
-        <div class="w-32">
-          <router-link to="/booking" class="custom-border-btn mt-6 p-2 block font-light text-white text-center">{{ $t("home.button") }}</router-link>
+        <h1 class="text-center lg:text-left mt-6 text-4xl font-extrabold tracking-tight text-white md:text-5xl lg:text-6xl">{{ $t("home.title") }}</h1>
+        <p class="text-center lg:text-left mt-0 text-xl text-white">{{ $t("home.description") }}</p>
+        <div class="w-32 mx-auto lg:mx-0">
+          <router-link to="/booking" class=" custom-border-btn mt-6 p-2 block font-light text-white text-center">{{ $t("home.button") }}</router-link>
         </div>
       </div>
       <video autoplay loop muted class="absolute z-10 w-auto min-w-full min-h-full max-h-full max-w-none">
@@ -217,7 +217,7 @@
                       <div class="flex-shrink-0">
                         <img class="h-6 w-6 rounded-full" src="img/IMG_0332.webp" alt="jardin relax" />
                       </div>
-                      <div class="text-base font-medium text-gray-700">Nancy , Content Creator</div>
+                      <div class="text-base font-medium text-gray-700">Nancy Lastname, Content Creator</div>
                     </div>
                   </footer>
                 </blockquote>

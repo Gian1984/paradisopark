@@ -1,5 +1,5 @@
 <template>
-    <section aria-labelledby="collection-heading" class="max-w-xl mx-auto pt-24 px-4 sm:pt-32 sm:px-6 lg:max-w-7xl lg:px-8">
+    <section aria-labelledby="collection-heading" class="h-screen max-w-xl mx-auto pt-24 px-4 sm:pt-32 sm:px-6 lg:max-w-7xl lg:px-8">
         <h2 id="collection-heading" class="mt-10 text-center text-4xl font-extrabold tracking-tight text-gray-900">Make your choice</h2>
         <!-- <p class="text-center mt-4 text-base text-gray-500">Choose your category</p> -->
 
