@@ -13,6 +13,46 @@ function loadLocaleMessages () {
                 button: "Book",
             },
 
+            // Services
+            services: {
+                title: 'Our services',
+                sauna: {
+                    title: 'Sauna & Hammam',
+                    description: 'Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum',
+                    alt: 'Sauna',
+                },
+                pool: {
+                    title: 'Pool',
+                    description: 'Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum',
+                    alt: 'pool',
+                },
+                wintergarden: {
+                    title: 'Winter garden',
+                    description: 'Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum',
+                    alt: 'Winter garden',
+                },
+                eventroom: {
+                    title: 'Event room',
+                    description: 'Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum',
+                    alt: 'Event room',
+                },
+                rooms: {
+                    title: 'Rooms',
+                    description: 'Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum',
+                    alt: 'Rooms',
+                },
+                garden: {
+                    title: 'Garden and pond',
+                    description: 'Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum',
+                    alt: 'Garden and pond',
+                },
+                catering: {
+                    title: 'Catering',
+                    description: 'Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum',
+                    alt: 'Catering',
+                },
+            },
+
             cookies:{
                 title:'Dear visitor',
                 click:'By clicking "Accept All" you accept the',
@@ -32,6 +72,46 @@ function loadLocaleMessages () {
                 button: "Réserver",
             },
 
+            // Services
+            services: {
+                title: 'Nos services',
+                sauna: {
+                    title: 'Sauna & Hammam',
+                    description: 'Lorem ipsum',
+                    alt: 'Sauna',
+                },
+                pool: {
+                    title: 'Piscine',
+                    description: 'Lorem ipsum',
+                    alt: 'Piscine',
+                },
+                wintergarden: {
+                    title: 'Jardin d\'hiver',
+                    description: 'Lorem ipsum',
+                    alt: 'Jardin d\'hiver',
+                },
+                eventroom: {
+                    title: 'Salle d\'événement',
+                    description: 'Lorem ipsum',
+                    alt: 'Salle d\'événement',
+                },
+                rooms: {
+                    title: 'Chambres',
+                    description: 'Lorem ipsum',
+                    alt: 'Chambres',
+                },
+                garden: {
+                    title: 'Jardin et étang',
+                    description: 'Lorem ipsum',
+                    alt: 'Jardin et étang',
+                },
+                catering: {
+                    title: 'Traiteur',
+                    description: 'Lorem ipsum',
+                    alt: 'Traiteur',
+                },
+            },
+
             cookies:{
                 title:'Cher visiteur',
                 click:'En cliquant "Accept All" vous acceptez les',
@@ -49,6 +129,46 @@ function loadLocaleMessages () {
                 title: "Welkom",
                 description: "Lorem ipsum",
                 button: "Boeken",
+            },
+
+            // Services
+            services: {
+                title: 'Onze diensten',
+                sauna: {
+                    title: 'Sauna & Hammam',
+                    description: 'Lorem ipsum',
+                    alt: 'Sauna',
+                },
+                pool: {
+                    title: 'Zwembad',
+                    description: 'Lorem ipsum',
+                    alt: 'Zwembad',
+                },
+                wintergarden: {
+                    title: 'Wintertuin',
+                    description: 'Lorem ipsum',
+                    alt: 'Wintertuin',
+                },
+                eventroom: {
+                    title: 'Evenementenzaal',
+                    description: 'Lorem ipsum',
+                    alt: 'Evenementenzaal',
+                },
+                rooms: {
+                    title: 'Kamers',
+                    description: 'Lorem ipsum',
+                    alt: 'Kamers',
+                },
+                garden: {
+                    title: 'Tuin en vijver',
+                    description: 'Lorem ipsum',
+                    alt: 'Tuin en vijver',
+                },
+                catering: {
+                    title: 'Horeca',
+                    description: 'Lorem ipsum',
+                    alt: 'Horeca',
+                },
             },
 
             cookies:{

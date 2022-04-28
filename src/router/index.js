@@ -4,7 +4,6 @@ import Services from '../views/Services.vue'
 import Rooms from '../views/Rooms.vue'
 import Events from '../views/Events.vue'
 import Gallery from '../views/Gallery.vue'
-import Contact from '../views/Contact.vue'
 import Login from '../views/Login.vue'
 import Register from '../views/Register.vue'
 import Resetpassword from '../views/Resetpassword.vue'
@@ -58,11 +57,6 @@ const routes = [
     path: '/gallery',
     name: 'Gallery',
     component: Gallery
-  },
-  {
-    path: '/contact',
-    name: 'Contact',
-    component: Contact
   },
   {
     path: '/login',
