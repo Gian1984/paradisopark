@@ -13,8 +13,8 @@
       <div class="mt-5 lg:mt-20 space-y-16">
         <div v-for="(person, featureIdx) in ourservices" :key="person.name" class="flex flex-col-reverse lg:grid lg:grid-cols-12 lg:gap-x-2 py-4 lg:items-center">
           <div :class="[featureIdx % 2 === 0 ? 'lg:col-start-1' : 'lg:col-start-6 xl:col-start-5', 'mt-6 lg:mt-0 lg:row-start-1 lg:col-span-8 xl:col-span-7']">
-            <h3 :class="[featureIdx % 2 === 0 ? 'text-left' : 'text-right']" class="text-xl font-medium uppercase" style="font-weight: 800;">{{ person.name }}</h3>
-            <p :class="[featureIdx % 2 === 0 ? 'text-left' : 'text-right']" class="mt-2 text-base">{{ person.bio }}</p>
+            <h3 :class="[featureIdx % 2 === 0 ? 'text-center lg:text-left' : 'text-center lg:text-right']" class="text-xl font-medium uppercase" style="font-weight: 800;">{{ person.name }}</h3>
+            <p :class="[featureIdx % 2 === 0 ? 'text-center lg:text-left' : 'text-center lg:text-right']" class="mt-2 text-base">{{ person.bio }}</p>
             <!-- <div v-if="person.href == 1">
               <button class="mt-4 w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-gold bg-bord focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gold">
                 {{person.button}}
@@ -28,7 +28,7 @@
           </div>
           <div :class="[featureIdx % 2 === 0 ? 'lg:col-start-10 xl:col-start-9' : 'lg:col-start-1', 'flex-auto lg:row-start-1 lg:col-span-3 xl:col-span-3']">
             <div class="bg-gray-100 overflow-hidden custom-shadow">
-              <img :src="person.imageUrl" :alt="person.alt" class="object-center object-cover h-48 w-full" />
+              <img :src="person.imageUrl" :alt="person.alt" class="object-center object-cover h-96 w-full" />
             </div>
           </div>
         </div>
