@@ -273,78 +273,83 @@ export default {
       this.loading = true
       this.paymentProcessing = true;
 
-      const {paymentMethod, error} = await this.stripe.createPaymentMethod(
-          'card', this.cardElement, {
-            billing_details: {
-              name: this.setUser.name,
-              email: this.setUser.email,
-              // address: {
-              //   line1: 'via aldo bronx 3',
-              //   city: 'bruxelles',
-              //   state: 'belgium',
-              //   postal_code: '1050'
-              // }
+        const {paymentMethod, error} = await this.stripe.createPaymentMethod(
+            'card', this.cardElement, {
+              billing_details: {
+                name: this.setUser.name,
+                email: this.setUser.email,
+                // address: {
+                //   line1: 'via aldo bronx 3',
+                //   city: 'bruxelles',
+                //   state: 'belgium',
+                //   postal_code: '1050'
+                // }
+              }
             }
-          }
-      );
+        );
 
-      if (error) {
-        //test
-        this.paymentProcessing = false;
-        this.loading = false
-        console.error(error);
-      } else {
-        this.paymentMethod = paymentMethod
-        let language = 'EN'
-        let transactionID = paymentMethod.id
-        let cardBrand = paymentMethod.card.brand
-        let lastFour = paymentMethod.card.last4
-        let expire = paymentMethod.card.exp_year
-        let user_id = this.setUser.id
-        let product_id = '1'
-        let startdate = moment(this.reservation.date).format('YYYY-M-DD')
-        let finishdate = moment(this.reservation.date).format('YYYY-M-DD')
-        let starttime = this.reservation.start
-        let finishtime = this.reservation.end
-        let slot_id = this.reservation.slot
-        let fullday = '0'
-        let guests = this.reservation.guests
-        let amount = parseInt(this.totalAmount)
-        let payment_method_id = paymentMethod.id;
+        if (error) {
+          //test
+          this.paymentProcessing = false;
+          this.loading = false
+          console.error(error);
+        } else {
+          this.paymentMethod = paymentMethod
+          let language = 'EN'
+          let transactionID = paymentMethod.id
+          let cardBrand = paymentMethod.card.brand
+          let lastFour = paymentMethod.card.last4
+          let expire = paymentMethod.card.exp_year
+          let user_id = this.setUser.id
+          let product_id = '1'
+          let startdate = moment(this.reservation.date).format('YYYY-M-DD')
+          let finishdate = moment(this.reservation.date).format('YYYY-M-DD')
+          let starttime = this.reservation.start
+          let finishtime = this.reservation.end
+          let slot_id = this.reservation.slot
+          let fullday = '0'
+          let guests = this.reservation.guests
+          let amount = parseInt(this.totalAmount)
+          let payment_method_id = paymentMethod.id;
 
-        this.axios.post(process.env.VUE_APP_URL_API + 'api/reservations',
-            {
-              user_id,
-              product_id,
-              startdate,
-              finishdate,
-              starttime,
-              finishtime,
-              slot_id,
-              fullday,
-              guests,
-              transactionID,
-              cardBrand,
-              lastFour,
-              expire,
-              amount,
-              payment_method_id,
-              language
-            })
-            .then((response) => {
-              let extras = this.additionals.map(element => this.axios.post(process.env.VUE_APP_URL_API + 'api/extras',{reservation_id: response.data.id, name: element.name, price:element.price, quantity:element.quantity  }))
-              console.log(extras)
-              this.paymentProcessing = false;
-              this.loading = false
-              console.log(response.data.id)
-              this.$router.push({path:'/'})
-            })
-            .catch((error) => {
-              this.paymentProcessing = false;
-              this.loading = false
-              this.error = error.response.data.message;
-            });
-      }
+          this.axios.post(process.env.VUE_APP_URL_API + 'api/reservations',
+              {
+                user_id,
+                product_id,
+                startdate,
+                finishdate,
+                starttime,
+                finishtime,
+                slot_id,
+                fullday,
+                guests,
+                transactionID,
+                cardBrand,
+                lastFour,
+                expire,
+                amount,
+                payment_method_id,
+                language
+              })
+              .then((response) => {
+                let extras = this.additionals.map(element => this.axios.post(process.env.VUE_APP_URL_API + 'api/extras', {
+                  reservation_id: response.data.id,
+                  name: element.name,
+                  price: element.price,
+                  quantity: element.quantity
+                }))
+                console.log(extras)
+                this.paymentProcessing = false;
+                this.loading = false
+                console.log(response.data.id)
+                this.$router.push({path: '/'})
+              })
+              .catch((error) => {
+                this.paymentProcessing = false;
+                this.loading = false
+                this.error = error.response.data.message;
+              });
+        }
 
     },
 
@@ -360,6 +365,7 @@ export default {
         phone : '',
       },
       user:'',
+      verify:'',
       loading: false,
       paymentProcessing: false,
       paymentMethod:'',
