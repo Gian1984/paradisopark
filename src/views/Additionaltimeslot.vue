@@ -36,6 +36,7 @@
       </ol>
     </nav>
 
+
     <!-- Additional elements-->
     <h1 class="text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl">Additionals</h1>
     <form class="mt-8 lg:grid lg:grid-cols-12 lg:gap-x-12 lg:items-start xl:gap-x-16">

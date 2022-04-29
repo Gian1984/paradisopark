@@ -41,6 +41,7 @@
 
       <h1 class="sr-only">Checkout</h1>
 
+
       <!-- Mobile order summary -->
       <section aria-labelledby="order-heading" class="bg-gray-50 px-4 py-6 sm:px-6 lg:hidden">
         <Disclosure as="div" class="max-w-lg mx-auto" v-slot="{ open }">
@@ -275,14 +276,11 @@ export default {
 
 
       let fullday = '0'
-      // let startdate = moment(this.reservation.date).format('YYYY-M-DD')
-      let startdate = '2022-4-14'
-      // let finishdate = moment(this.reservation.date).format('YYYY-M-DD')
-      let finishdate = '2022-4-14'
-      // let slot_id = this.reservation.slot
-      let slot_id = '2'
+      let startdate = moment(this.reservation.date).format('YYYY-M-DD')
+      let finishdate = moment(this.reservation.date).format('YYYY-M-DD')
+      let slot_id = this.reservation.slot
 
-      this.axios.post(process.env.VUE_APP_URL_API + 'api/verifytimeslots',
+      await this.axios.post(process.env.VUE_APP_URL_API + 'api/verifytimeslots',
           {
             startdate,
             finishdate,
@@ -291,11 +289,22 @@ export default {
 
           })
           .then((response) => {
-            this.verify = response.data
-            console.log('lookatthis',this.verify)
+
+            if ( typeof response.data[0] === 'undefined'){
+
+              this.verify = false
+
+            } else {
+
+              this.verify = true
+
+            }
+            console.log('lookatthis',response.data[0])
+            console.log(this.verify)
           })
 
-      if(this.verify[0]){
+
+      if(this.verify === true){
 
         this.paymentProcessing = false;
         this.loading = false
@@ -342,7 +351,7 @@ export default {
           let amount = parseInt(this.totalAmount)
           let payment_method_id = paymentMethod.id;
 
-          this.axios.post(process.env.VUE_APP_URL_API + 'api/reservations',
+          await this.axios.post(process.env.VUE_APP_URL_API + 'api/reservations',
               {
                 user_id,
                 product_id,
@@ -398,7 +407,7 @@ export default {
         phone : '',
       },
       user:'',
-      verify:'',
+      verify: false,
       loading: false,
       paymentProcessing: false,
       paymentMethod:'',
