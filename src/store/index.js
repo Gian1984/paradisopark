@@ -1,8 +1,10 @@
 import { createStore } from 'vuex'
 import createPersistedState from "vuex-persistedstate";
+import axios from 'axios'
 
 export default createStore({
   state: {
+    timeslots: [],
     reservation:'',
     additionals:'',
     totalAmount:'',
@@ -42,8 +44,18 @@ export default createStore({
     setRoute(state, route){
       state.setRoute = route
     },
+    setTimeslot(state, timeslots) {
+      state.timeslots = timeslots
+    }
   },
+
   actions: {
+    getTimeslots({ commit }) {
+      axios.get(process.env.VUE_APP_URL_API + "api/timeslots")
+          .then(response => {
+            commit('setTimeslot', response.data)
+          })
+    }
   },
   modules: {
   },

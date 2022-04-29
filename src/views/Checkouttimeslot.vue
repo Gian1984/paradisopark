@@ -41,6 +41,7 @@
 
       <h1 class="sr-only">Checkout</h1>
 
+
       <!-- Mobile order summary -->
       <section aria-labelledby="order-heading" class="bg-gray-50 px-4 py-6 sm:px-6 lg:hidden">
         <Disclosure as="div" class="max-w-lg mx-auto" v-slot="{ open }">
@@ -273,6 +274,44 @@ export default {
       this.loading = true
       this.paymentProcessing = true;
 
+
+      let fullday = '0'
+      let startdate = moment(this.reservation.date).format('YYYY-M-DD')
+      let finishdate = moment(this.reservation.date).format('YYYY-M-DD')
+      let slot_id = this.reservation.slot
+
+      await this.axios.post(process.env.VUE_APP_URL_API + 'api/verifytimeslots',
+          {
+            startdate,
+            finishdate,
+            slot_id,
+            fullday,
+
+          })
+          .then((response) => {
+
+            if ( typeof response.data[0] === 'undefined'){
+
+              this.verify = false
+
+            } else {
+
+              this.verify = true
+
+            }
+            console.log('lookatthis',response.data[0])
+            console.log(this.verify)
+          })
+
+
+      if(this.verify === true){
+
+        this.paymentProcessing = false;
+        this.loading = false
+        this.error = 'already taken'
+
+      }else{
+
         const {paymentMethod, error} = await this.stripe.createPaymentMethod(
             'card', this.cardElement, {
               billing_details: {
@@ -312,7 +351,7 @@ export default {
           let amount = parseInt(this.totalAmount)
           let payment_method_id = paymentMethod.id;
 
-          this.axios.post(process.env.VUE_APP_URL_API + 'api/reservations',
+          await this.axios.post(process.env.VUE_APP_URL_API + 'api/reservations',
               {
                 user_id,
                 product_id,
@@ -351,6 +390,9 @@ export default {
               });
         }
 
+
+      }
+
     },
 
   },
@@ -365,7 +407,7 @@ export default {
         phone : '',
       },
       user:'',
-      verify:'',
+      verify: false,
       loading: false,
       paymentProcessing: false,
       paymentMethod:'',
