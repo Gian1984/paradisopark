@@ -273,6 +273,36 @@ export default {
       this.loading = true
       this.paymentProcessing = true;
 
+
+      let fullday = '0'
+      // let startdate = moment(this.reservation.date).format('YYYY-M-DD')
+      let startdate = '2022-4-14'
+      // let finishdate = moment(this.reservation.date).format('YYYY-M-DD')
+      let finishdate = '2022-4-14'
+      // let slot_id = this.reservation.slot
+      let slot_id = '2'
+
+      this.axios.post(process.env.VUE_APP_URL_API + 'api/verifytimeslots',
+          {
+            startdate,
+            finishdate,
+            slot_id,
+            fullday,
+
+          })
+          .then((response) => {
+            this.verify = response.data
+            console.log('lookatthis',this.verify)
+          })
+
+      if(this.verify[0]){
+
+        this.paymentProcessing = false;
+        this.loading = false
+        this.error = 'already taken'
+
+      }else{
+
         const {paymentMethod, error} = await this.stripe.createPaymentMethod(
             'card', this.cardElement, {
               billing_details: {
@@ -350,6 +380,9 @@ export default {
                 this.error = error.response.data.message;
               });
         }
+
+
+      }
 
     },
 
