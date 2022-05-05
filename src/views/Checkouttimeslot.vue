@@ -17,7 +17,7 @@
           </template>
           <template v-else-if="step.status === 'current'" condition="step.status === 'current'">
             <div class="absolute inset-0 flex items-center" aria-hidden="true">
-              <div class="h-0.5 w-full bg-gray-200" />
+              <div class="h-0.5 w-full bg-beige" />
             </div>
             <router-link :to="step.href" class="relative w-8 h-8 flex items-center justify-center bg-white border-2 border-indigo-600 rounded-full" aria-current="step">
               <span class="h-2.5 w-2.5 bg-indigo-600 rounded-full" aria-hidden="true" />
@@ -26,7 +26,7 @@
           </template>
           <template v-else>
             <div class="absolute inset-0 flex items-center" aria-hidden="true">
-              <div class="h-0.5 w-full bg-gray-200" />
+              <div class="h-0.5 w-full bg-beige" />
             </div>
             <router-link :to="step.href" class="group relative w-8 h-8 flex items-center justify-center bg-white border-2 border-gray-300 rounded-full hover:border-gray-400">
               <span class="h-2.5 w-2.5 bg-transparent rounded-full group-hover:bg-gray-300" aria-hidden="true" />
@@ -92,10 +92,10 @@
       </section>
 
       <!-- Order summary -->
-      <section aria-labelledby="summary-heading" class="hidden bg-gray-50 w-full max-w-md flex-col lg:flex">
+      <section aria-labelledby="summary-heading" class="hidden bg-beige w-full max-w-md flex-col lg:flex">
         <h2 id="summary-heading" class="sr-only">Order summary</h2>
 
-        <div class="sticky bottom-0 flex-none bg-gray-50 border-gray-200 p-6">
+        <div class="sticky bottom-0 flex-none bg-beige border-gray-200 p-6">
 
           <dl class="text-sm font-medium text-gray-500 mt-10 space-y-6">
 
@@ -121,7 +121,7 @@
               </div>
             </div>
 
-            <div class="flex items-center justify-between border-t border-gray-200 text-gray-900 pt-6">
+            <div class="flex items-center justify-between border-t border-gray-500 text-gray-900 pt-6">
               <dt class="text-base">Total</dt>
               <dd class="text-base">{{ totalAmount / 100}} € </dd>
             </div>

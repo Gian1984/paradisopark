@@ -2,7 +2,7 @@
   <section class="max-w-xl mx-auto pt-24 pb-8 px-4 sm:pt-32 sm:px-6 lg:max-w-7xl lg:px-8">
 
     <nav aria-label="Progress" class="relative flex justify-center">
-      <router-link to="/booking" class="absolute left-0 inline-flex items-center px-3 py-2 border border-transparent shadow-sm text-sm leading-4 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 ">
+      <router-link to="/booking" class="absolute left-0 inline-flex items-center px-3 py-2 border border-black shadow-sm text-sm leading-4 font-medium text-black bg-white hover:bg-black hover:text-white focus:outline-none focus:ring-0 focus:ring-offset-2 focus:ring-indigo-500 ">
         <ChevronLeftIcon class="-ml-0.5 mr-2 h-4 w-4" aria-hidden="true" />
         Back
       </router-link>
@@ -43,13 +43,13 @@
     <form class="mt-8 lg:grid lg:grid-cols-12 lg:gap-x-12 lg:items-start xl:gap-x-16">
       <section aria-labelledby="cart-heading" class="lg:col-span-7">
         <h2 id="cart-heading" class="sr-only">Items in your shopping cart</h2>
-        <div class="items-center bg-gray-50 mb-4 p-4">
+        <div class="items-center bg-beige mb-4 p-4">
           <!-- SELECT NUMBER OF PEOPLE -->
           <div>
             <Listbox as="div" v-model="selected">
               <ListboxLabel class="block text-sm font-medium text-gray-700"> Number of people </ListboxLabel>
               <div class="mt-1 relative">
-                <ListboxButton class="bg-white relative w-full border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                <ListboxButton class="bg-white relative w-full border border-gray-300  shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-0 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                   <span class="block truncate">{{ selected.name }}</span>
                   <span class="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
                         <SelectorIcon class="h-5 w-5 text-gray-400" aria-hidden="true" />
@@ -57,14 +57,14 @@
                 </ListboxButton>
 
                 <transition leave-active-class="transition ease-in duration-100" leave-from-class="opacity-100" leave-to-class="opacity-0">
-                  <ListboxOptions class="absolute z-10 mt-1 w-full bg-white shadow-lg max-h-60 rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none sm:text-sm">
+                  <ListboxOptions class="absolute z-10 mt-1 w-full bg-white shadow-lg max-h-60 py-1 text-base ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none sm:text-sm">
                     <ListboxOption as="template" v-for="person in numberOfPeopleTimeSlot" :key="person.id" :value="person" v-slot="{ active, selected }">
-                      <li :class="[active ? 'text-white bg-indigo-600' : 'text-gray-900', 'cursor-default select-none relative py-2 pl-3 pr-9']" v-on:click="checknumberOfPeople(person.value)">
+                      <li :class="[active ? 'text-white bg-beige' : 'text-gray-900', 'cursor-default select-none relative py-2 pl-3 pr-9']" v-on:click="checknumberOfPeople(person.value)">
                             <span :class="[selected ? 'font-semibold' : 'font-normal', 'block truncate']">
                               {{ person.name }}
                             </span>
 
-                        <span v-if="selected" :class="[active ? 'text-white' : 'text-indigo-600', 'absolute inset-y-0 right-0 flex items-center pr-4']">
+                        <span v-if="selected" :class="[active ? 'text-white' : 'text-green-500v', 'absolute inset-y-0 right-0 flex items-center pr-4']">
                               <CheckIcon class="h-5 w-5" aria-hidden="true" />
                             </span>
                       </li>
@@ -80,7 +80,7 @@
               <div class="mt-4 flex mx-auto text-center">
                 <p class="text-center text-sm mt-1">More than 60 persons?</p>
                 <div class="text-center">
-                  <router-link to="/contact" class="ml-2 inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                  <router-link to="/contact" class="ml-2 inline-flex items-center px-2.5 py-1.5 border border-black text-xs font-medium shadow-sm text-black bg-white hover:bg-black hover:text-white focus:outline-none focus:ring-0 focus:ring-offset-2 focus:ring-indigo-500">
                     <MailIcon class="-ml-0.5 mr-2 h-4 w-4" aria-hidden="true" />
                     Contact us
                   </router-link>
@@ -152,7 +152,7 @@
           <!-- <RadioGroupLabel class="text-base font-medium text-gray-900"> Select a time slot </RadioGroupLabel> -->
 
 
-          <div class="grid grid-cols-1 gap-y-6 sm:grid-cols-3 sm:gap-x-4 bg-gray-50 mt-4 p-4">
+          <div class="grid grid-cols-1 gap-y-6 sm:grid-cols-3 sm:gap-x-4 bg-white mt-4 p-4">
             <RadioGroupOption as="template" v-for="timeslot in timeslots" :key="timeslot.start" :value="timeslot" v-slot="{ checked, active }" :disabled="timeslot.available == 0">
               <div :class="[checked ? 'border-green-500' : 'border-gray-300', active ? 'ring-1 ring-green-500' : '', 'relative bg-white border shadow-sm p-4 flex cursor-pointer focus:outline-none']" v-on:click="ex(timeslot.start, timeslot.end, timeslot.id)">
                 <div class="flex-1 flex">
@@ -175,7 +175,7 @@
 
       </section>
       <!-- Order summary -->
-      <section aria-labelledby="summary-heading" class="mt-16 bg-gray-50 px-4 py-6 sm:p-6 lg:p-8 lg:mt-0 lg:col-span-5">
+      <section aria-labelledby="summary-heading" class="mt-16 bg-beige px-4 py-6 sm:p-6 lg:p-8 lg:mt-0 lg:col-span-5">
         <h2 id="summary-heading" class="text-lg font-medium text-gray-900">Order summary</h2>
 
         <dl class="mt-6 space-y-4">
@@ -202,7 +202,7 @@
         </dl>
 
         <div class="mt-6">
-          <button v-on:click="next( date, amount, guests)" type="button" class="w-full bg-indigo-600 border border-transparent rounded-md shadow-sm py-3 px-4 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-indigo-500">Next</button>
+          <button v-on:click="next( date, amount, guests)" type="button" class="w-full bg-white border border-black shadow-sm py-3 px-4 text-base font-medium text-black hover:bg-black hover:text-white focus:outline-none focus:ring-0 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-indigo-500">Next</button>
         </div>
 
 
@@ -546,7 +546,7 @@ export default {
 </script>
 <style>
 .mycutomcalendar{
-  background: rgb(249, 250, 251);
+  background: #ebe6d8;
   border-radius: 0;
   border: none;
   /*box-shadow: 0px 3px 20px 3px lightgrey;*/

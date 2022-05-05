@@ -192,7 +192,8 @@
         </div>
       </div>
     </section> -->
-
+    
+    <!-- PHILOSOPHY -->
     <section>
       <div class="relative bg-white pt-16 pb-32 overflow-hidden">
         <div class="relative">
