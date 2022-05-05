@@ -27,7 +27,7 @@
             </div> -->
           </div>
           <div :class="[featureIdx % 2 === 0 ? 'lg:col-start-10 xl:col-start-9' : 'lg:col-start-1', 'flex-auto lg:row-start-1 lg:col-span-3 xl:col-span-3']">
-            <div class="bg-gray-100 overflow-hidden custom-shadow">
+            <div class="bg-gray-100 overflow-hidden shadow-2xl">
               <img :src="person.imageUrl" :alt="person.alt" class="object-center object-cover h-96 w-full" />
             </div>
           </div>
