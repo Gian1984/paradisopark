@@ -331,7 +331,11 @@ const numberOfPeopleTimeSlot = [
 
 export default {
   mounted() {
-    this.$store.dispatch("getTimeslots");
+    // this.$store.dispatch("getTimeslots");
+    this.axios.get(process.env.VUE_APP_URL_API + "api/timeslots")
+        .then(response => {
+         this.timeslots = response.data
+        })
 
     this.axios.post(process.env.VUE_APP_URL_API + "api/slots")
         .then(response => {
@@ -378,6 +382,7 @@ export default {
   },
   data() {
     return {
+      timeslots:'',
       setectedSlotId:'',
       setectedSlotStart:'',
       setectedSlotEnd:'',
@@ -537,11 +542,11 @@ export default {
     }
   },
 
-  computed: {
-    timeslots() {
-      return this.$store.state.timeslots
-    }
-  },
+  // computed: {
+  //   timeslots() {
+  //     return this.$store.state.timeslots
+  //   }
+  // },
 }
 </script>
 <style>
