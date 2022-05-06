@@ -154,11 +154,12 @@
 
           <div class="grid grid-cols-1 gap-y-6 sm:grid-cols-3 sm:gap-x-4 bg-white mt-4 p-4">
             <RadioGroupOption as="template" v-for="timeslot in timeslots" :key="timeslot.start" :value="timeslot" v-slot="{ checked, active }" :disabled="timeslot.available == 0">
-              <div :class="[checked ? 'border-green-500' : 'border-gray-300', active ? 'ring-1 ring-green-500' : '', 'relative bg-white border shadow-sm p-4 flex cursor-pointer focus:outline-none']" v-on:click="ex(timeslot.start, timeslot.end, timeslot.id)">
+              <div :class="[checked ? 'border-green-500' : 'border-gray-300', active ? 'ring-1 ring-green-500' : '', 'relative bg-white border shadow-sm p-4 flex cursor-pointer focus:outline-none']" v-on:click="ex(timeslot.start, timeslot.end, timeslot.slot_id)">
                 <div class="flex-1 flex">
                   <div class="flex flex-col items-center justify-center text-center text-base font-medium text-gray-900">
                     <RadioGroupLabel as="span" class="text-sm font-medium text-gray-900 uppercase">de</RadioGroupLabel>
                     <RadioGroupLabel as="span" class="text-sm font-medium text-gray-900 uppercase hidden">{{ timeslot.id }}</RadioGroupLabel>
+                    <RadioGroupLabel as="span" class="text-sm font-medium text-gray-900 uppercase hidden">{{ timeslot.slot_id }}</RadioGroupLabel>
                     <RadioGroupDescription as="span" class="flex items-center text-sm text-gray-500">{{ timeslot.start }}:00</RadioGroupDescription>
                     <RadioGroupDescription as="span" class="text-sm font-medium text-gray-900 uppercase">JUSQU'Á</RadioGroupDescription>
                     <RadioGroupDescription as="span" class="flex items-center text-sm text-gray-500">{{ timeslot.end }}:00</RadioGroupDescription>
@@ -460,8 +461,9 @@ export default {
           return a.start - b.start;
         })
 
-        this.timeslots = todaySorted
 
+        this.timeslots = todaySorted
+        console.log(todaySorted)
       })
     },
 

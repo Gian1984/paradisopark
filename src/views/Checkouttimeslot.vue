@@ -242,6 +242,16 @@ const total = '$341.68'
 
 
 export default {
+  beforeMount() {
+    this.axios.post(process.env.VUE_APP_URL_API + "api/verifyfulldays")
+        .then(response => {
+              let fulldays = response.data
+              console.log('verifyfulldays',response.data)
+              this.verifyfulldays = fulldays.map(element=>{
+                return { start: new Date(element.startdate), end: new Date(element.finishdate) }
+              })
+        })
+  },
 
   async mounted() {
     // this.isLoggedIn = localStorage.getItem('bigStore.jwt') != null
@@ -275,10 +285,18 @@ export default {
       this.paymentProcessing = true;
 
 
+
+
+
       let fullday = '0'
-      let startdate = moment(this.reservation.date).format('YYYY-M-DD')
-      let finishdate = moment(this.reservation.date).format('YYYY-M-DD')
+      // let startdate = moment(this.reservation.date).format('YYYY-M-DD')
+      let startdate = '2022-5-15'
+      // let finishdate = moment(this.reservation.date).format('YYYY-M-DD')
+      let finishdate = '2022-5-15'
       let slot_id = this.reservation.slot
+
+      let verify = this.verifyfulldays.filter(e=>moment(this.reservation.date).format('YYYY-M-DD') >= moment(e.start).format('YYYY-M-DD') &&  moment(this.reservation.date).format('YYYY-M-DD') <= moment(e.start).format('YYYY-M-DD'))
+      console.log(verify)
 
       await this.axios.post(process.env.VUE_APP_URL_API + 'api/verifytimeslots',
           {
@@ -399,6 +417,7 @@ export default {
 
   data(){
     return {
+      verifyfulldays:'',
       order:'',
       stripe: {},
       cardElement: {},
