@@ -75,7 +75,7 @@
               <div v-for="additional in additionals" :key="additional.id">
                 <div v-if="additional.total != 0" class="flex justify-between">
                   <dt>{{additional.name}}</dt>
-                  <dd class="text-gray-900">{{ additional.total }} €</dd>
+                  <dd class="text-gray-900">{{ additional.total / 100 }} €</dd>
                 </div>
               </div>
 
@@ -85,7 +85,7 @@
 
           <p class="flex items-center justify-between text-sm font-medium text-gray-900 border-t border-gray-200 pt-6 mt-6">
             <span class="text-base">Total</span>
-            <span class="text-base">{{ totalAmount }} €</span>
+            <span class="text-base">{{ totalAmount / 100 }} €</span>
           </p>
 
         </Disclosure>
@@ -105,7 +105,7 @@
             </div>
 
             <div class="flex justify-between">
-              <dt>Guests</dt>
+              <dt>Date</dt>
               <dd class="text-gray-900">{{ moment(reservation.date).format('DD-MM-YYYY') }}</dd>
             </div>
 
@@ -289,14 +289,14 @@ export default {
 
 
       let fullday = '0'
-      // let startdate = moment(this.reservation.date).format('YYYY-M-DD')
-      let startdate = '2022-5-15'
-      // let finishdate = moment(this.reservation.date).format('YYYY-M-DD')
-      let finishdate = '2022-5-15'
+      let startdate = moment(this.reservation.date).format('YYYY-M-DD')
+      // let startdate = '2022-5-15'
+      let finishdate = moment(this.reservation.date).format('YYYY-M-DD')
+      // let finishdate = '2022-5-15'
       let slot_id = this.reservation.slot
 
       let verify = this.verifyfulldays.filter(e=>moment(this.reservation.date).format('YYYY-M-DD') >= moment(e.start).format('YYYY-M-DD') &&  moment(this.reservation.date).format('YYYY-M-DD') <= moment(e.start).format('YYYY-M-DD'))
-      console.log(verify)
+      console.log(verify.length)
 
       await this.axios.post(process.env.VUE_APP_URL_API + 'api/verifytimeslots',
           {
@@ -308,7 +308,7 @@ export default {
           })
           .then((response) => {
 
-            if ( typeof response.data[0] === 'undefined'){
+            if ( typeof response.data[0] === 'undefined' || verify.length != 0){
 
               this.verify = false
 
