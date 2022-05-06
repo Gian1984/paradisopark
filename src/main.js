@@ -12,8 +12,9 @@ import createPersistedState from 'vuex-persistedstate';
 import 'vue-cookie-comply/dist/style.css'
 import i18n from './i18n'
 import 'tw-elements'
+import VuePictureSwipe from 'vue-picture-swipe';
 
 
 
 
-createApp(App).use(store).use(router).use(VueAxios, axios).use(moment).use(VCalendar,{}).use(createPersistedState).use(VueCookieComply).use(i18n).mount('#app')
+createApp(App).use(store).use(router).use(VueAxios, axios).use(moment).use(VCalendar,{}).use(createPersistedState).use(VueCookieComply).use(i18n).use('vue-picture-swipe', VuePictureSwipe).mount('#app')
