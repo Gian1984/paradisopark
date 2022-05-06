@@ -1,3 +1,4 @@
+<!--https://github.com/rap2hpoutre/vue-picture-swipe?ref=morioh.com&utm_source=morioh.com-->
 <template>
   <div class="bg-white">
     <div class="max-w-7xl mx-auto top-20 py-24 px-4 sm:py-32 sm:px-6 lg:px-8">
@@ -26,43 +27,36 @@ export default {
           src: 'https://cdn.pixabay.com/photo/2020/07/01/17/34/wolf-5360340__340.jpg',
           thumbnail: 'https://cdn.pixabay.com/photo/2020/07/01/17/34/wolf-5360340__340.jpg',
           w: 600,
-          h: 400
+          h: 400,
+          alt: 'some numbers on a grey background' // optional alt attribute for thumbnail image
         },
         {
           src: 'https://cdn.pixabay.com/photo/2020/09/23/17/12/flowers-5596564__340.png',
           thumbnail: 'https://cdn.pixabay.com/photo/2020/09/23/17/12/flowers-5596564__340.png',
           w: 600,
-          h: 400
+          h: 400,
+          alt: 'some numbers on a grey background' // optional alt attribute for thumbnail image
         },
         {
           src: 'https://cdn.pixabay.com/photo/2021/10/27/08/43/forest-6746433__340.jpg',
           thumbnail: 'https://cdn.pixabay.com/photo/2021/10/27/08/43/forest-6746433__340.jpg',
           w: 600,
-          h: 400
+          h: 400,
+          alt: 'some numbers on a grey background' // optional alt attribute for thumbnail image
         },
         {
           src: 'https://cdn.pixabay.com/photo/2021/11/03/09/25/squirrel-6765124__340.jpg',
           thumbnail: 'https://cdn.pixabay.com/photo/2021/11/03/09/25/squirrel-6765124__340.jpg',
           w: 600,
-          h: 400
+          h: 400,
+          alt: 'some numbers on a grey background' // optional alt attribute for thumbnail image
         },
         {
           src: 'https://cdn.pixabay.com/photo/2021/05/09/06/07/dog-6240043__340.jpg',
           thumbnail: 'https://cdn.pixabay.com/photo/2021/05/09/06/07/dog-6240043__340.jpg',
           w: 600,
-          h: 400
-        },
-        {
-          src: 'https://cdn.pixabay.com/photo/2021/11/11/13/08/leopard-6786267__340.jpg',
-          thumbnail: 'https://cdn.pixabay.com/photo/2021/11/11/13/08/leopard-6786267__340.jpg',
-          w: 600,
-          h: 400
-        },
-        {
-          src: 'https://cdn.pixabay.com/photo/2020/07/01/17/34/wolf-5360340__340.jpg',
-          thumbnail: 'https://cdn.pixabay.com/photo/2020/07/01/17/34/wolf-5360340__340.jpg',
-          w: 600,
-          h: 400
+          h: 400,
+          alt: 'some numbers on a grey background' // optional alt attribute for thumbnail image
         },
         {
           src: 'https://cdn.pixabay.com/photo/2021/11/11/13/08/leopard-6786267__340.jpg',
@@ -75,43 +69,64 @@ export default {
           src: 'https://cdn.pixabay.com/photo/2020/07/01/17/34/wolf-5360340__340.jpg',
           thumbnail: 'https://cdn.pixabay.com/photo/2020/07/01/17/34/wolf-5360340__340.jpg',
           w: 600,
-          h: 400
-        },
-        {
-          src: 'https://cdn.pixabay.com/photo/2020/09/23/17/12/flowers-5596564__340.png',
-          thumbnail: 'https://cdn.pixabay.com/photo/2020/09/23/17/12/flowers-5596564__340.png',
-          w: 600,
-          h: 400
-        },
-        {
-          src: 'https://cdn.pixabay.com/photo/2021/10/27/08/43/forest-6746433__340.jpg',
-          thumbnail: 'https://cdn.pixabay.com/photo/2021/10/27/08/43/forest-6746433__340.jpg',
-          w: 600,
-          h: 400
-        },
-        {
-          src: 'https://cdn.pixabay.com/photo/2021/11/03/09/25/squirrel-6765124__340.jpg',
-          thumbnail: 'https://cdn.pixabay.com/photo/2021/11/03/09/25/squirrel-6765124__340.jpg',
-          w: 600,
-          h: 400
-        },
-        {
-          src: 'https://cdn.pixabay.com/photo/2021/05/09/06/07/dog-6240043__340.jpg',
-          thumbnail: 'https://cdn.pixabay.com/photo/2021/05/09/06/07/dog-6240043__340.jpg',
-          w: 600,
-          h: 400
+          h: 400,
+          alt: 'some numbers on a grey background' // optional alt attribute for thumbnail image
         },
         {
           src: 'https://cdn.pixabay.com/photo/2021/11/11/13/08/leopard-6786267__340.jpg',
           thumbnail: 'https://cdn.pixabay.com/photo/2021/11/11/13/08/leopard-6786267__340.jpg',
           w: 600,
-          h: 400
+          h: 400,
+          alt: 'some numbers on a grey background' // optional alt attribute for thumbnail image
         },
         {
           src: 'https://cdn.pixabay.com/photo/2020/07/01/17/34/wolf-5360340__340.jpg',
           thumbnail: 'https://cdn.pixabay.com/photo/2020/07/01/17/34/wolf-5360340__340.jpg',
           w: 600,
-          h: 400
+          h: 400,
+          alt: 'some numbers on a grey background' // optional alt attribute for thumbnail image
+        },
+        {
+          src: 'https://cdn.pixabay.com/photo/2020/09/23/17/12/flowers-5596564__340.png',
+          thumbnail: 'https://cdn.pixabay.com/photo/2020/09/23/17/12/flowers-5596564__340.png',
+          w: 600,
+          h: 400,
+          alt: 'some numbers on a grey background' // optional alt attribute for thumbnail image
+        },
+        {
+          src: 'https://cdn.pixabay.com/photo/2021/10/27/08/43/forest-6746433__340.jpg',
+          thumbnail: 'https://cdn.pixabay.com/photo/2021/10/27/08/43/forest-6746433__340.jpg',
+          w: 600,
+          h: 400,
+          alt: 'some numbers on a grey background' // optional alt attribute for thumbnail image
+        },
+        {
+          src: 'https://cdn.pixabay.com/photo/2021/11/03/09/25/squirrel-6765124__340.jpg',
+          thumbnail: 'https://cdn.pixabay.com/photo/2021/11/03/09/25/squirrel-6765124__340.jpg',
+          w: 600,
+          h: 400,
+          alt: 'some numbers on a grey background' // optional alt attribute for thumbnail image
+        },
+        {
+          src: 'https://cdn.pixabay.com/photo/2021/05/09/06/07/dog-6240043__340.jpg',
+          thumbnail: 'https://cdn.pixabay.com/photo/2021/05/09/06/07/dog-6240043__340.jpg',
+          w: 600,
+          h: 400,
+          alt: 'some numbers on a grey background' // optional alt attribute for thumbnail image
+        },
+        {
+          src: 'https://cdn.pixabay.com/photo/2021/11/11/13/08/leopard-6786267__340.jpg',
+          thumbnail: 'https://cdn.pixabay.com/photo/2021/11/11/13/08/leopard-6786267__340.jpg',
+          w: 600,
+          h: 400,
+          alt: 'some numbers on a grey background' // optional alt attribute for thumbnail image
+        },
+        {
+          src: 'https://cdn.pixabay.com/photo/2020/07/01/17/34/wolf-5360340__340.jpg',
+          thumbnail: 'https://cdn.pixabay.com/photo/2020/07/01/17/34/wolf-5360340__340.jpg',
+          w: 600,
+          h: 400,
+          alt: 'some numbers on a grey background' // optional alt attribute for thumbnail image
         },
       ],
     };
