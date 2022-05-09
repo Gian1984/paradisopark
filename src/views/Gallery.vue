@@ -3,7 +3,7 @@
   <div class="bg-white">
     <div class="max-w-7xl mx-auto top-20 py-24 px-4 sm:py-32 sm:px-6 lg:px-8">
       <h2 class="py-4 text-3xl font-bold text-center text-black flex">Gallerie</h2>
-      <vue-picture-swipe :items="items"></vue-picture-swipe>
+      <vue-picture-swipe :items="items" :options="{shareEl: false}"></vue-picture-swipe>
     </div>
   </div>
 </template>
@@ -21,7 +21,8 @@ export default {
           thumbnail: 'https://cdn.pixabay.com/photo/2021/11/11/13/08/leopard-6786267__340.jpg',
           w: 600,
           h: 400,
-          alt: 'some numbers on a grey background' // optional alt attribute for thumbnail image
+          alt: 'some numbers on a grey background', // optional alt attribute for thumbnail image
+          href:'https://www.paradisopark.be/'
         },
         {
           src: 'https://cdn.pixabay.com/photo/2020/07/01/17/34/wolf-5360340__340.jpg',
