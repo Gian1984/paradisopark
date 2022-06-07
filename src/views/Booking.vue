@@ -1,6 +1,6 @@
 <template>
     <section aria-labelledby="collection-heading" class="h-screen max-w-xl mx-auto pt-24 px-4 sm:pt-32 sm:px-6 lg:max-w-7xl lg:px-8">
-        <h2 id="collection-heading" class="mt-10 text-center text-4xl font-extrabold tracking-tight text-gray-900">Make your choice</h2>
+        <h2 id="collection-heading" class="mt-10 text-center text-4xl font-extrabold tracking-tight text-gray-900">{{ $t("booking.title") }}</h2>
         <!-- <p class="text-center mt-4 text-base text-gray-500">Choose your category</p> -->
 
         <div class="lg:max-w-3xl mx-auto mt-20 mb-20 space-y-12 lg:space-y-0 lg:grid lg:grid-cols-2 lg:gap-x-20">
@@ -17,31 +17,55 @@
 </template>
 
 <script>
-    const collections = [
-        {
-            name: 'Time slot',
-            href: '/timeslot',
-            imageSrc: 'https://tailwindui.com/img/ecommerce-images/home-page-01-collection-01.jpg',
-            imageAlt: 'Brown leather key ring with brass metal loops and rivets on wood table.',
-            description: 'Need a break during the week, book a time slot and privatize Paradiso Park.',
-            button: 'Book now',
-        },
-        {
-            name: 'Full day',
-            href: '/fullday',
-            imageSrc: 'https://tailwindui.com/img/ecommerce-images/home-page-01-collection-02.jpg',
-            imageAlt: 'Natural leather mouse pad on white desk next to porcelain mug and keyboard.',
-            description: 'Enjoy a unique moment with family or friends at Paradiso Park.',
-            button: 'Book now',
-        },
-        // More Options
-    ]
+    // const collections = [
+    //     {
+    //         name: this.$t('booking.timeslot.title'),
+    //         href: '/timeslot',
+    //         imageSrc: 'https://tailwindui.com/img/ecommerce-images/home-page-01-collection-01.jpg',
+    //         imageAlt: 'Brown leather key ring with brass metal loops and rivets on wood table.',
+    //         description: this.$t('booking.timeslot.description'),
+    //         button: this.$t('booking.timeslot.button'),
+    //     },
+    //     {
+    //         name: this.$t('booking.fullday.title'),
+    //         href: '/fullday',
+    //         imageSrc: 'https://tailwindui.com/img/ecommerce-images/home-page-01-collection-02.jpg',
+    //         imageAlt: 'Natural leather mouse pad on white desk next to porcelain mug and keyboard.',
+    //         description: this.$t('booking.fullday.description'),
+    //         button: this.$t('booking.fullday.button'),
+    //     },
+    //     // More Options
+    // ]
 
 export default {
   setup() {
     return {
-      collections,
+
     }
   },
+  computed: {
+
+    collections() {
+
+      return [
+        {
+            name: this.$t('booking.timeslot.title'),
+            href: '/timeslot',
+            imageSrc: 'https://tailwindui.com/img/ecommerce-images/home-page-01-collection-01.jpg',
+            imageAlt: 'Brown leather key ring with brass metal loops and rivets on wood table.',
+            description: this.$t('booking.timeslot.description'),
+            button: this.$t('booking.timeslot.button'),
+        },
+        {
+            name: this.$t('booking.fullday.title'),
+            href: '/fullday',
+            imageSrc: 'https://tailwindui.com/img/ecommerce-images/home-page-01-collection-02.jpg',
+            imageAlt: 'Natural leather mouse pad on white desk next to porcelain mug and keyboard.',
+            description: this.$t('booking.fullday.description'),
+            button: this.$t('booking.fullday.button'),
+        },
+      ]
+    },
+  }
 }
 </script>

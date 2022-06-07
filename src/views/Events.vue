@@ -14,7 +14,9 @@
         <div v-for="(person, featureIdx) in events" :key="person.name" class="flex flex-col-reverse lg:grid lg:grid-cols-12 lg:gap-x-2 py-4 lg:items-center">
           <div :class="[featureIdx % 2 === 0 ? 'lg:col-start-1' : 'lg:col-start-6 xl:col-start-5', 'mt-6 lg:mt-0 lg:row-start-1 lg:col-span-8 xl:col-span-7']">
             <h3 :class="[featureIdx % 2 === 0 ? 'text-center lg:text-left' : 'text-center lg:text-right']" class="text-xl font-medium uppercase" style="font-weight: 800;">{{ person.name }}</h3>
-            <p :class="[featureIdx % 2 === 0 ? 'text-center lg:text-left' : 'text-center lg:text-right']" class="mt-2 text-base">{{ person.bio }}</p>
+            <p :class="[featureIdx % 2 === 0 ? 'text-center lg:text-justify' : 'text-center lg:text-justify']" class="mt-2 text-base">{{ person.bio1 }}</p>
+            <br>
+            <strong :class="[featureIdx % 2 === 0 ? 'text-center lg:text-justify' : 'text-center lg:text-justify']" class="mt-2 text-base">{{ person.bio2 }}</strong>
           </div>
           <div :class="[featureIdx % 2 === 0 ? 'lg:col-start-10 xl:col-start-9' : 'lg:col-start-1', 'flex-auto lg:row-start-1 lg:col-span-3 xl:col-span-3']">
             <div class="bg-gray-100 overflow-hidden custom-shadow">
@@ -58,13 +60,15 @@ export default {
         {
           name: this.$t('events.wedding.title'),
           imageUrl: 'img/candles.jpg',
-          bio: this.$t('events.wedding.description'),
+          bio1: this.$t('events.seminar.description1'),
+          bio2: this.$t('events.seminar.description2'),
           alt: this.$t('events.wedding.alt'),
         },
         {
           name: this.$t('events.seminar.title'),
           imageUrl: 'img/IMG_0332.webp',
-          bio: this.$t('events.seminar.description'),
+          bio1: this.$t('events.seminar.description1'),
+          bio2: this.$t('events.seminar.description2'),
           alt: this.$t('events.seminar.alt'),
         },
       ]

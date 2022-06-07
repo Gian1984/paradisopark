@@ -4,10 +4,31 @@
     <header class="relative flex items-center justify-start h-screen overflow-hidden">
       
       <div class=" z-30 py-16 sm:py-24 lg:max-w-7xl lg:mx-auto lg:py-32 lg:px-8 w-screen mx-auto">
-        <h1 class="text-center lg:text-left mt-6 text-4xl font-extrabold tracking-tight text-white md:text-5xl lg:text-6xl">{{ $t("home.title") }}</h1>
-        <p class="text-center lg:text-left mt-0 text-xl text-white">{{ $t("home.description") }}</p>
+        <h1 class="text-center lg:text-left uppercase mt-0 text-4xl font-extrabold tracking-tight text-white md:text-5xl lg:text-6xl">{{ $t("home.title1") }}</h1>
+        <h1 class="text-center lg:text-left uppercase mt-0 text-4xl font-extrabold tracking-tight text-white md:text-5xl lg:text-6xl">{{ $t("home.title2") }}</h1>
+        <h1 class="text-center lg:text-left uppercase mt-0 text-4xl font-extrabold tracking-tight text-white md:text-5xl lg:text-6xl">{{ $t("home.title3") }}</h1>
+        <!-- CAROUSEL-->
+        <div id="carouselServicesCaptions" class="carousel slide" data-bs-ride="carousel">
+          <div class="carousel-inner w-2/3 overflow-hidden flex">
+            <div class="carousel-item active w-full">
+              <div class="carousel-caption hidden md:block text-white">
+                <p class="text-xl">{{ $t("home.subtitle1") }}</p>
+              </div>
+            </div>
+            <div class="carousel-item w-full">
+              <div class="carousel-caption hidden md:block text-white">
+                <p class="text-xl">{{ $t("home.subtitle2") }}</p>
+              </div>
+            </div>
+            <div class="carousel-item w-full">
+              <div class="carousel-caption hidden md:block text-white">
+                <p class="text-xl">{{ $t("home.subtitle3") }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
         <div class="w-32 mx-auto lg:mx-0">
-          <router-link to="/booking" class=" custom-border-btn mt-6 p-2 block font-light text-white text-center">{{ $t("home.button") }}</router-link>
+          <router-link to="/booking" class=" custom-border-btn mt-0 p-2 block font-light text-white text-center text-xl">{{ $t("home.button") }}</router-link>
         </div>
       </div>
       <video autoplay loop muted class="absolute z-10 w-auto min-w-full min-h-full max-h-full max-w-none">
@@ -24,135 +45,65 @@
       
     </div> -->
 
-    <section class="h-screen">
-    <div class="pt-8 sm:pt-8 lg:max-w-7xl lg:mx-auto lg:pt-16 lg:px-8">
-      <div class="mb-8 px-4 w-2/3 mx-auto text-center sm:px-6 lg:px-0">
-          <p>Bienvenue à Paradiso Park, un domaine exceptionnel entre Anvers et Bruxelles. Majestueux et discret. Avec un espace vert de 20 hectares. Le domaine est lumineux. Réalisez vos rêves et voyagez dans le temps...</p>
+      <section class="h-screen">
+      <div class="pt-8 sm:pt-8 lg:max-w-7xl lg:mx-auto lg:pt-16 lg:px-8">
+        <div class="mb-8 px-4 w-full mx-auto text-center sm:px-6 lg:px-0">
+          <h2 style="font-size: 1.5em;">{{ $t("home.description") }}</h2>
+        </div>
+        <!-- Category section -->
+        <div aria-labelledby="category-heading">
+
+            <div class="mt-6 grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:grid-rows-2 sm:gap-x-6 lg:gap-8">
+              <div class="group aspect-w-2 aspect-h-1 overflow-hidden sm:aspect-h-1 sm:aspect-w-1 sm:row-span-2">
+                <img src="img/servicesCategory.jpeg" alt="" class="object-center object-cover group-hover:opacity-75" />
+                <div aria-hidden="true" class="bg-gradient-to-b from-transparent to-black opacity-30" />
+                <div class="p-6 flex items-end">
+                  <div>
+                    <h3 class="font-semibold text-white">
+                      <a href="/services">
+                        <span class="absolute inset-0" />
+                        {{ $t("home.category.services.title") }}
+                      </a>
+                    </h3>
+                    <p aria-hidden="true" class="mt-1 text-sm text-white">{{ $t("home.category.services.description") }}</p>
+                  </div>
+                </div>
+              </div>
+              <div class="group aspect-w-2 aspect-h-1 overflow-hidden sm:relative sm:aspect-none sm:h-full">
+                <img src="img/roomsCategory.jpeg" alt="" class="object-center object-cover group-hover:opacity-75 sm:absolute sm:inset-0 sm:w-full sm:h-full" />
+                <div aria-hidden="true" class="bg-gradient-to-b from-transparent to-black opacity-50 sm:absolute sm:inset-0" />
+                <div class="p-6 flex items-end sm:absolute sm:inset-0">
+                  <div>
+                    <h3 class="font-semibold text-white">
+                      <a href="/rooms">
+                        <span class="absolute inset-0" />
+                        {{ $t("home.category.rooms.title") }}
+                      </a>
+                    </h3>
+                    <p aria-hidden="true" class="mt-1 text-sm text-white">{{ $t("home.category.rooms.description") }}</p>
+                  </div>
+                </div>
+              </div>
+              <div class="group aspect-w-2 aspect-h-1 overflow-hidden sm:relative sm:aspect-none sm:h-full">
+                <img src="img/eventsCategory.jpeg" alt="" class="object-center object-cover group-hover:opacity-75 sm:absolute sm:inset-0 sm:w-full sm:h-full" />
+                <div aria-hidden="true" class="bg-gradient-to-b from-transparent to-black opacity-50 sm:absolute sm:inset-0" />
+                <div class="p-6 flex items-end sm:absolute sm:inset-0">
+                  <div>
+                    <h3 class="font-semibold text-white">
+                      <a href="/events">
+                        <span class="absolute inset-0" />
+                        {{ $t("home.category.events.title") }}
+                      </a>
+                    </h3>
+                    <p aria-hidden="true" class="mt-1 text-sm text-white">{{ $t("home.category.events.description") }}</p>
+                  </div>
+                </div>
+              </div>
+
+          </div>
+        </div>
       </div>
-      <div class="flex">
-        
-        <!-- CAROUSEL SERVICES -->
-        <div class="w-1/2 h-1/2  pr-4">
-        <h2 id="trending-heading" class="text-2xl font-semibold tracking-tight text-gray-900">Services</h2>
-          <div id="carouselServicesCaptions" class="carousel slide relative" data-bs-ride="carousel">
-            <div class="carousel-indicators absolute right-0 bottom-0 left-0 flex justify-center p-0 mb-4">
-              <button type="button" data-bs-target="#carouselServicesCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-              <button type="button" data-bs-target="#carouselServicesCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
-              <button type="button" data-bs-target="#carouselServicesCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
-              <button type="button" data-bs-target="#carouselServicesCaptions" data-bs-slide-to="3" aria-label="Slide 4"></button>
-              <button type="button" data-bs-target="#carouselServicesCaptions" data-bs-slide-to="4" aria-label="Slide 5"></button>
-              <button type="button" data-bs-target="#carouselServicesCaptions" data-bs-slide-to="5" aria-label="Slide 6"></button>
-            </div>
-            <div class="carousel-inner relative w-full overflow-hidden">
-              <div class="carousel-item active relative float-left w-full">
-                <img src="https://picsum.photos/190" class="block w-full" alt="..." />
-                <div class="carousel-caption hidden md:block absolute text-center">
-                  <h5 class="text-xl">Sauna & Hammam</h5>
-                  <p>Détendez-vous dans notre centre de balnéothérapie, dans notre sauna ou encore notre hamman.</p>
-                </div>
-              </div>
-              <div class="carousel-item relative float-left w-full">
-                <img src="https://picsum.photos/980" class="block w-full" alt="..."/>
-                <div class="carousel-caption hidden md:block absolute text-center">
-                  <h5 class="text-xl">Piscine</h5>
-                  <p>Une capacité de places assises pour conférences de 200 personnes et pour dîner de 100 personnes, un écran TV, support projecteur et fait 300m².</p>
-                </div>
-              </div>
-              <div class="carousel-item relative float-left w-full">
-                <img src="https://picsum.photos/670" class="block w-full" alt="..."/>
-                <div class="carousel-caption hidden md:block absolute text-center">
-                  <h5 class="text-xl">Jardin d’hiver</h5>
-                  <p>Le domaine contient un grand espace vert. Idéal pour vos fêtes en extérieur ou rassembler vos convives.</p>
-                </div>
-              </div>
-              <div class="carousel-item relative float-left w-full">
-                <img src="https://picsum.photos/320" class="block w-full" alt="..."/>
-                <div class="carousel-caption hidden md:block absolute text-center">
-                  <h5 class="text-xl">Salles d'événements</h5>
-                  <p>L\'endroit rêvé pour votre évènement. Que ce soit pour un anniversaire, pour un séminaire ou un gala.</p>
-                </div>
-              </div>
-              <div class="carousel-item relative float-left w-full">
-                <img src="https://picsum.photos/230" class="block w-full" alt="..."/>
-                <div class="carousel-caption hidden md:block absolute text-center">
-                  <h5 class="text-xl">Jardin & étangs</h5>
-                  <p>Some representative placeholder content for the third slide.</p>
-                </div>
-              </div>
-              <div class="carousel-item relative float-left w-full">
-                <img src="https://picsum.photos/120" class="block w-full" alt="..."/>
-                <div class="carousel-caption hidden md:block absolute text-center">
-                  <h5 class="text-xl">Traiteur</h5>
-                  <p>Some representative placeholder content for the third slide.</p>
-                </div>
-              </div>
-            </div>
-            <button class="carousel-control-prev absolute top-0 bottom-0 flex items-center justify-center p-0 text-center border-0 hover:outline-none hover:no-underline focus:outline-none focus:no-underline left-0" type="button" data-bs-target="#carouselServicesCaptions" data-bs-slide="prev">
-              <span class="carousel-control-prev-icon inline-block bg-no-repeat" aria-hidden="true"></span>
-              <span class="visually-hidden">Previous</span>
-            </button>
-            <button class="carousel-control-next absolute top-0 bottom-0 flex items-center justify-center p-0 text-center border-0 hover:outline-none hover:no-underline focus:outline-none focus:no-underline right-0" type="button" data-bs-target="#carouselServicesCaptions" data-bs-slide="next">
-              <span class="carousel-control-next-icon inline-block bg-no-repeat" aria-hidden="true"></span>
-              <span class="visually-hidden">Next</span>
-            </button>
-          </div>
-          </div>
-
-          <!-- CHAMRES CAROUSEL -->
-          <div class="w-1/2 pl-4">
-          <h2 id="trending-heading" class="text-2xl font-semibold tracking-tight text-gray-900">Chambres</h2>
-          <div id="carouselRoomCaptions" class="carousel slide relative" data-bs-ride="carousel">
-            <div class="carousel-indicators absolute right-0 bottom-0 left-0 flex justify-center p-0 mb-4">
-              <button type="button" data-bs-target="#carouselRoomCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-              <button type="button" data-bs-target="#carouselRoomCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
-              <button type="button" data-bs-target="#carouselRoomCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
-              <button type="button" data-bs-target="#carouselRoomCaptions" data-bs-slide-to="3" aria-label="Slide 4"></button>
-            </div>
-            <div class="carousel-inner relative w-full overflow-hidden">
-              <div class="carousel-item active relative float-left w-full">
-                <img src="img/room1.jpg" class="block w-full" alt="..." />
-                <div class="carousel-caption hidden md:block absolute text-center">
-                  <h5 class="text-xl">Sauna & Hammam</h5>
-                  <p>Détendez-vous dans notre centre de balnéothérapie, dans notre sauna ou encore notre hamman.</p>
-                </div>
-              </div>
-              <div class="carousel-item relative float-left w-full">
-                <img src="img/room2.jpg" class="block w-full" alt="..."/>
-                <div class="carousel-caption hidden md:block absolute text-center">
-                  <h5 class="text-xl">Salle de réception</h5>
-                  <p>Une capacité de places assises pour conférences de 200 personnes et pour dîner de 100 personnes, un écran TV, support projecteur et fait 300m².</p>
-                </div>
-              </div>
-              <div class="carousel-item relative float-left w-full">
-                <img src="img/room3.jpg" class="block w-full" alt="..."/>
-                <div class="carousel-caption hidden md:block absolute text-center">
-                  <h5 class="text-xl">Jardin</h5>
-                  <p>Le domaine contient un grand espace vert. Idéal pour vos fêtes en extérieur ou rassembler vos convives.</p>
-                </div>
-              </div>
-              <div class="carousel-item relative float-left w-full">
-                <img src="img/room4.jpg" class="block w-full" alt="..."/>
-                <div class="carousel-caption hidden md:block absolute text-center">
-                  <h5 class="text-xl">Interieur</h5>
-                  <p>L\'endroit rêvé pour votre évènement. Que ce soit pour un anniversaire, pour un séminaire ou un gala.</p>
-                </div>
-              </div>
-            </div>
-            <button class="carousel-control-prev absolute top-0 bottom-0 flex items-center justify-center p-0 text-center border-0 hover:outline-none hover:no-underline focus:outline-none focus:no-underline left-0" type="button" data-bs-target="#carouselRoomCaptions" data-bs-slide="prev">
-              <span class="carousel-control-prev-icon inline-block bg-no-repeat" aria-hidden="true"></span>
-              <span class="visually-hidden">Previous</span>
-            </button>
-            <button class="carousel-control-next absolute top-0 bottom-0 flex items-center justify-center p-0 text-center border-0 hover:outline-none hover:no-underline focus:outline-none focus:no-underline right-0" type="button" data-bs-target="#carouselRoomCaptions" data-bs-slide="next">
-              <span class="carousel-control-next-icon inline-block bg-no-repeat" aria-hidden="true"></span>
-              <span class="visually-hidden">Next</span>
-            </button>
-          </div>
-          </div>
-          </div>
-    </div>
     </section>
-
-
 
     <!-- CHAMRES -->
     <!-- <section aria-labelledby="trending-heading" class="bg-white">
@@ -192,7 +143,7 @@
         </div>
       </div>
     </section> -->
-    
+
     <!-- PHILOSOPHY -->
     <section>
       <div class="relative bg-white pt-16 pb-32 overflow-hidden">
@@ -201,14 +152,15 @@
             <div class="px-4 max-w-xl mx-auto sm:px-6 lg:py-16 lg:max-w-none lg:mx-0 lg:px-0">
               <div>
                 <div class="mt-6">
-                  <h2 class="text-3xl font-extrabold tracking-tight text-gray-900">Notre philosophie</h2>
-                  <p class="mt-4 text-lg text-gray-500">Bienvenue à Paradiso Park, un domaine exceptionnel entre Anvers et Bruxelles. Majestueux et discret. Avec un espace vert de 20 hectares. Le domaine est lumineux. Réalisez vos rêves et voyagez dans le temps...</p>
+                  <h2 class="text-3xl font-extrabold tracking-tight text-gray-900">{{ $t("home.philosophy.title") }}</h2>
+                  <p class="mt-4 text-lg text-gray-500">{{ $t("home.philosophy.description1") }}</p>
+                  <p class="mt-4 text-lg text-gray-500">{{ $t("home.philosophy.description2") }}</p>
                   <!-- <div class="mt-6">
                     <a href="#" class="inline-flex px-4 py-2 border border-transparent text-base font-medium shadow-sm text-black bg-beige hover:bg-indigo-700"> Plus d'info </a>
                   </div> -->
                 </div>
               </div>
-              <div class="mt-8 border-t border-gray-200 pt-6">
+              <!-- <div class="mt-8 border-t border-gray-200 pt-6">
                 <blockquote>
                   <div>
                     <p class="text-base text-gray-500">&ldquo;En pleine nature, laissez le domaine vous ressourcer. Grâce à son élégance et sa décoration d'intérieur majestueuse, vous vous retrouverez téléporté ailleurs.&rdquo;</p>
@@ -218,11 +170,11 @@
                       <div class="flex-shrink-0">
                         <img class="h-6 w-6 rounded-full" src="img/IMG_0332.webp" alt="jardin relax" />
                       </div>
-                      <div class="text-base font-medium text-gray-700">Nancy Lastname, Content Creator</div>
+                      <div class="text-base font-medium text-gray-700">Petros Lastame, Owner</div>
                     </div>
                   </footer>
                 </blockquote>
-              </div>
+              </div> -->
             </div>
             <div class="mt-12 sm:mt-16 lg:mt-0">
               <div class="pl-4 sm:pl-6 lg:px-0 lg:m-0 lg:relative lg:h-full">

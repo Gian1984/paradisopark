@@ -236,25 +236,25 @@
       <div class="relative max-w-7xl mx-auto lg:grid lg:grid-cols-5">
         <div class="bg-beige pt-8 px-4 sm:px-6 lg:col-span-2 lg:px-8 lg:pt-8 xl:pr-12">
           <div class="max-w-lg mx-auto">
-            <h2 class="text-2xl font-extrabold tracking-tight text-gray-900 sm:text-3xl">Contact</h2>
-            <p class="mt-3 text-lg leading-6 text-gray-500">Nullam risus blandit ac aliquam justo ipsum. Quam mauris volutpat massa dictumst amet. Sapien tortor lacus arcu.</p>
+            <h2 class="text-2xl font-extrabold tracking-tight text-gray-900 sm:text-3xl">{{ $t("contact.title") }}</h2>
+            <p class="mt-3 text-lg leading-6 text-gray-500">{{ $t("contact.description") }}</p>
             <dl class="mt-8 text-base text-gray-500">
               <div>
-                <dt class="sr-only">Postal address</dt>
+                <dt class="sr-only">{{ $t("contact.address") }}</dt>
                 <dd>
                   <p>269 Lintsesteenweg</p>
                   <p>2570 Duffel, Belgique</p>
                 </dd>
               </div>
               <div class="mt-6">
-                <dt class="sr-only">Phone number</dt>
+                <dt class="sr-only">{{ $t("contact.phone") }}</dt>
                 <dd class="flex">
                   <PhoneIcon class="flex-shrink-0 h-6 w-6 text-gray-400" aria-hidden="true" />
                   <span class="ml-3"> +32 493 47 07 07 </span>
                 </dd>
               </div>
               <div class="mt-3">
-                <dt class="sr-only">Email</dt>
+                <dt class="sr-only">{{ $t("contact.mail") }}</dt>
                 <dd class="flex">
                   <MailIcon class="flex-shrink-0 h-6 w-6 text-gray-400" aria-hidden="true" />
                   <span class="ml-3"> info@paradisopark.be </span>
@@ -267,19 +267,19 @@
           <div class="max-w-lg mx-auto lg:max-w-none">
             <form action="#" method="POST" class="grid grid-cols-1 gap-y-6">
               <div>
-                <label for="full-name" class="sr-only">Full name</label>
+                <label for="full-name" class="sr-only">{{ $t("contact.label.name") }}</label>
                 <input type="text" name="full-name" id="full-name" autocomplete="name" class="block w-full shadow-sm py-2 px-4 bg-white placeholder-gray-500 focus:ring-gray-400 focus:border-gray-400 border-gray-300" placeholder="Full name" />
               </div>
               <div>
-                <label for="email" class="sr-only">Email</label>
+                <label for="email" class="sr-only">{{ $t("contact.label.mail") }}</label>
                 <input id="email" name="email" type="email" autocomplete="email" class="block w-full shadow-sm py-2 px-4 bg-white placeholder-gray-500 focus:ring-gray-400 focus:border-gray-400 border-gray-300" placeholder="Email" />
               </div>
               <div>
-                <label for="phone" class="sr-only">Phone</label>
+                <label for="phone" class="sr-only">{{ $t("contact.label.phone") }}</label>
                 <input type="text" name="phone" id="phone" autocomplete="tel" class="block w-full shadow-sm py-2 px-4 bg-white placeholder-gray-500 focus:ring-gray-400 focus:border-gray-400 border-gray-300" placeholder="Phone" />
               </div>
               <div>
-                <label for="message" class="sr-only">Message</label>
+                <label for="message" class="sr-only">{{ $t("contact.label.message") }}</label>
                 <textarea id="message" name="message" rows="4" class="block w-full shadow-sm py-2 px-4 bg-white placeholder-gray-500 focus:ring-gray-400 focus:border-gray-400 border border-gray-300" placeholder="Message" />
               </div>
               <div class="flex justify-end">
@@ -530,7 +530,6 @@ const navigation = {
     { name: 'Services', href: '/services' },
     { name: 'Chambres', href: '/rooms' },
     { name: 'Événements', href: '/events' },
-    { name: 'Gallerie', href: '/gallery' },
     { name: 'Contact', href: '#contact' },
   ],
 
@@ -563,18 +562,6 @@ const navigation = {
               'Grey 6-panel baseball hat with black brim, black mountain graphic on front, and light heather gray body.',
         },
         {
-          name: 'Salle d\'événements',
-          href: '/services',
-          imageSrc: 'https://tailwindui.com/img/ecommerce-images/mega-menu-01-men-category-01.jpg',
-          imageAlt: 'Hats and sweaters on wood shelves next to various colors of t-shirts on hangers.',
-        },
-        {
-          name: 'Chambres',
-          href: '/rooms',
-          imageSrc: 'img/candles.jpg',
-          imageAlt: 'Model wearing light heather gray t-shirt.',
-        },
-        {
           name: 'Jardin et étang',
           href: '/services',
           imageSrc: 'img/dish.jpg',
@@ -592,8 +579,8 @@ const navigation = {
     }
   ],
   pages: [
+    { name: 'Chambres', href: '/rooms' },
     { name: 'Événements', href: '/events' },
-    { name: 'Gallerie', href: '/gallery' },
     { name: 'Contact', href: '#contact' },
     
   ],
