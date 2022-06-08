@@ -14,7 +14,7 @@
         <div v-for="(person, featureIdx) in ourservices" :key="person.name" class="flex flex-col-reverse lg:grid lg:grid-cols-12 lg:gap-x-2 py-4 lg:items-center">
           <div :class="[featureIdx % 2 === 0 ? 'lg:col-start-1' : 'lg:col-start-6 xl:col-start-5', 'mt-6 lg:mt-0 lg:row-start-1 lg:col-span-8 xl:col-span-7']">
             <h3 :class="[featureIdx % 2 === 0 ? 'text-center lg:text-left' : 'text-center lg:text-right']" class="text-xl font-medium uppercase" style="font-weight: 800;">{{ person.name }}</h3>
-            <p :class="[featureIdx % 2 === 0 ? 'text-center lg:text-left' : 'text-center lg:text-right']" class="mt-2 text-base">{{ person.bio }}</p>
+            <p :class="[featureIdx % 2 === 0 ? 'text-center lg:text-justify' : 'text-center lg:text-justify']" class="mt-2 text-base">{{ person.bio }}</p>
             <!-- <div v-if="person.href == 1">
               <button class="mt-4 w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-gold bg-bord focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gold">
                 {{person.button}}
@@ -82,18 +82,6 @@ export default {
           imageUrl: 'img/IMG_0332.webp',
           bio: this.$t('services.wintergarden.description'),
           alt: this.$t('services.wintergarden.alt'),
-        },
-        {
-          name: this.$t('services.eventroom.title'),
-          imageUrl: 'img/IMG_0332.webp',
-          bio: this.$t('services.eventroom.description'),
-          alt: this.$t('services.eventroom.alt'),
-        },
-        {
-          name: this.$t('services.rooms.title'),
-          imageUrl: 'img/IMG_0332.webp',
-          bio: this.$t('services.rooms.description'),
-          alt: this.$t('services.rooms.alt'),
         },
         {
           name: this.$t('services.garden.title'),

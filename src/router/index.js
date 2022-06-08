@@ -3,7 +3,6 @@ import Home from '../views/Home.vue'
 import Services from '../views/Services.vue'
 import Rooms from '../views/Rooms.vue'
 import Events from '../views/Events.vue'
-import Gallery from '../views/Gallery.vue'
 import Login from '../views/Login.vue'
 import Register from '../views/Register.vue'
 import Resetpassword from '../views/Resetpassword.vue'
@@ -52,11 +51,6 @@ const routes = [
     path: '/events',
     name: 'Events',
     component: Events
-  },
-  {
-    path: '/gallery',
-    name: 'Gallery',
-    component: Gallery
   },
   {
     path: '/login',
